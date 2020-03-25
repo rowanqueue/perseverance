@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 public enum Command : byte{
-    Up,
-    Right,
-    Down,
-    Left,
+    Forward,
+    Backward,
+    TurnRight,
+    TurnLeft,
     PickUp,
     PutDown
 }
@@ -14,11 +14,11 @@ public class Rover : MonoBehaviour
 {
     public bool waitingForInput;
     public int numMoves;
-    public int lastDirection;
+    public int direction;
     List<float> angles = new List<float>{0,-90,-180,-270};
     List<Vector2Int> directions = new List<Vector2Int>{Vector2Int.up,Vector2Int.right,Vector2Int.down,Vector2Int.left};
     public TaskManager taskManager = new TaskManager();
-    public List<MoveRover> moves = new List<MoveRover>();
+    public List<RoverCommand> moves = new List<RoverCommand>();
     bool doMoves = false;
     float elapsedTime;
 
@@ -27,12 +27,13 @@ public class Rover : MonoBehaviour
     List<Vector2Int> obstacles;
     //sample stuff
 
+    public bool carryingSample;
     public Sample sampleCarried;
     public Transform samplesParent;
     List<Sample> samples;
 
     void Start(){
-        lastDirection = 0;
+        direction = 0;
         obstacles = new List<Vector2Int>();
         samples = new List<Sample>();
         foreach(Transform child in obstaclesParent){
@@ -45,7 +46,7 @@ public class Rover : MonoBehaviour
     void Update()
     {
         //set direction
-        transform.GetChild(0).localEulerAngles = new Vector3(0,0,angles[lastDirection]);
+        //transform.GetChild(0).localEulerAngles = new Vector3(0,0,angles[direction]);
         waitingForInput = !doMoves;
         taskManager.Update();
         if(doMoves){
@@ -68,16 +69,16 @@ public class Rover : MonoBehaviour
                 moves.Clear();
             }else{
                 if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)){
-                    EnterCommand(Command.Up);
+                    EnterCommand(Command.Forward);
                 }
                 if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)){
-                     EnterCommand(Command.Right);
+                     EnterCommand(Command.TurnRight);
                 }
                 if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)){
-                     EnterCommand(Command.Down);
+                     EnterCommand(Command.Backward);
                 }
                 if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)){
-                     EnterCommand(Command.Left);
+                     EnterCommand(Command.TurnLeft);
                 }
                 if(Input.GetKeyDown(KeyCode.Q)){
                     EnterCommand(Command.PickUp);
@@ -92,35 +93,234 @@ public class Rover : MonoBehaviour
     public void EnterCommand(Command command){
         if(waitingForInput){
             switch(command){
-                case Command.Up:
-                    moves.Add(new MoveRover(this, Vector2.up));
-                    text.text +="Up ";
+                case Command.Forward:
+                    moves.Add(new MoveRover(this, true));
+                    text.text +="Forward ";
                     break;
-                case Command.Right:
-                    moves.Add(new MoveRover(this, Vector2.right));
-                    text.text +="Right ";
+                case Command.Backward:
+                    moves.Add(new MoveRover(this, false));
+                    text.text +="Backward ";
                     break;
-                case Command.Left:
-                    moves.Add(new MoveRover(this, Vector2.left));
+                case Command.TurnLeft:
+                    moves.Add(new TurnRover(this, false));
                     text.text +="Left ";
                     break;
-                case Command.Down:
-                    moves.Add(new MoveRover(this, Vector2.down));
-                    text.text +="Down ";
+                case Command.TurnRight:
+                    moves.Add(new TurnRover(this, true));
+                    text.text +="Right ";
                     break;
                 case Command.PickUp:
-                    moves.Add(new MoveRover(this, Vector2.up*2));
+                    moves.Add(new PickUpSample(this));
                     text.text +="PickUp ";
                     break;
                 case Command.PutDown:
-                    moves.Add(new MoveRover(this, Vector2.up*-2));
+                    moves.Add(new DropSample(this));
                     text.text +="PutDown ";
                     break;
             }
         }
         
     }
-    public class MoveRover : Task
+    public class RoverCommand : Task
+    {
+        public float duration = 1.0f;
+        public Rover rover;
+        public float elapsedTime = 0;
+        public RoverCommand(Rover rover){
+            this.rover = rover;
+        }
+        protected override  void Initialize(){
+
+        }
+        internal override void Update(){
+            elapsedTime+=Time.deltaTime;
+            if(elapsedTime >=duration){
+                SetStatus(TaskStatus.Success);
+                return;
+            }
+        }
+        protected override void OnSuccess(){
+
+        }
+    }
+    public class MoveRover : RoverCommand
+    {
+        public bool forward;
+        Vector2 target;
+        Vector2 start;
+        bool obstacleHere;
+        public MoveRover(Rover rover, bool forward) : base(rover){
+            this.rover = rover;
+            this.forward = forward;
+        }
+        protected override void Initialize(){
+            Vector2 direction= Vector2.zero;
+            if(forward){
+                direction = rover.directions[rover.direction];
+            }else{
+                direction = rover.directions[(rover.direction+2)%4];
+            }
+            start = (Vector2)rover.transform.position;
+            target = (Vector2)rover.transform.position+direction;
+            target.x = Mathf.RoundToInt(target.x);
+            target.y = Mathf.RoundToInt(target.y);
+            Vector2Int targetExact = new Vector2Int((int)target.x,(int)target.y);
+            if(rover.obstacles.Contains(targetExact)){
+                obstacleHere = true;
+                //SetStatus(TaskStatus.Success);
+            }
+            foreach(Sample sample in rover.samples){
+                if(sample != rover.sampleCarried){
+                    if((Vector2)sample.transform.position == targetExact){
+                        obstacleHere = true;
+                    }
+                }
+            }
+        }
+        internal override void Update(){
+            base.Update();
+            if(obstacleHere){
+                if(elapsedTime < duration*0.5f){
+                    rover.transform.position = Vector2.Lerp(start,target,elapsedTime/duration);
+                }else{
+                    rover.transform.position = Vector2.Lerp(target,start,elapsedTime/duration);
+                }
+            }else{
+                rover.transform.position = Vector2.Lerp(start,target,elapsedTime/duration);
+            }   
+        }
+    }
+    public class TurnRover : RoverCommand
+    {
+        public bool right;
+        float targetAngle;
+        float startAngle;
+        public TurnRover(Rover rover, bool right) : base(rover){
+            this.rover = rover;
+            this.right = right;
+        }
+        protected override void Initialize(){
+            bool wrappedAround = false;
+            startAngle = rover.angles[rover.direction];
+            if(right){
+                rover.direction+=1;
+                if(rover.direction == 4){
+                    wrappedAround = true;
+                }
+            }else{
+                rover.direction-=1;
+                if(rover.direction == -1){
+                    wrappedAround = true;
+                }
+            }
+            rover.direction = (rover.direction+4)%4;
+            //if(rover.direction)
+            Debug.Log(rover.direction);
+            targetAngle = rover.angles[rover.direction];
+            if(wrappedAround){
+                targetAngle+= right ? -360 : 360;
+            }
+        }
+        internal override void Update(){
+            base.Update();
+            rover.transform.GetChild(0).eulerAngles 
+            = Vector3.Lerp(new Vector3(0,0,startAngle),
+                           new Vector3(0,0,targetAngle),elapsedTime/duration);
+        }
+    }
+    public class PickUpSample : RoverCommand
+    {
+        bool foundSample;
+        Sample sampleToPickUp;
+        Vector2 start;
+        Vector2 target;
+        public PickUpSample(Rover rover) : base(rover){
+            this.rover = rover;
+        }
+        protected override void Initialize(){
+            duration *= 0.1f;
+            foundSample = false;
+            Vector2 pickUpPosition = (Vector2)rover.transform.position+rover.directions[rover.direction];
+            if(rover.carryingSample){
+                return;
+            }
+            foreach(Sample sample in rover.samples){
+                if(Vector2.Distance(sample.transform.position,pickUpPosition) <= 0.5){
+                    sampleToPickUp = sample;
+                    foundSample = true;
+                    break;
+                }
+            }
+            if(foundSample){
+                start = sampleToPickUp.transform.position;
+                target = rover.transform.position;
+            }
+        }
+        internal override void Update(){
+            base.Update();
+            if(foundSample){
+                sampleToPickUp.transform.position = Vector2.Lerp(start,target,elapsedTime/duration);
+            }else{
+                elapsedTime = duration;
+            }
+            
+        }
+       protected override void OnSuccess(){
+            if(foundSample){
+                rover.carryingSample = true;
+                rover.sampleCarried = sampleToPickUp;
+                sampleToPickUp.transform.parent = rover.transform;
+                sampleToPickUp.transform.localPosition = Vector2.zero;
+            }
+        }
+    }
+    public class DropSample : RoverCommand
+    {
+        bool canDrop;
+        Vector2Int dropPosition;
+        Vector2 start;
+        Vector2 target;
+        public DropSample(Rover rover) : base(rover){
+            this.rover = rover;
+        }
+        protected override void Initialize(){
+            duration *= 0.1f;
+            canDrop = false;
+            Debug.Log(rover.carryingSample);
+            if(rover.carryingSample == false){
+                Debug.Log("not carrying anthing");
+                return;
+            }
+            dropPosition = new Vector2Int((int)rover.transform.position.x,(int)rover.transform.position.y)+rover.directions[rover.direction];
+            if(!rover.obstacles.Contains(dropPosition)){
+                canDrop = true;
+            }
+            if(canDrop){
+                start = rover.transform.position;
+                target = dropPosition;
+            }
+        }
+        internal override void Update(){
+            base.Update();
+            if(canDrop && rover.sampleCarried != null){
+                rover.sampleCarried.transform.position = Vector2.Lerp(start,target,elapsedTime/duration);
+            }else{
+                elapsedTime = duration;
+            }
+            
+        }
+        protected override void OnSuccess(){
+            if(canDrop){
+                Debug.Log("DROPPED");
+                rover.carryingSample = false;
+                rover.sampleCarried.transform.position = (Vector2)dropPosition;
+                rover.sampleCarried.transform.parent = rover.samplesParent;
+                rover.sampleCarried = null;
+            }
+        }
+    }
+    
+    /*public class MoveRoverT : RoverCommand
     {
         private float duration = 1.0f;
         private Rover rover;
@@ -130,16 +330,16 @@ public class Rover : MonoBehaviour
         Vector2 start;
         bool obstacleHere;
         //pick up stuff
-        bool pickUpCommand;
+        /*bool pickUpCommand;
         bool foundSample;
         Sample sampleToPickUp;
         //end pick up stuff
         //put down stuff
         bool putDownCommand;
         bool canPutDown;
-        Vector2Int putDownDirection;
+        Vector2Int putDownDirection;*/
         //end put down stuff
-        public MoveRover(Rover rover, Vector2 direction)
+        /*public MoveRover(Rover rover, Vector2 direction)
         {
             this.direction = direction;
             this.rover = rover;
@@ -262,6 +462,6 @@ public class Rover : MonoBehaviour
             Debug.Log("SUCCESS");
             //rover.transform.position = target;
         }
-    }
+    }*/
 
 }
