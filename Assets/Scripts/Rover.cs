@@ -8,7 +8,8 @@ public enum Command : byte{
     TurnRight,
     TurnLeft,
     PickUp,
-    PutDown
+    PutDown,
+    Send
 }
 public class Rover : MonoBehaviour
 {
@@ -57,35 +58,26 @@ public class Rover : MonoBehaviour
                 text.text = "";
             }
         }else{
-            if(moves.Count >= numMoves){
-                doMoves = true;
-                elapsedTime = 0;
-                //fill commands here
-                var move = moves[0];
-                for(int i = 1; i < numMoves; i++){
-                    moves[i-1].Then(moves[i]);
-                }
-                taskManager.Do(moves[0]);
-                moves.Clear();
-            }else{
-                if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)){
-                    EnterCommand(Command.Forward);
-                }
-                if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)){
-                     EnterCommand(Command.TurnRight);
-                }
-                if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)){
-                     EnterCommand(Command.Backward);
-                }
-                if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)){
-                     EnterCommand(Command.TurnLeft);
-                }
-                if(Input.GetKeyDown(KeyCode.Q)){
-                    EnterCommand(Command.PickUp);
-                }
-                if(Input.GetKeyDown(KeyCode.E)){
-                    EnterCommand(Command.PutDown);
-                }
+            if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)){
+                EnterCommand(Command.Forward);
+            }
+            if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)){
+                    EnterCommand(Command.TurnRight);
+            }
+            if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)){
+                    EnterCommand(Command.Backward);
+            }
+            if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)){
+                    EnterCommand(Command.TurnLeft);
+            }
+            if(Input.GetKeyDown(KeyCode.Q)){
+                EnterCommand(Command.PickUp);
+            }
+            if(Input.GetKeyDown(KeyCode.E)){
+                EnterCommand(Command.PutDown);
+            }
+            if(Input.GetKeyDown(KeyCode.F)){
+                EnterCommand(Command.Send);
             }
         }
         
@@ -117,9 +109,24 @@ public class Rover : MonoBehaviour
                     moves.Add(new DropSample(this));
                     text.text +="PutDown ";
                     break;
+                case Command.Send:
+                    SendCommands();
+                    break;
             }
         }
         
+    }
+    public void SendCommands(){
+        doMoves = true;
+        numMoves = moves.Count;
+        elapsedTime = 0;
+        //fill commands here
+        var move = moves[0];
+        for(int i = 1; i < numMoves; i++){
+            moves[i-1].Then(moves[i]);
+        }
+        taskManager.Do(moves[0]);
+        moves.Clear();
     }
     public class RoverCommand : Task
     {
