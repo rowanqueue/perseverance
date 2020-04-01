@@ -1,0 +1,123 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public enum Tile : byte{
+    None,
+    Rover,
+    Obstacle,
+    Sample,
+    Cache
+}
+public class LevelLoader : MonoBehaviour
+{
+    public TextAsset levelText;
+
+    //prefab stuff
+
+
+    public Tile[,] level;
+    Dictionary<char,Tile> char2Tile = new Dictionary<char, Tile>{
+        {'.',Tile.None},
+        {' ',Tile.None},
+        {'@',Tile.Rover},
+        {'#',Tile.Obstacle},
+        {'*',Tile.Sample},
+        {'h',Tile.Cache}
+    };
+    // Start is called before the first frame update
+    void Start()
+    {
+        Debug.Log(levelText.text);
+        string levelString = levelText.text;
+        level = LoadLevelFromString(levelString);
+        CreateLevel(level);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    public Tile[,] LoadLevelFromString(string levelString){
+        string[] lines = levelString.Split('\n');
+        int width = lines[0].Length-3;
+        int height = lines.Length-2;
+        Tile[,] _level = new Tile[width,height];
+        //checks for acceptable level
+        bool hasRover = false;
+        bool hasMultipleRover = false;
+        bool hasCache = false;
+        bool hasMultipleCache = false;
+        bool hasSample = false;
+
+        for(int y = 0; y<height;y++){
+            for(int x = 0; x<width;x++){
+                char c = lines[y+1][x+1];
+                Tile tile = char2Tile[c];
+                bool acceptable = true;
+                switch(tile){
+                    case Tile.Rover:
+                        if(hasRover){
+                            hasMultipleRover = true;
+                            acceptable = false;
+                        }else{
+                            hasRover = true;
+                        }
+                        break;
+                    case Tile.Cache:
+                        if(hasCache){
+                            hasMultipleCache = true;
+                            acceptable = false;
+                        }else{
+                            hasCache = true;
+                        }
+                        break;
+                    case Tile.Sample:
+                        hasSample = true;
+                        break;
+                }
+                if(acceptable){
+                    _level[x,y] = tile;
+                }
+
+                //Debug.Log(lines[x+1][y+1]);
+            }
+        }
+        if(hasRover == false)
+            Debug.Log("ERROR: No Rover");
+        if(hasMultipleRover)
+            Debug.Log("ERROR: Multiple Rovers");
+        if(hasCache == false)
+            Debug.Log("ERROR: No Cache");
+        if(hasMultipleCache)
+            Debug.Log("ERROR: Multiple Caches");
+        if(hasSample == false)
+            Debug.Log("ERROR: No Sample");
+        return _level;
+        //Debug.Log(_level[4,4]);
+        //Debug.Log(lines[1][1]);
+    }
+    public void CreateLevel(Tile[,] _level){
+        for(int x = 0;x<_level.GetLength(0);x++){
+            for(int y = 0; y<_level.GetLength(1);y++){
+                Vector2Int pos = new Vector2Int(x,level.GetLength(1)-y)+Services.GameController.offset;
+                switch(_level[x,y]){
+                    case Tile.Obstacle:
+                        Services.ObstacleManager.CreateObstacle(pos);
+                        break;
+                    case Tile.Rover:
+                        Services.Rover.SetPosition(pos);
+                        break;
+                    case Tile.Cache:
+                        Services.Cache.SetPosition(pos);
+                        break;
+                    case Tile.Sample:
+                        Services.SampleManager.CreateSample(pos);
+                        break;
+                }
+            }
+        }
+        Services.ObstacleManager.border = new Vector2Int(level.GetLength(0),level.GetLength(1));
+    }
+}

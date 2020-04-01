@@ -24,25 +24,13 @@ public class Rover : MonoBehaviour
     float elapsedTime;
 
     public TextMeshPro text;
-    public Transform obstaclesParent;
-    List<Vector2Int> obstacles;
     //sample stuff
 
     public bool carryingSample;
     public Sample sampleCarried;
-    public Transform samplesParent;
-    List<Sample> samples;
 
     void Start(){
         direction = 0;
-        obstacles = new List<Vector2Int>();
-        samples = new List<Sample>();
-        foreach(Transform child in obstaclesParent){
-            obstacles.Add(new Vector2Int((int)child.transform.position.x,(int)child.transform.position.y));
-        }
-        foreach(Transform child in samplesParent){
-            samples.Add(child.GetComponent<Sample>());
-        }
     }
     void Update()
     {
@@ -119,6 +107,10 @@ public class Rover : MonoBehaviour
     public void SendCommands(){
         doMoves = true;
         numMoves = moves.Count;
+        if(numMoves == 0){
+            Debug.Log("ERROR: No moves input");
+            return;
+        }
         elapsedTime = 0;
         //fill commands here
         var move = moves[0];
@@ -127,6 +119,9 @@ public class Rover : MonoBehaviour
         }
         taskManager.Do(moves[0]);
         moves.Clear();
+    }
+    public void SetPosition(Vector2Int pos){
+        transform.position = (Vector3Int)pos;
     }
     public class RoverCommand : Task
     {
@@ -172,16 +167,12 @@ public class Rover : MonoBehaviour
             target.x = Mathf.RoundToInt(target.x);
             target.y = Mathf.RoundToInt(target.y);
             Vector2Int targetExact = new Vector2Int((int)target.x,(int)target.y);
-            if(rover.obstacles.Contains(targetExact)){
+            if(Services.ObstacleManager.IsObstacleHere(targetExact)){
                 obstacleHere = true;
                 //SetStatus(TaskStatus.Success);
             }
-            foreach(Sample sample in rover.samples){
-                if(sample != rover.sampleCarried){
-                    if((Vector2)sample.transform.position == targetExact){
-                        obstacleHere = true;
-                    }
-                }
+            if(Services.SampleManager.IsSampleHere(targetExact)){
+                obstacleHere = true;
             }
         }
         internal override void Update(){
@@ -247,26 +238,23 @@ public class Rover : MonoBehaviour
         protected override void Initialize(){
             duration *= 0.1f;
             foundSample = false;
-            Vector2 pickUpPosition = (Vector2)rover.transform.position+rover.directions[rover.direction];
+            Vector2Int pickUpPosition = new Vector2Int((int)rover.transform.position.x,(int)rover.transform.position.y) + rover.directions[rover.direction];
             if(rover.carryingSample){
                 return;
             }
-            foreach(Sample sample in rover.samples){
-                if(Vector2.Distance(sample.transform.position,pickUpPosition) <= 0.5){
-                    sampleToPickUp = sample;
-                    foundSample = true;
-                    break;
-                }
+            if(Services.SampleManager.IsSampleHere(pickUpPosition)){
+                sampleToPickUp = Services.SampleManager.GetSampleHere(pickUpPosition);
+                foundSample = true;
             }
             if(foundSample){
-                start = sampleToPickUp.transform.position;
+                start = sampleToPickUp.pos;
                 target = rover.transform.position;
             }
         }
         internal override void Update(){
             base.Update();
             if(foundSample){
-                sampleToPickUp.transform.position = Vector2.Lerp(start,target,elapsedTime/duration);
+                sampleToPickUp.obj.transform.position = Vector2.Lerp(start,target,elapsedTime/duration);
             }else{
                 elapsedTime = duration;
             }
@@ -276,8 +264,7 @@ public class Rover : MonoBehaviour
             if(foundSample){
                 rover.carryingSample = true;
                 rover.sampleCarried = sampleToPickUp;
-                sampleToPickUp.transform.parent = rover.transform;
-                sampleToPickUp.transform.localPosition = Vector2.zero;
+                rover.sampleCarried.PickUp();
             }
         }
     }
@@ -299,7 +286,7 @@ public class Rover : MonoBehaviour
                 return;
             }
             dropPosition = new Vector2Int((int)rover.transform.position.x,(int)rover.transform.position.y)+rover.directions[rover.direction];
-            if(!rover.obstacles.Contains(dropPosition)){
+            if(!Services.ObstacleManager.IsObstacleHere(dropPosition)){
                 canDrop = true;
             }
             if(canDrop){
@@ -310,7 +297,7 @@ public class Rover : MonoBehaviour
         internal override void Update(){
             base.Update();
             if(canDrop && rover.sampleCarried != null){
-                rover.sampleCarried.transform.position = Vector2.Lerp(start,target,elapsedTime/duration);
+                rover.sampleCarried.obj.transform.position = Vector2.Lerp(start,target,elapsedTime/duration);
             }else{
                 elapsedTime = duration;
             }
@@ -320,155 +307,11 @@ public class Rover : MonoBehaviour
             if(canDrop){
                 Debug.Log("DROPPED");
                 rover.carryingSample = false;
-                rover.sampleCarried.transform.position = (Vector2)dropPosition;
-                rover.sampleCarried.transform.parent = rover.samplesParent;
+                rover.sampleCarried.Drop(dropPosition);
+
                 rover.sampleCarried = null;
             }
         }
     }
-    
-    /*public class MoveRoverT : RoverCommand
-    {
-        private float duration = 1.0f;
-        private Rover rover;
-        private float elapsedTime = 0;
-        public Vector2 direction;
-        Vector2 target;
-        Vector2 start;
-        bool obstacleHere;
-        //pick up stuff
-        /*bool pickUpCommand;
-        bool foundSample;
-        Sample sampleToPickUp;
-        //end pick up stuff
-        //put down stuff
-        bool putDownCommand;
-        bool canPutDown;
-        Vector2Int putDownDirection;*/
-        //end put down stuff
-        /*public MoveRover(Rover rover, Vector2 direction)
-        {
-            this.direction = direction;
-            this.rover = rover;
-            duration = 0.25f;
-            elapsedTime = 0f;
-            if(direction == Vector2.up*2){
-                Debug.Log("Pickup");
-                pickUpCommand = true;
-            }
-            if(direction == Vector2.up*-2){
-                Debug.Log("PutDown");
-                pickUpCommand = true;
-                putDownCommand = true;
-            }
-        }
-        protected override void Initialize(){
-            if(pickUpCommand){
-                if(putDownCommand){
-                    if(rover.sampleCarried == null){
-                        canPutDown = false;
-                        return;
-                    }
-                    canPutDown = true;
-                    putDownDirection = Vector2Int.down;
-                    //here is where we would figure out if you can put it down, will figure out later
-                }else{
-                    if(rover.sampleCarried != null){
-                        return;
-                    }
-                    foreach(Sample sample in rover.samples){
-                        Debug.Log(sample);
-                        Debug.Log(rover);
-                        if(Vector2.Distance(sample.transform.position,rover.transform.position) <= 1){
-                            sampleToPickUp = sample;
-                            foundSample = true;
-                            break;
-                        }
-                    }
-                }
-                
-            }else{
-                if(direction == Vector2.up){
-                    rover.lastDirection = 0;
-                }
-                if(direction == Vector2.right){
-                    rover.lastDirection = 1;
-                }
-                if(direction == Vector2.down){
-                    rover.lastDirection = 2;
-                }
-                if(direction == Vector2.left){
-                    rover.lastDirection = 3;
-                }
-                start = (Vector2)rover.transform.position;
-                target = (Vector2)rover.transform.position+direction;
-                target.x = Mathf.RoundToInt(target.x);
-                target.y = Mathf.RoundToInt(target.y);
-                Vector2Int targetExact = new Vector2Int((int)target.x,(int)target.y);
-                if(rover.obstacles.Contains(targetExact)){
-                    obstacleHere = true;
-                    //SetStatus(TaskStatus.Success);
-                }
-                foreach(Sample sample in rover.samples){
-                    if(sample != rover.sampleCarried){
-                        if((Vector2)sample.transform.position == targetExact){
-                            obstacleHere = true;
-                        }
-                    }
-                }
-            }
-            
-        }
-        internal override void Update(){
-            elapsedTime += Time.deltaTime;
-            if(elapsedTime >= duration){
-                if(pickUpCommand){
-                    if(putDownCommand){
-                        if(canPutDown){
-                            rover.sampleCarried.transform.position = (Vector2)rover.transform.position + putDownDirection;
-                            rover.sampleCarried.transform.parent = rover.samplesParent;
-                            rover.sampleCarried = null;
-                        }
-                    }else{
-                        if(foundSample){
-                            rover.sampleCarried = sampleToPickUp;
-                            sampleToPickUp.transform.parent = rover.transform;
-                            sampleToPickUp.transform.localPosition = Vector2.zero;
-                        }
-                    }
-                    
-                   
-                }else{
-                    if(obstacleHere){
-                        rover.transform.position = start;
-                    }else{
-                        rover.transform.position = target;
-                    }
-                }
-                
-                SetStatus(TaskStatus.Success);
-                return;
-            }
-            if(pickUpCommand){
-
-            }else{
-                if(obstacleHere){
-                    if(elapsedTime < duration*0.5f){
-                        rover.transform.position = Vector2.Lerp(start,target,elapsedTime/duration);
-                    }else{
-                        rover.transform.position = Vector2.Lerp(target,start,elapsedTime/duration);
-                    }
-                }else{
-                    rover.transform.position = Vector2.Lerp(start,target,elapsedTime/duration);
-                }
-            }
-            
-            
-        }
-        protected override void OnSuccess(){
-            Debug.Log("SUCCESS");
-            //rover.transform.position = target;
-        }
-    }*/
 
 }
