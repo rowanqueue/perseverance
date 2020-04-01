@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -39,41 +40,68 @@ public class ButtonManager : MonoBehaviour
     public void OnForwardButtonPress()
     {
         thisRover.EnterCommand(Command.Forward);
-        Instantiate(UpArrowPrefab).transform.SetParent(commandBox.transform);
+        var newUpArrowIcon = Instantiate(UpArrowPrefab);
+        newUpArrowIcon.transform.SetParent(commandBox.transform);
+        commandList.Add(newUpArrowIcon);
+        Debug.Log("The length of command list is " + commandList.Count);
     }
 
     public void OnBackwardButtonPress()
     {
         thisRover.EnterCommand(Command.Backward);
-        Instantiate(DownArrowPrefab).transform.SetParent(commandBox.transform);
+        var newDownArrowIcon = Instantiate(DownArrowPrefab);
+        newDownArrowIcon.transform.SetParent(commandBox.transform);
+        commandList.Add(newDownArrowIcon);
+        Debug.Log("The length of command list is " + commandList.Count);
+
     }
 
     public void OnRightButtonPress()
     {
         thisRover.EnterCommand(Command.TurnRight);
-        Instantiate(LeftArrowPrefab).transform.SetParent(commandBox.transform);
+        var newRightArrowIcon = Instantiate(RightArrowPrefab);
+        newRightArrowIcon.transform.SetParent(commandBox.transform);
+        commandList.Add(newRightArrowIcon);
     }
 
     public void OnLeftButtonPress()
     {
         thisRover.EnterCommand(Command.TurnLeft);
-        Instantiate(RightArrowPrefab).transform.SetParent(commandBox.transform);
+        var newLeftArrowIcon = Instantiate(LeftArrowPrefab);
+        newLeftArrowIcon.transform.SetParent(commandBox.transform);
+        commandList.Add(newLeftArrowIcon);
     }
 
     public void OnPutdownButtonPress()
     {
         thisRover.EnterCommand(Command.PutDown);
-        Instantiate(DropoffPrefab).transform.SetParent(commandBox.transform);
+        var newDropoffIcon = Instantiate(DropoffPrefab);
+        newDropoffIcon.transform.SetParent(commandBox.transform);
+        commandList.Add(newDropoffIcon);
     }
 
     public void onPickupButtonPress()
     {
         thisRover.EnterCommand(Command.PickUp);
-        Instantiate(PickupPrefab).transform.SetParent(commandBox.transform);
+        var newPickupIcon = Instantiate(PickupPrefab);
+        newPickupIcon.transform.SetParent(commandBox.transform);
+        commandList.Add(newPickupIcon);
     }
 
     public void onSendButtonPress()
     {
         thisRover.EnterCommand(Command.Send);
+    }
+
+    public void OnDeleteButtonPress()
+    {
+        if (commandList.Count == 0)
+        {
+            //if there is nothing in the list, it will stop running the function right here
+            return;
+        }
+        
+        Destroy(commandList[commandList.Count - 1].gameObject);
+        commandList.RemoveAt(commandList.Count-1);
     }
 }
