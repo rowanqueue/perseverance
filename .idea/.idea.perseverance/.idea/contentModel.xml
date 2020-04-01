@@ -21,6 +21,9 @@
             <e p="readme.txt" t="Include" />
           </e>
         </e>
+        <e p="Levels" t="Include">
+          <e p="level0.txt" t="Include" />
+        </e>
         <e p="Modern UI Pack" t="Include">
           <e p="Editor" t="Include">
             <e p="InitMUIP.cs" t="Include" />
@@ -59,9 +62,15 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="ButtonManager.cs" t="Include" />
+          <e p="Cache.cs" t="Include" />
+          <e p="GameController.cs" t="Include" />
+          <e p="LevelLoader.cs" t="Include" />
           <e p="Obstacle.cs" t="Include" />
+          <e p="ObstacleManager.cs" t="Include" />
           <e p="Rover.cs" t="Include" />
           <e p="Sample.cs" t="Include" />
+          <e p="SampleManager.cs" t="Include" />
+          <e p="Services.cs" t="Include" />
           <e p="Task.cs" t="Include" />
           <e p="TaskManager.cs" t="Include" />
         </e>
