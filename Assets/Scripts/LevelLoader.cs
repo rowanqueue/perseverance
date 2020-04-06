@@ -31,13 +31,17 @@ public class LevelLoader : MonoBehaviour
         Debug.Log(levelText.text);
         string levelString = levelText.text;
         level = LoadLevelFromString(levelString);
-        CreateLevel(level);
+        LoadLevel(level);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    public void DeleteLevel(){
+        Services.SampleManager.ClearSamples();
+        Services.ObstacleManager.ClearObstacles();
     }
     public Tile[,] LoadLevelFromString(string levelString){
         string[] lines = levelString.Split('\n');
@@ -98,10 +102,15 @@ public class LevelLoader : MonoBehaviour
         //Debug.Log(_level[4,4]);
         //Debug.Log(lines[1][1]);
     }
-    public void CreateLevel(Tile[,] _level){
+    public void LoadLevel(string levelString){
+        Tile[,] _level = LoadLevelFromString(levelString);
+        LoadLevel(_level);
+    }
+    public void LoadLevel(Tile[,] _level){
+        DeleteLevel();
         for(int x = 0;x<_level.GetLength(0);x++){
             for(int y = 0; y<_level.GetLength(1);y++){
-                Vector2Int pos = new Vector2Int(x,level.GetLength(1)-y)+Services.GameController.offset;
+                Vector2Int pos = new Vector2Int(x,_level.GetLength(1)-y)+Services.GameController.offset;
                 switch(_level[x,y]){
                     case Tile.Obstacle:
                         Services.ObstacleManager.CreateObstacle(pos);
@@ -118,6 +127,6 @@ public class LevelLoader : MonoBehaviour
                 }
             }
         }
-        Services.ObstacleManager.border = new Vector2Int(level.GetLength(0),level.GetLength(1));
+        Services.ObstacleManager.border = new Vector2Int(_level.GetLength(0),_level.GetLength(1));
     }
 }
