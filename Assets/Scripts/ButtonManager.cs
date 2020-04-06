@@ -24,6 +24,10 @@ public class ButtonManager : MonoBehaviour
 
     public Image DropoffPrefab;
 
+    public Image factHolderImage;
+
+    public Image factHolderTitle;
+
     private List<Image> commandList;
     // Start is called before the first frame update
     void Start()
@@ -103,5 +107,11 @@ public class ButtonManager : MonoBehaviour
         
         Destroy(commandList[commandList.Count - 1].gameObject);
         commandList.RemoveAt(commandList.Count-1);
+    }
+
+    public void onFactBoxButtonPress()
+    {
+        factHolderImage.gameObject.SetActive(false);
+        factHolderTitle.gameObject.SetActive(false);
     }
 }
