@@ -34,5 +34,7 @@ public class GameController : MonoBehaviour
 
         Services.Rover = rover;
         Services.Cache = new Cache(Vector2Int.zero);
+        
+        FactManager.instance.openFactBox();
     }
 }

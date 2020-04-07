@@ -23,6 +23,7 @@
         </e>
         <e p="Levels" t="Include">
           <e p="level0.txt" t="Include" />
+          <e p="level1.txt" t="Include" />
         </e>
         <e p="Modern UI Pack" t="Include">
           <e p="Editor" t="Include">
@@ -63,6 +64,7 @@
         <e p="Scripts" t="Include">
           <e p="ButtonManager.cs" t="Include" />
           <e p="Cache.cs" t="Include" />
+          <e p="FactManager.cs" t="Include" />
           <e p="GameController.cs" t="Include" />
           <e p="LevelLoader.cs" t="Include" />
           <e p="Obstacle.cs" t="Include" />
