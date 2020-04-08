@@ -24,6 +24,7 @@
         <e p="Levels" t="Include">
           <e p="level0.txt" t="Include" />
           <e p="level1.txt" t="Include" />
+          <e p="level2.txt" t="Include" />
         </e>
         <e p="Modern UI Pack" t="Include">
           <e p="Editor" t="Include">

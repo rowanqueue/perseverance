@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
@@ -7,6 +8,8 @@ using Debug = UnityEngine.Debug;
 
 public class ButtonManager : MonoBehaviour
 {
+
+    public static ButtonManager instance;
 
     public Rover thisRover;
 
@@ -24,13 +27,22 @@ public class ButtonManager : MonoBehaviour
 
     public Image DropoffPrefab;
 
+    public Image BeamMeUpButton;
 
 
-    private List<Image> commandList;
+
+    [HideInInspector]public List<Image> commandList;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {    
         commandList = new List<Image>();
+        BeamMeUpButton.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -92,7 +104,7 @@ public class ButtonManager : MonoBehaviour
 
     public void onSendButtonPress()
     {
-        thisRover.EnterCommand(Command.Send);
+        BeamMeUpButton.gameObject.SetActive(true);
     }
 
     public void OnDeleteButtonPress()
@@ -105,6 +117,12 @@ public class ButtonManager : MonoBehaviour
         
         Destroy(commandList[commandList.Count - 1].gameObject);
         commandList.RemoveAt(commandList.Count-1);
+    }
+
+    public void OnBeamButtonPress()
+    {
+        thisRover.EnterCommand(Command.Send);
+        BeamMeUpButton.gameObject.SetActive(false);
     }
     
 }

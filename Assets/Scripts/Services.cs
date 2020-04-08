@@ -6,4 +6,5 @@ public static class Services
     public static GameController GameController;
     public static ObstacleManager ObstacleManager;
     public static SampleManager SampleManager;
+    public static FactManager FactManager;
 }

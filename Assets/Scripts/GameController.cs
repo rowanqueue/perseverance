@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,11 @@ public class GameController : MonoBehaviour
         InitializeServices();
     }
 
+    private void Start()
+    {
+        FactManager.instance.openFactBox();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -35,6 +41,5 @@ public class GameController : MonoBehaviour
         Services.Rover = rover;
         Services.Cache = new Cache(Vector2Int.zero);
         
-        FactManager.instance.openFactBox();
     }
 }

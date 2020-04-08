@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+
 public enum Command : byte{
     Forward,
     Backward,
@@ -41,7 +43,12 @@ public class Rover : MonoBehaviour
         if(doMoves){
             elapsedTime+=Time.deltaTime;
             //taskManager.Update();
-            if(elapsedTime >= numMoves*0.25f){
+            if(elapsedTime >= numMoves){
+                foreach (Image command in ButtonManager.instance.commandList)
+                {
+                    Destroy(command.gameObject);
+                }
+                ButtonManager.instance.commandList.Clear();
                 doMoves = false;
                 text.text = "";
             }
