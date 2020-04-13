@@ -67,6 +67,7 @@
           <e p="Cache.cs" t="Include" />
           <e p="FactManager.cs" t="Include" />
           <e p="GameController.cs" t="Include" />
+          <e p="IntroManager.cs" t="Include" />
           <e p="LevelLoader.cs" t="Include" />
           <e p="Obstacle.cs" t="Include" />
           <e p="ObstacleManager.cs" t="Include" />
