@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class IntroManager : MonoBehaviour
@@ -35,6 +36,10 @@ public class IntroManager : MonoBehaviour
         playButtonText = playButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
         tutorialText = tutorialBox.gameObject.GetComponentInChildren<TextMeshProUGUI>();
         continueButton = tutorialBox.gameObject.GetComponentInChildren<Button>();
+        /*continueButton.image.color = clearButtonColor;
+        tutorialText.color = clearBlack;
+        tutorialBox.color = clearWhite;
+        tutorialBoxOutline.color = clearTutorialBoxOutline;*/
         tutorialBox.gameObject.SetActive(false);
         tutorialBoxOutline.gameObject.SetActive(false);
         controlRoomPicture.DOFade(0f, .1f);
@@ -70,6 +75,7 @@ public class IntroManager : MonoBehaviour
         tutorialBoxOutline.DOFade(1f, 2f);
         tutorialText.text = tutorialStringArray[StringArrayIndex];
         tutorialText.DOFade(1f, 2f);
+        continueButton.image.DOFade(1f, 2f);
     }
 
     public void continueButtonClick()
@@ -81,6 +87,13 @@ public class IntroManager : MonoBehaviour
     void loadNewTutorialText()
     {
         StringArrayIndex++;
-        tutorialText.text = tutorialStringArray[StringArrayIndex];
+        if (StringArrayIndex == tutorialStringArray.Length)
+        {
+            SceneManager.LoadScene(1);
+        }
+        else
+        {
+            tutorialText.text = tutorialStringArray[StringArrayIndex];
+        }
     }
 }
