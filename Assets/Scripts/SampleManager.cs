@@ -27,7 +27,8 @@ public class SampleManager
     }
     public bool IsSampleHere(Vector2Int pos){
         foreach(Sample samp in samples){
-            if(samp.pos == pos){
+            if(samp.beingCarried == false && samp.pos == pos){
+                Debug.Log(pos);
                 return true;
             }
         }
