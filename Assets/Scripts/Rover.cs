@@ -37,6 +37,9 @@ public class Rover : MonoBehaviour
     void Update()
     {
         //set direction
+        if(sampleCarried != null){
+            sampleCarried.pos = new Vector2Int((int)transform.position.x,(int)transform.position.y);
+        }
         //transform.GetChild(0).localEulerAngles = new Vector3(0,0,angles[direction]);
         waitingForInput = !doMoves;
         taskManager.Update();
