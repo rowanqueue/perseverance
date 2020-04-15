@@ -1,0 +1,4 @@
+Congratulations, scientist! You've been selected to program NASA's new Mars rover, Perseverance.
+Welcome to mission control at the Johnson Space Center. Here, you'll beam instructions from Earth to Mars.
+On average, the two planets are almost 140,000,000 miles apart!
+That's why it takes 20 minutes for instructions to reach the rover from mission control.

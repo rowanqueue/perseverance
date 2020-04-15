@@ -62,6 +62,9 @@
             <e p="UI HQ Blur.shader" t="Include" />
           </e>
         </e>
+        <e p="Resources" t="Include">
+          <e p="tutorialLines.txt" t="Include" />
+        </e>
         <e p="Scripts" t="Include">
           <e p="ButtonManager.cs" t="Include" />
           <e p="Cache.cs" t="Include" />
