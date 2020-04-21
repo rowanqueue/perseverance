@@ -28,6 +28,19 @@ public class IntroManager : MonoBehaviour
     private TextAsset tutorialLines;
     private string[] tutorialStringArray;
     private int StringArrayIndex = 0;
+    
+    //tutorial sprites
+    public SpriteRenderer martianSurface;
+    public SpriteRenderer grid;
+    public SpriteRenderer rover;
+    public Rigidbody2D roverArrow;
+    public Rigidbody2D directionalArrow;
+    public Rigidbody2D sendArrow;
+    
+    //rover UI
+    public Button[] fadeableDirectionalIconArray;
+    public Button[] fadeablePickupDropoffIconArray;
+    public Image[] fadeableImageArray;
 
     // Start is called before the first frame update
     void Start()
@@ -87,6 +100,40 @@ public class IntroManager : MonoBehaviour
     void loadNewTutorialText()
     {
         StringArrayIndex++;
+        if (StringArrayIndex == 5)
+        {
+            controlRoomPicture.DOFade(0f, 1f).OnComplete(() => martianSurface.DOFade(1f, 1f));
+            grid.DOFade(1f, 1f).SetDelay(1f);
+            rover.DOFade(1f, 1f);
+            roverArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f);
+            roverArrow.transform.DOMove(new Vector2(0.45f,0.232f), 1).SetEase(Ease.InOutQuad).SetLoops(8);
+        }
+        
+        if (StringArrayIndex == 6)
+        {
+            roverArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(0f, 1f)
+                .OnComplete(() => roverArrow.gameObject.SetActive(false));
+            foreach (var butt in fadeableDirectionalIconArray)
+            {
+                butt.gameObject.SetActive(true);
+                butt.image.DOFade(1f, 1f);
+            }
+
+            foreach (var UIBox in fadeableImageArray)
+            {
+                UIBox.gameObject.SetActive(true);
+                UIBox.DOFade(.8f, 1f);
+            }
+            
+            directionalArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f);
+            directionalArrow.transform.DOMove(new Vector2(-0.8462309f, -1.95f), 1).SetEase(Ease.InOutQuad).SetLoops(4)
+                .OnComplete(() =>
+                    sendArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f))
+                .OnComplete(() =>
+                    sendArrow.transform.DOMove(new Vector2(-0.51f, 1.3f), 1).SetEase(Ease.InOutQuad).SetLoops(4)
+                );
+
+        }
         if (StringArrayIndex == tutorialStringArray.Length)
         {
             SceneManager.LoadScene(1);

@@ -1,4 +1,8 @@
-Congratulations, scientist! You've been selected to program NASA's new Mars rover, Perseverance.
+Congratulations, scientist! You've been selected to create the geological sample program for NASA's new Mars rover, Perseverance.
 Welcome to mission control at the Johnson Space Center. Here, you'll beam instructions from Earth to Mars.
-On average, the two planets are almost 140,000,000 miles apart!
-That's why it takes 20 minutes for instructions to reach the rover from mission control.
+One of Perseverance's top jobs is taking geological samples. The rover has drills and lasers - think of them like hands! - that it can use to pick up objects.
+Once Perseverance takes those samples, it stores them in caches. On future missions, we'll bring the samples back and analyze them here.
+It's your job to tell Perseverance where to go each day. Think you can handle that?
+Check out this map of the Jezero Crater. See that robot? That's the rover!
+Let's experiment. Press the up, down, turn right, and turn left buttons in any order you want. Then press 'send.'
+
