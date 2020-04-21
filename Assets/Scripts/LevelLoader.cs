@@ -11,12 +11,7 @@ public enum Tile : byte{
 }
 public class LevelLoader : MonoBehaviour
 {
-    public TextAsset levelText;
-
-    //prefab stuff
-
-
-    public Tile[,] level;
+    public TextAsset[] levelTexts;
     Dictionary<char,Tile> char2Tile = new Dictionary<char, Tile>{
         {'.',Tile.None},
         {' ',Tile.None},
@@ -24,21 +19,7 @@ public class LevelLoader : MonoBehaviour
         {'#',Tile.Obstacle},
         {'*',Tile.Sample},
         {'h',Tile.Cache}
-    };
-    // Start is called before the first frame update
-    void Start()
-    {
-        Debug.Log(levelText.text);
-        string levelString = levelText.text;
-        level = LoadLevelFromString(levelString);
-        LoadLevel(level);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    };  
     public void DeleteLevel(){
         Services.SampleManager.ClearSamples();
         Services.ObstacleManager.ClearObstacles();
@@ -110,7 +91,7 @@ public class LevelLoader : MonoBehaviour
         DeleteLevel();
         for(int x = 0;x<_level.GetLength(0);x++){
             for(int y = 0; y<_level.GetLength(1);y++){
-                Vector2Int pos = new Vector2Int(x,_level.GetLength(1)-y)+Services.GameController.offset;
+                Vector2Int pos = new Vector2Int(x,_level.GetLength(1)-y-1)+Services.GameController.offset;
                 switch(_level[x,y]){
                     case Tile.Obstacle:
                         Services.ObstacleManager.CreateObstacle(pos);
@@ -128,5 +109,8 @@ public class LevelLoader : MonoBehaviour
             }
         }
         Services.ObstacleManager.border = new Vector2Int(_level.GetLength(0),_level.GetLength(1));
+    }
+    public void LoadLevel(int levelNum){
+        LoadLevel(levelTexts[levelNum].text);
     }
 }

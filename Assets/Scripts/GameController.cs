@@ -8,6 +8,8 @@ public class GameController : MonoBehaviour
 {
     //settings
     public Vector2Int offset;
+    public int currentLevel;
+    public LevelLoader levelLoader;
     //stuff
     public Rover rover;
     public Transform obstaclesParent;
@@ -19,11 +21,13 @@ public class GameController : MonoBehaviour
     void Awake()
     {
         InitializeServices();
+        Services.EventManager.Register<PlacedOnCache>(OnCachePlacement);
     }
 
     private void Start()
     {
         FactManager.instance.openFactBox();
+        levelLoader.LoadLevel(currentLevel);
     }
 
     // Update is called once per frame
@@ -44,6 +48,13 @@ public class GameController : MonoBehaviour
 
         Services.Rover = rover;
         Services.Cache = new Cache(Vector2Int.zero);
+
+        Services.EventManager = new EventManager();
         
+    }
+
+    void OnCachePlacement(Eevent e){
+        currentLevel++;
+        levelLoader.LoadLevel(currentLevel);
     }
 }

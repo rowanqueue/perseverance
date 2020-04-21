@@ -18,21 +18,24 @@ public class Rover : MonoBehaviour
     public bool waitingForInput;
     public int numMoves;
     public int direction;
+    public List<Sprite> directionalSprites;
     List<float> angles = new List<float>{0,-90,-180,-270};
     List<Vector2Int> directions = new List<Vector2Int>{Vector2Int.up,Vector2Int.right,Vector2Int.down,Vector2Int.left};
     public TaskManager taskManager = new TaskManager();
     public List<RoverCommand> moves = new List<RoverCommand>();
     bool doMoves = false;
     float elapsedTime;
+    float timeForCommands;
 
     public TextMeshPro text;
     //sample stuff
 
     public bool carryingSample;
     public Sample sampleCarried;
+    SpriteRenderer spriteRenderer;
 
     void Start(){
-        direction = 0;
+        spriteRenderer  = GetComponentInChildren<SpriteRenderer>();
     }
     void Update()
     {
@@ -40,13 +43,14 @@ public class Rover : MonoBehaviour
         if(sampleCarried != null){
             sampleCarried.pos = new Vector2Int((int)transform.position.x,(int)transform.position.y);
         }
+        spriteRenderer.sprite = directionalSprites[direction];
         //transform.GetChild(0).localEulerAngles = new Vector3(0,0,angles[direction]);
         waitingForInput = !doMoves;
         taskManager.Update();
         if(doMoves){
             elapsedTime+=Time.deltaTime;
             //taskManager.Update();
-            if(elapsedTime >= numMoves){
+            if(elapsedTime >= timeForCommands){
                 foreach (Image command in ButtonManager.instance.commandList)
                 {
                     Destroy(command.gameObject);
@@ -128,6 +132,10 @@ public class Rover : MonoBehaviour
             moves[i-1].Then(moves[i]);
         }
         taskManager.Do(moves[0]);
+        timeForCommands = 0;
+        for(int i = 0; i < numMoves;i++){
+            timeForCommands += moves[i].duration;
+        }
         moves.Clear();
     }
     public void SetPosition(Vector2Int pos){
@@ -206,6 +214,7 @@ public class Rover : MonoBehaviour
         public TurnRover(Rover rover, bool right) : base(rover){
             this.rover = rover;
             this.right = right;
+            duration = 0.25f;
         }
         protected override void Initialize(){
             bool wrappedAround = false;
@@ -231,9 +240,9 @@ public class Rover : MonoBehaviour
         }
         internal override void Update(){
             base.Update();
-            rover.transform.GetChild(0).eulerAngles 
+            /*rover.transform.GetChild(0).eulerAngles 
             = Vector3.Lerp(new Vector3(0,0,startAngle),
-                           new Vector3(0,0,targetAngle),elapsedTime/duration);
+                           new Vector3(0,0,targetAngle),elapsedTime/duration);*/
         }
     }
     public class PickUpSample : RoverCommand
