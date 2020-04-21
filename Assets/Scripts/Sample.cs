@@ -22,6 +22,10 @@ public class Sample
         pos = dropPosition;
         obj.transform.position = (Vector3Int)pos;
         obj.transform.parent = Services.SampleManager.parent;
+        if(Services.Cache.pos == pos){
+            Debug.Log("SUCCEED");
+            Services.EventManager.Fire(new PlacedOnCache());
+        }
     }
 
     public void DestroySelf(){
