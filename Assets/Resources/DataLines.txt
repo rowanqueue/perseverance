@@ -1,0 +1,5 @@
+Data received in 20 minutes . . .
+Data received in 15 minutes . . .
+Data received in 10 minutes . . .
+Data received in 5 minutes . . . 
+Data received!

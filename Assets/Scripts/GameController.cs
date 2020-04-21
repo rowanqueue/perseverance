@@ -26,7 +26,11 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        FactManager.instance.openFactBox();
+        //Elizabeth's note: 0 is the tutorial scene, so no facts needed. If the scene index is not 0, pop open the fact box.
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            FactManager.instance.openFactBox();
+        }
         levelLoader.LoadLevel(currentLevel);
     }
 

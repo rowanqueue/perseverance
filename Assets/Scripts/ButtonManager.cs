@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
@@ -27,9 +28,17 @@ public class ButtonManager : MonoBehaviour
 
     public Image DropoffPrefab;
 
-    public Image BeamMeUpButton;
+    public Image SendingToRoverImage;
 
+    private TextAsset timePassingFile;
 
+    private TextMeshProUGUI timePassingText;
+
+    private float timer = 0;
+
+    private bool beamingUp = false;
+
+    private string[] timePassingArray;
 
     [HideInInspector]public List<Image> commandList;
 
@@ -40,15 +49,63 @@ public class ButtonManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {    
+    {
         commandList = new List<Image>();
-        BeamMeUpButton.gameObject.SetActive(false);
+        timePassingText = SendingToRoverImage.gameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        timePassingText.text = "";
+        SendingToRoverImage.gameObject.SetActive(false);
+        timePassingFile = Resources.Load<TextAsset>("DataLines");
+        timePassingArray = timePassingFile.text.Split('\n');
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (beamingUp)
+        {
+            SendingToRoverImage.gameObject.SetActive(true);
+            timePassingText.text = timePassingArray[0];
+            timePassingText.gameObject.SetActive(false);
+            timer += Time.deltaTime;
+            if (timer >= 1f)
+            {
+                timePassingText.gameObject.SetActive(true);
+            }
+            if (timer >= 3.5f)
+            {
+                timePassingText.text = timePassingArray[1];
+            }
+
+            if (timer >= 5f)
+            {
+                timePassingText.text = timePassingArray[2];
+            }
+
+            if (timer >= 6.5f)
+            {
+                timePassingText.text = timePassingArray[3];
+            }
+
+            if (timer >= 8f)
+            {
+                timePassingText.text = timePassingArray[4];
+            }
+
+            if (timer >= 9.5f)
+            {
+                timePassingText.text = "";
+                SendingToRoverImage.gameObject.SetActive(false);
+            }
+
+            if (timer >= 10.5f)
+            {
+                Services.Rover.SendCommands();
+                beamingUp = false;
+                timer = 0;
+            }
+        }
+
     }
 
     public void OnForwardButtonPress()
@@ -104,7 +161,9 @@ public class ButtonManager : MonoBehaviour
 
     public void onSendButtonPress()
     {
-        BeamMeUpButton.gameObject.SetActive(true);
+        SendingToRoverImage.gameObject.SetActive(true);
+        beamingUp = true;
+
     }
 
     public void OnDeleteButtonPress()
@@ -119,10 +178,6 @@ public class ButtonManager : MonoBehaviour
         commandList.RemoveAt(commandList.Count-1);
     }
 
-    public void OnBeamButtonPress()
-    {
-        thisRover.EnterCommand(Command.Send);
-        BeamMeUpButton.gameObject.SetActive(false);
-    }
+    
     
 }

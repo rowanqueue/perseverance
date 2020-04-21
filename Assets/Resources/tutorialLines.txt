@@ -5,4 +5,5 @@ Once Perseverance takes those samples, it stores them in caches. On future missi
 It's your job to tell Perseverance where to go each day. Think you can handle that?
 Check out this map of the Jezero Crater. See that robot? That's the rover!
 Let's experiment. Press the up, down, turn right, and turn left buttons in any order you want. Then press 'send.'
-
+Good work!
+Now take a look at the sample icon. Move forward, then use the pickup button to collect the sample.

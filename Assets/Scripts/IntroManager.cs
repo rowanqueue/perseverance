@@ -33,9 +33,13 @@ public class IntroManager : MonoBehaviour
     public SpriteRenderer martianSurface;
     public SpriteRenderer grid;
     public SpriteRenderer rover;
+    public SpriteRenderer sample;
+    public SpriteRenderer cache;
     public Rigidbody2D roverArrow;
     public Rigidbody2D directionalArrow;
     public Rigidbody2D sendArrow;
+    public SpriteRenderer sampleArrow;
+    public SpriteRenderer pickupArrow;
     
     //rover UI
     public Button[] fadeableDirectionalIconArray;
@@ -105,8 +109,8 @@ public class IntroManager : MonoBehaviour
             controlRoomPicture.DOFade(0f, 1f).OnComplete(() => martianSurface.DOFade(1f, 1f));
             grid.DOFade(1f, 1f).SetDelay(1f);
             rover.DOFade(1f, 1f);
-            roverArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f);
-            roverArrow.transform.DOMove(new Vector2(0.45f,0.232f), 1).SetEase(Ease.InOutQuad).SetLoops(8);
+            roverArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f).SetDelay(1f);
+            roverArrow.transform.DOMove(new Vector2(1.54f, 0.15f), 1).SetEase(Ease.InOutQuad).SetLoops(8).SetDelay(1f);
         }
         
         if (StringArrayIndex == 6)
@@ -126,13 +130,15 @@ public class IntroManager : MonoBehaviour
             }
             
             directionalArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f);
-            directionalArrow.transform.DOMove(new Vector2(-0.8462309f, -1.95f), 1).SetEase(Ease.InOutQuad).SetLoops(4)
-                .OnComplete(() =>
-                    sendArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f))
-                .OnComplete(() =>
-                    sendArrow.transform.DOMove(new Vector2(-0.51f, 1.3f), 1).SetEase(Ease.InOutQuad).SetLoops(4)
-                );
+            directionalArrow.transform.DOMove(new Vector2(-0.37f, -0.57f), 1).SetEase(Ease.InOutQuad).SetLoops(4);
+            sendArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f).SetDelay(4f);
+            sendArrow.transform.DOMove(new Vector2(-0.02f, 2.7f), 1).SetEase(Ease.InOutQuad).SetLoops(4).SetDelay(4f);
 
+        }
+
+        if (StringArrayIndex == 8)
+        {
+            fadeablePickupDropoffIconArray[0].gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f);
         }
         if (StringArrayIndex == tutorialStringArray.Length)
         {

@@ -25,6 +25,7 @@
           <e p="level0.txt" t="Include" />
           <e p="level1.txt" t="Include" />
           <e p="level2.txt" t="Include" />
+          <e p="level3.txt" t="Include" />
         </e>
         <e p="Modern UI Pack" t="Include">
           <e p="Editor" t="Include">
@@ -63,17 +64,20 @@
           </e>
         </e>
         <e p="Resources" t="Include">
+          <e p="DataLines.txt" t="Include" />
           <e p="tutorialLines.txt" t="Include" />
         </e>
         <e p="Scripts" t="Include">
           <e p="ButtonManager.cs" t="Include" />
           <e p="Cache.cs" t="Include" />
+          <e p="EventManager.cs" t="Include" />
           <e p="FactManager.cs" t="Include" />
           <e p="GameController.cs" t="Include" />
           <e p="IntroManager.cs" t="Include" />
           <e p="LevelLoader.cs" t="Include" />
           <e p="Obstacle.cs" t="Include" />
           <e p="ObstacleManager.cs" t="Include" />
+          <e p="RandomSpriteSelector.cs" t="Include" />
           <e p="Rover.cs" t="Include" />
           <e p="Sample.cs" t="Include" />
           <e p="SampleManager.cs" t="Include" />
@@ -122,6 +126,7 @@
             <e p="Triangle.cginc" t="Include" />
           </e>
         </e>
+        <e p="soundmanager.cs" t="Include" />
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">
             <e p="LiberationSans - OFL.txt" t="Include" />
