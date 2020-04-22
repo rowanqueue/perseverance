@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+
 using Debug = UnityEngine.Debug;
+using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -41,6 +42,7 @@ public class ButtonManager : MonoBehaviour
     private string[] timePassingArray;
 
     [HideInInspector]public List<Image> commandList;
+    public Transform buttonHolder;
 
     private void Awake()
     {
@@ -62,6 +64,11 @@ public class ButtonManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Services.GameController.isTutorial){
+            buttonHolder.localPosition = (new Vector3(0,-100f));
+        }else{
+            buttonHolder.localPosition += (new Vector3(0,-185f)-buttonHolder.localPosition)*0.1f;
+        }
         if (beamingUp)
         {
             SendingToRoverImage.gameObject.SetActive(true);
@@ -110,6 +117,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnForwardButtonPress()
     {
+        if(commandList.Count >= 6){return;}
         thisRover.EnterCommand(Command.Forward);
         var newUpArrowIcon = Instantiate(UpArrowPrefab);
         newUpArrowIcon.transform.SetParent(commandBox.transform);
@@ -119,6 +127,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnBackwardButtonPress()
     {
+        if(commandList.Count >= 6){return;}
         thisRover.EnterCommand(Command.Backward);
         var newDownArrowIcon = Instantiate(DownArrowPrefab);
         newDownArrowIcon.transform.SetParent(commandBox.transform);
@@ -129,6 +138,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnRightButtonPress()
     {
+        if(commandList.Count >= 6){return;}
         thisRover.EnterCommand(Command.TurnRight);
         var newRightArrowIcon = Instantiate(RightArrowPrefab);
         newRightArrowIcon.transform.SetParent(commandBox.transform);
@@ -137,6 +147,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnLeftButtonPress()
     {
+        if(commandList.Count >= 6){return;}
         thisRover.EnterCommand(Command.TurnLeft);
         var newLeftArrowIcon = Instantiate(LeftArrowPrefab);
         newLeftArrowIcon.transform.SetParent(commandBox.transform);
@@ -145,6 +156,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnPutdownButtonPress()
     {
+        if(commandList.Count >= 6){return;}
         thisRover.EnterCommand(Command.PutDown);
         var newDropoffIcon = Instantiate(DropoffPrefab);
         newDropoffIcon.transform.SetParent(commandBox.transform);
@@ -153,6 +165,7 @@ public class ButtonManager : MonoBehaviour
 
     public void onPickupButtonPress()
     {
+        if(commandList.Count >= 6){return;}
         thisRover.EnterCommand(Command.PickUp);
         var newPickupIcon = Instantiate(PickupPrefab);
         newPickupIcon.transform.SetParent(commandBox.transform);
@@ -176,6 +189,7 @@ public class ButtonManager : MonoBehaviour
         
         Destroy(commandList[commandList.Count - 1].gameObject);
         commandList.RemoveAt(commandList.Count-1);
+        thisRover.moves.RemoveAt(commandList.Count-1);
     }
 
     

@@ -45,10 +45,18 @@ public class IntroManager : MonoBehaviour
     public Button[] fadeableDirectionalIconArray;
     public Button[] fadeablePickupDropoffIconArray;
     public Image[] fadeableImageArray;
+    public GameObject game;
+    public GameController gameController;
 
     // Start is called before the first frame update
     void Start()
     {
+        if(gameController.currentLevel > 0){
+            game.SetActive(true);
+            GameObject.Destroy(gameObject);
+            gameController.intro = null;
+            return;
+        }
         //get correct components for various UI elements, then set them inactive/fade them
         playButtonText = playButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
         tutorialText = tutorialBox.gameObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -107,6 +115,7 @@ public class IntroManager : MonoBehaviour
         if (StringArrayIndex == 5)
         {
             controlRoomPicture.DOFade(0f, 1f).OnComplete(() => martianSurface.DOFade(1f, 1f));
+            game.SetActive(true);
             grid.DOFade(1f, 1f).SetDelay(1f);
             rover.DOFade(1f, 1f);
             roverArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f).SetDelay(1f);
@@ -142,7 +151,9 @@ public class IntroManager : MonoBehaviour
         }
         if (StringArrayIndex == tutorialStringArray.Length)
         {
-            SceneManager.LoadScene(1);
+            //SceneManager.LoadScene(1);
+            Services.GameController.intro = null;
+            Destroy(gameObject);
         }
         else
         {

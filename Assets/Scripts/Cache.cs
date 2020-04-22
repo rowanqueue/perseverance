@@ -10,6 +10,7 @@ public class Cache
         this.pos = pos;
         obj = GameObject.Instantiate(Services.GameController.cachePrefab);
         obj.transform.position = (Vector3Int)pos;
+        obj.transform.parent = Services.GameController.transform.parent;
     }
     public void SetPosition(Vector2Int pos){
         this.pos = pos;

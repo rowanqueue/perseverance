@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
     public GameObject cachePrefab;
     public Transform samplesParent;
     public GameObject samplePrefab;
+    public bool isTutorial;
+    public IntroManager intro;
     // Start is called before the first frame update
     void Awake()
     {
@@ -27,10 +29,10 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         //Elizabeth's note: 0 is the tutorial scene, so no facts needed. If the scene index is not 0, pop open the fact box.
-        if (SceneManager.GetActiveScene().buildIndex != 0)
+        /*if (SceneManager.GetActiveScene().buildIndex != 0)
         {
             FactManager.instance.openFactBox();
-        }
+        }*/
         levelLoader.LoadLevel(currentLevel);
     }
 
@@ -39,7 +41,12 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(1);
+            levelLoader.LoadLevel(currentLevel);
+        }
+        if(ReferenceEquals(intro,null)){
+            isTutorial = false;
+        }else{
+            isTutorial = true;
         }
     }
     void InitializeServices(){
