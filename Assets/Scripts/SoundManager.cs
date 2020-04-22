@@ -7,8 +7,10 @@ public class SoundManager : MonoBehaviour
 {
 
     public static SoundManager instance;
+    public GameController myGameController;
     private AudioSource myAudioSource;
-    public AudioClip backgroundMusic;
+    public AudioClip backgroundMusic1;
+    public AudioClip backgroundMusic2;
 
     private void Awake()
     {
@@ -26,7 +28,7 @@ public class SoundManager : MonoBehaviour
     void Start()
     {
         myAudioSource = gameObject.GetComponent<AudioSource>();
-        myAudioSource.clip = backgroundMusic;
+        myAudioSource.clip = backgroundMusic1;
         myAudioSource.Play();
         myAudioSource.loop = true;
     }
@@ -34,6 +36,11 @@ public class SoundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (myGameController.currentLevel != 0 && myAudioSource.clip != backgroundMusic2)
+        {
+            myAudioSource.clip = backgroundMusic2;
+            myAudioSource.Play();
+            myAudioSource.loop = true;
+        }
     }
 }

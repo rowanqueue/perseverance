@@ -82,6 +82,7 @@
           <e p="Sample.cs" t="Include" />
           <e p="SampleManager.cs" t="Include" />
           <e p="Services.cs" t="Include" />
+          <e p="soundmanager.cs" t="Include" />
           <e p="Task.cs" t="Include" />
           <e p="TaskManager.cs" t="Include" />
         </e>
@@ -126,7 +127,6 @@
             <e p="Triangle.cginc" t="Include" />
           </e>
         </e>
-        <e p="soundmanager.cs" t="Include" />
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">
             <e p="LiberationSans - OFL.txt" t="Include" />

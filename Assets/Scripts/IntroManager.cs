@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class IntroManager : MonoBehaviour
 {
+    public LevelLoader myLevelLoader;
     //title screen elements
     public SpriteRenderer titlePicture;
     public Button playButton;
@@ -33,17 +34,29 @@ public class IntroManager : MonoBehaviour
     public SpriteRenderer martianSurface;
     public SpriteRenderer grid;
     public SpriteRenderer rover;
-    public SpriteRenderer sample;
-    public SpriteRenderer cache;
-    public Rigidbody2D roverArrow;
-    public Rigidbody2D directionalArrow;
-    public Rigidbody2D sendArrow;
+    
+    //pointer arrows
+    public SpriteRenderer roverArrow;
+    public SpriteRenderer directionalArrow;
+    public SpriteRenderer sendArrow;
     public SpriteRenderer sampleArrow;
     public SpriteRenderer pickupArrow;
+    public SpriteRenderer cacheArrow;
+    public SpriteRenderer dropoffArrow;
+
+    public float arrowMoveAmount = .25f;
+    private Vector2 roverArrowVector;
+    private Vector2 directionalArrowVector;
+    private Vector2 sendArrowVector;
+    private Vector2 sampleArrowVector;
+    private Vector2 pickupArrowVector;
+    private Vector2 cacheArrowVector;
+    private Vector2 dropoffArrowVector;
     
     //rover UI
     public Button[] fadeableDirectionalIconArray;
-    public Button[] fadeablePickupDropoffIconArray;
+    public Button pickupButton;
+    public Button dropoffButton;
     public Image[] fadeableImageArray;
     public GameObject game;
     public GameController gameController;
@@ -72,6 +85,15 @@ public class IntroManager : MonoBehaviour
         //set up the tutorial lines array
         tutorialLines = Resources.Load<TextAsset>("tutorialLines");
         tutorialStringArray = tutorialLines.text.Split('\n');
+        
+        //set arrow Vector2s
+        roverArrowVector = roverArrow.gameObject.transform.position;
+        directionalArrowVector = directionalArrow.gameObject.transform.position;
+        sendArrowVector = sendArrow.gameObject.transform.position;
+        sampleArrowVector = sampleArrow.gameObject.transform.position;
+        pickupArrowVector = pickupArrow.gameObject.transform.position;
+        cacheArrowVector = cacheArrow.gameObject.transform.position;
+        dropoffArrowVector = dropoffArrow.gameObject.transform.position;
     }
 
     // Update is called once per frame
@@ -116,16 +138,16 @@ public class IntroManager : MonoBehaviour
         {
             controlRoomPicture.DOFade(0f, 1f).OnComplete(() => martianSurface.DOFade(1f, 1f));
             game.SetActive(true);
-            grid.DOFade(1f, 1f).SetDelay(1f);
+            grid.DOFade(.4f, 1f).SetDelay(1f);
             rover.DOFade(1f, 1f);
-            roverArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f).SetDelay(1f);
-            roverArrow.transform.DOMove(new Vector2(1.54f, 0.15f), 1).SetEase(Ease.InOutQuad).SetLoops(8).SetDelay(1f);
+            roverArrow.DOFade(1f, 1f).SetDelay(1f);
+            roverArrow.transform.DOMove(new Vector2(roverArrowVector.x, roverArrowVector.y - arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4).SetDelay(1f)
+                .OnComplete(() => roverArrow.DOFade(0f, 1f).
+                    OnComplete(() => roverArrow.gameObject.SetActive(false)));
         }
         
         if (StringArrayIndex == 6)
         {
-            roverArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(0f, 1f)
-                .OnComplete(() => roverArrow.gameObject.SetActive(false));
             foreach (var butt in fadeableDirectionalIconArray)
             {
                 butt.gameObject.SetActive(true);
@@ -138,16 +160,50 @@ public class IntroManager : MonoBehaviour
                 UIBox.DOFade(.8f, 1f);
             }
             
-            directionalArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f);
-            directionalArrow.transform.DOMove(new Vector2(-0.37f, -0.57f), 1).SetEase(Ease.InOutQuad).SetLoops(4);
-            sendArrow.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f).SetDelay(4f);
-            sendArrow.transform.DOMove(new Vector2(-0.02f, 2.7f), 1).SetEase(Ease.InOutQuad).SetLoops(4).SetDelay(4f);
+            directionalArrow.DOFade(1f, 1f);
+            directionalArrow.transform.DOMove(new Vector2(directionalArrowVector.x, directionalArrowVector.y - arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4)
+                .OnComplete(() => directionalArrow.DOFade(0f, 1f)
+                    .OnComplete(() => directionalArrow.gameObject.SetActive(false)));
+            sendArrow.DOFade(1f, 1f).SetDelay(4f);
+            sendArrow.transform.DOMove(new Vector2(sendArrowVector.x - arrowMoveAmount, sendArrowVector.y), 1).SetEase(Ease.InOutQuad).SetLoops(4).SetDelay(4f)
+                .OnComplete(() => sendArrow.DOFade(0f, 1f).
+                    OnComplete(() => sendArrow.gameObject.SetActive(false)));
 
+        }
+
+        if (StringArrayIndex == 7)
+        {
+            //reset the rover
+            myLevelLoader.LoadLevel(Services.GameController.currentLevel);
         }
 
         if (StringArrayIndex == 8)
         {
-            fadeablePickupDropoffIconArray[0].gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 1f);
+            pickupButton.image.DOFade(1f, 1f);
+            sampleArrow.DOFade(1f, 1f);
+            sampleArrow.transform.DOMove(new Vector2(sampleArrowVector.x - arrowMoveAmount, sampleArrowVector.y),1).SetEase(Ease.InOutQuad).SetLoops(4)
+                .OnComplete(() => sampleArrow.DOFade(0f, 1f).
+                    OnComplete(() => sampleArrow.gameObject.SetActive(false)));
+            pickupArrow.DOFade(1f, 1f).SetDelay(3f);
+            pickupArrow.transform.DOMove(new Vector2(pickupArrowVector.x, pickupArrowVector.y - arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4)
+                .SetDelay(3f)
+                .OnComplete(() => pickupArrow.DOFade(0f, 1f).
+                    OnComplete(() => pickupArrow.gameObject.SetActive(false)));
+        }
+
+        if (StringArrayIndex == 9)
+        {
+            dropoffButton.image.DOFade(1f, 1f);
+            cacheArrow.DOFade(1f, 1f);
+            cacheArrow.transform.DOMove(new Vector2(cacheArrowVector.x - arrowMoveAmount, cacheArrowVector.y),1).SetEase(Ease.InOutQuad).SetLoops(4)
+                .OnComplete(() => cacheArrow.DOFade(0f, 1f).
+                    OnComplete(() => cacheArrow.gameObject.SetActive(false)));
+            dropoffArrow.DOFade(1f, 1f).SetDelay(3f);
+            dropoffArrow.transform.DOMove(new Vector2(dropoffArrowVector.x - arrowMoveAmount, dropoffArrowVector.y), 1).SetEase(Ease.InOutQuad).SetLoops(4)
+                .SetDelay(3f)
+                .OnComplete(() => dropoffArrow.DOFade(0f, 1f).
+                    OnComplete(() => dropoffArrow.gameObject.SetActive(false)));
+
         }
         if (StringArrayIndex == tutorialStringArray.Length)
         {

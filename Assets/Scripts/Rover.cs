@@ -140,6 +140,7 @@ public class Rover : MonoBehaviour
     }
     public void SetPosition(Vector2Int pos){
         transform.position = (Vector3Int)pos;
+        direction = 3;
     }
     public class RoverCommand : Task
     {
