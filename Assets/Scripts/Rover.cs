@@ -34,6 +34,7 @@ public class Rover : MonoBehaviour
     public Sample sampleCarried;
     SpriteRenderer spriteRenderer;
 
+
     void Start(){
         spriteRenderer  = GetComponentInChildren<SpriteRenderer>();
     }
@@ -150,6 +151,7 @@ public class Rover : MonoBehaviour
         public RoverCommand(Rover rover){
             this.rover = rover;
         }
+        
         protected override  void Initialize(){
 
         }
@@ -170,6 +172,8 @@ public class Rover : MonoBehaviour
         Vector2 target;
         Vector2 start;
         bool obstacleHere;
+        
+
         public MoveRover(Rover rover, bool forward) : base(rover){
             this.rover = rover;
             this.forward = forward;
@@ -204,6 +208,11 @@ public class Rover : MonoBehaviour
                 }
             }else{
                 rover.transform.position = Vector2.Lerp(start,target,elapsedTime/duration);
+                if (!SoundManager.instance.roverSoundPlaying)
+                {
+                    SoundManager.instance.playRoverSound(SoundManager.instance.roverMoveForwardSound);
+                    SoundManager.instance.roverSoundPlaying = true;
+                }
             }   
         }
     }
@@ -232,6 +241,11 @@ public class Rover : MonoBehaviour
                 }
             }
             rover.direction = (rover.direction+4)%4;
+            if (!SoundManager.instance.roverSoundPlaying)
+            {
+                SoundManager.instance.playRoverSound(SoundManager.instance.roverTurnSound);
+                SoundManager.instance.roverSoundPlaying = true;
+            }
             //if(rover.direction)
             Debug.Log(rover.direction);
             targetAngle = rover.angles[rover.direction];
@@ -285,6 +299,11 @@ public class Rover : MonoBehaviour
                 rover.carryingSample = true;
                 rover.sampleCarried = sampleToPickUp;
                 rover.sampleCarried.PickUp();
+                if (!SoundManager.instance.roverSoundPlaying)
+                {
+                    SoundManager.instance.playRoverSound(SoundManager.instance.roverPickupSound);
+                    SoundManager.instance.roverSoundPlaying = true;
+                }
             }
         }
     }
@@ -330,6 +349,12 @@ public class Rover : MonoBehaviour
                 rover.sampleCarried.Drop(dropPosition);
 
                 rover.sampleCarried = null;
+
+                if (!SoundManager.instance.roverSoundPlaying)
+                {
+                    SoundManager.instance.playRoverSound(SoundManager.instance.roverDropSound);
+                    SoundManager.instance.roverSoundPlaying = true;
+                }
             }
         }
     }

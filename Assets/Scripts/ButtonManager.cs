@@ -79,33 +79,35 @@ public class ButtonManager : MonoBehaviour
             {
                 timePassingText.gameObject.SetActive(true);
             }
-            if (timer >= 3.5f)
+            if (timer >= 3f)
             {
                 timePassingText.text = timePassingArray[1];
             }
 
-            if (timer >= 5f)
+            if (timer >= 4f)
             {
                 timePassingText.text = timePassingArray[2];
             }
 
-            if (timer >= 6.5f)
+            if (timer >= 5f)
             {
                 timePassingText.text = timePassingArray[3];
             }
 
-            if (timer >= 8f)
+            if (timer >= 6f)
             {
                 timePassingText.text = timePassingArray[4];
             }
 
-            if (timer >= 9.5f)
+            if (timer >= 7f)
             {
                 timePassingText.text = "";
                 SendingToRoverImage.gameObject.SetActive(false);
+                SoundManager.instance.UIAudioSource.Stop();
+                SoundManager.instance.UIAudioSource.loop = false;
             }
 
-            if (timer >= 10.5f)
+            if (timer >= 8f)
             {
                 Services.Rover.SendCommands();
                 beamingUp = false;
@@ -122,7 +124,7 @@ public class ButtonManager : MonoBehaviour
         var newUpArrowIcon = Instantiate(UpArrowPrefab);
         newUpArrowIcon.transform.SetParent(commandBox.transform);
         commandList.Add(newUpArrowIcon);
-        Debug.Log("The length of command list is " + commandList.Count);
+        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound2);
     }
 
     public void OnBackwardButtonPress()
@@ -132,7 +134,7 @@ public class ButtonManager : MonoBehaviour
         var newDownArrowIcon = Instantiate(DownArrowPrefab);
         newDownArrowIcon.transform.SetParent(commandBox.transform);
         commandList.Add(newDownArrowIcon);
-        Debug.Log("The length of command list is " + commandList.Count);
+        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound2);
 
     }
 
@@ -143,6 +145,7 @@ public class ButtonManager : MonoBehaviour
         var newRightArrowIcon = Instantiate(RightArrowPrefab);
         newRightArrowIcon.transform.SetParent(commandBox.transform);
         commandList.Add(newRightArrowIcon);
+        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound2);
     }
 
     public void OnLeftButtonPress()
@@ -152,6 +155,8 @@ public class ButtonManager : MonoBehaviour
         var newLeftArrowIcon = Instantiate(LeftArrowPrefab);
         newLeftArrowIcon.transform.SetParent(commandBox.transform);
         commandList.Add(newLeftArrowIcon);
+        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound2);
+
     }
 
     public void OnPutdownButtonPress()
@@ -161,6 +166,8 @@ public class ButtonManager : MonoBehaviour
         var newDropoffIcon = Instantiate(DropoffPrefab);
         newDropoffIcon.transform.SetParent(commandBox.transform);
         commandList.Add(newDropoffIcon);
+        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound2);
+
     }
 
     public void onPickupButtonPress()
@@ -170,13 +177,15 @@ public class ButtonManager : MonoBehaviour
         var newPickupIcon = Instantiate(PickupPrefab);
         newPickupIcon.transform.SetParent(commandBox.transform);
         commandList.Add(newPickupIcon);
+        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound2);
+
     }
 
     public void onSendButtonPress()
     {
         SendingToRoverImage.gameObject.SetActive(true);
         beamingUp = true;
-
+        SoundManager.instance.PlaySendingToRoverSound();
     }
 
     public void OnDeleteButtonPress()
@@ -190,6 +199,7 @@ public class ButtonManager : MonoBehaviour
         Destroy(commandList[commandList.Count - 1].gameObject);
         commandList.RemoveAt(commandList.Count-1);
         thisRover.moves.RemoveAt(commandList.Count-1);
+        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound1);
     }
 
     

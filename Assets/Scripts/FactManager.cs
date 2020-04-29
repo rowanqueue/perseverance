@@ -53,5 +53,6 @@ public class FactManager : MonoBehaviour
         factHolderTitle.gameObject.SetActive(false);
         blackBackground.gameObject.SetActive(false);
         startFactIndex++;
+        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound1);
     }
 }
