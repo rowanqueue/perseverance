@@ -43,6 +43,8 @@ public class IntroManager : MonoBehaviour
     public SpriteRenderer pickupArrow;
     public SpriteRenderer cacheArrow;
     public SpriteRenderer dropoffArrow;
+    public SpriteRenderer obstacleArrow1;
+    public SpriteRenderer obstacleArrow2;
 
     public float arrowMoveAmount = .25f;
     private Vector2 roverArrowVector;
@@ -52,6 +54,8 @@ public class IntroManager : MonoBehaviour
     private Vector2 pickupArrowVector;
     private Vector2 cacheArrowVector;
     private Vector2 dropoffArrowVector;
+    private Vector2 obstacleArrow1Vector;
+    private Vector2 obstacleArrow2Vector;
     
     //rover UI
     public Button[] fadeableDirectionalIconArray;
@@ -94,6 +98,8 @@ public class IntroManager : MonoBehaviour
         pickupArrowVector = pickupArrow.gameObject.transform.position;
         cacheArrowVector = cacheArrow.gameObject.transform.position;
         dropoffArrowVector = dropoffArrow.gameObject.transform.position;
+        obstacleArrow1Vector = obstacleArrow1.gameObject.transform.position;
+        obstacleArrow2Vector = obstacleArrow2.gameObject.transform.position;
     }
 
     // Update is called once per frame
@@ -135,7 +141,7 @@ public class IntroManager : MonoBehaviour
     void loadNewTutorialText()
     {
         StringArrayIndex++;
-        if (StringArrayIndex == 5)
+        if (StringArrayIndex == 4)
         {
             controlRoomPicture.DOFade(0f, 1f).OnComplete(() => martianSurface.DOFade(1f, 1f));
             game.SetActive(true);
@@ -147,7 +153,7 @@ public class IntroManager : MonoBehaviour
                     OnComplete(() => roverArrow.gameObject.SetActive(false)));
         }
         
-        if (StringArrayIndex == 6)
+        if (StringArrayIndex == 5)
         {
             foreach (var butt in fadeableDirectionalIconArray)
             {
@@ -172,10 +178,24 @@ public class IntroManager : MonoBehaviour
 
         }
 
-        if (StringArrayIndex == 7)
+        if (StringArrayIndex == 6)
         {
             //reset the rover
             myLevelLoader.LoadLevel(Services.GameController.currentLevel);
+        }
+
+        if (StringArrayIndex == 7)
+        {
+            obstacleArrow1.DOFade(1f, 1f);
+            obstacleArrow2.DOFade(1f, 1f);
+            obstacleArrow1.transform
+                .DOMove(new Vector2(obstacleArrow1Vector.x, obstacleArrow1Vector.y - arrowMoveAmount), 1)
+                .SetEase(Ease.InOutQuad).SetLoops(4)
+                .OnComplete(() => obstacleArrow1.DOFade(0f, 1f));
+            obstacleArrow2.transform
+                .DOMove(new Vector2(obstacleArrow2Vector.x, obstacleArrow2Vector.y - arrowMoveAmount), 1)
+                .SetEase(Ease.InOutQuad).SetLoops(4)
+                .OnComplete(() => obstacleArrow2.DOFade(0f, 1f));
         }
 
         if (StringArrayIndex == 8)

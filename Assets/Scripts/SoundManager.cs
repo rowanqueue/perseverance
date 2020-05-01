@@ -15,7 +15,9 @@ public class SoundManager : MonoBehaviour
     public AudioClip buttonClickSound1;
     public AudioClip buttonClickSound2;
     public AudioClip sendingToRoverSound;
+    public AudioClip roverBeginMoveForwardSound;
     public AudioClip roverMoveForwardSound;
+    public AudioClip roverFinishMoveForwardSound;
     public AudioClip roverTurnSound;
     public AudioClip roverDropSound;
     public AudioClip roverPickupSound;

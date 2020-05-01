@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SpriteGlow;
 using UnityEngine;
 
 public class SampleManager
@@ -7,6 +8,9 @@ public class SampleManager
     public List<Sample> samples;
     public Transform parent;
     public GameObject prefab;
+    private SpriteGlowEffect sampGlow;
+    public float glowLowRange = 3f;
+    public float glowHighRange = 4f;
     
     // Start is called before the first frame update
     public void Initialize(Transform parent, GameObject prefab)
@@ -18,6 +22,7 @@ public class SampleManager
     public void CreateSample(Vector2Int pos){
         Sample samp = new Sample(pos);
         samples.Add(samp);
+        sampGlow = samp.obj.GetComponentInChildren<SpriteGlowEffect>();
     }
     public void ClearSamples(){
         foreach(Sample samp in samples){
@@ -43,4 +48,5 @@ public class SampleManager
         Debug.Log("There is no sample at ("+pos.x+","+pos.y+")");
         return null;
     }
+    
 }
