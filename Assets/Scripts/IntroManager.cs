@@ -135,7 +135,7 @@ public class IntroManager : MonoBehaviour
     {
         tutorialText.DOFade(0f, textFadeTime).OnComplete(() => tutorialText.DOFade(1f, textFadeTime));
         Invoke("loadNewTutorialText", textFadeTime);
-        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound1);
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
     }
 
     void loadNewTutorialText()

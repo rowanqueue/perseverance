@@ -124,7 +124,7 @@ public class ButtonManager : MonoBehaviour
         var newUpArrowIcon = Instantiate(UpArrowPrefab);
         newUpArrowIcon.transform.SetParent(commandBox.transform);
         commandList.Add(newUpArrowIcon);
-        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound2);
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
     }
 
     public void OnBackwardButtonPress()
@@ -134,7 +134,7 @@ public class ButtonManager : MonoBehaviour
         var newDownArrowIcon = Instantiate(DownArrowPrefab);
         newDownArrowIcon.transform.SetParent(commandBox.transform);
         commandList.Add(newDownArrowIcon);
-        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound2);
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
 
     }
 
@@ -145,7 +145,7 @@ public class ButtonManager : MonoBehaviour
         var newRightArrowIcon = Instantiate(RightArrowPrefab);
         newRightArrowIcon.transform.SetParent(commandBox.transform);
         commandList.Add(newRightArrowIcon);
-        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound2);
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
     }
 
     public void OnLeftButtonPress()
@@ -155,7 +155,7 @@ public class ButtonManager : MonoBehaviour
         var newLeftArrowIcon = Instantiate(LeftArrowPrefab);
         newLeftArrowIcon.transform.SetParent(commandBox.transform);
         commandList.Add(newLeftArrowIcon);
-        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound2);
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
 
     }
 
@@ -166,7 +166,7 @@ public class ButtonManager : MonoBehaviour
         var newDropoffIcon = Instantiate(DropoffPrefab);
         newDropoffIcon.transform.SetParent(commandBox.transform);
         commandList.Add(newDropoffIcon);
-        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound2);
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
 
     }
 
@@ -177,7 +177,7 @@ public class ButtonManager : MonoBehaviour
         var newPickupIcon = Instantiate(PickupPrefab);
         newPickupIcon.transform.SetParent(commandBox.transform);
         commandList.Add(newPickupIcon);
-        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound2);
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
 
     }
 
@@ -199,7 +199,7 @@ public class ButtonManager : MonoBehaviour
         Destroy(commandList[commandList.Count - 1].gameObject);
         commandList.RemoveAt(commandList.Count-1);
         thisRover.moves.RemoveAt(commandList.Count-1);
-        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound1);
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
     }
 
     

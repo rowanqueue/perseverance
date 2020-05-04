@@ -22,6 +22,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip roverDropSound;
     public AudioClip roverPickupSound;
     public AudioClip roverHitObstacleSound;
+    public AudioClip levelCompleteSound;
 
     [HideInInspector] public bool roverSoundPlaying = false;
     private float sendingtimer = 0;
@@ -61,7 +62,7 @@ public class SoundManager : MonoBehaviour
 
     }
 
-    public void PlayButtonClickSound(AudioClip clip)
+    public void PlayUISound(AudioClip clip)
     {
         UIAudioSource.PlayOneShot(clip);
     }

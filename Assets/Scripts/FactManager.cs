@@ -9,28 +9,55 @@ public class FactManager : MonoBehaviour
 {
     public static FactManager instance;
     
-    public Image factHolderImage;
+    public GameObject startFactHolder;
 
-    private TextMeshProUGUI factText;
+    private TextMeshProUGUI startFactText;
 
-    public Image factHolderTitle;
+    public GameObject finishFactHolder;
+
+    private TextMeshProUGUI scoreText;
+
+    private TextMeshProUGUI finishFactText;
 
     public Image blackBackground;
 
-    public string[] startFacts;
+    private TextAsset startFacts;
 
-    [HideInInspector] public int startFactIndex = 0;
+    private string[] startFactArray;
+
+    private TextAsset finishFacts;
+
+    private string[] finishFactArray;
+
+    private int startFactIndex = 0;
+
+    private int finishFactIndex = 0;
+
+    public SpriteRenderer martianSurface;
+
+    public SpriteRenderer missionControl;
 
     private void Awake()
     {
         instance = this;
-        factText = factHolderImage.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        startFactText = startFactHolder.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+
+        startFacts = Resources.Load<TextAsset>("StartFacts");
+        startFactArray = startFacts.text.Split('\n');
+
+        finishFacts = Resources.Load<TextAsset>("FinishFacts");
+        finishFactArray = finishFacts.text.Split('\n');
+
+        scoreText = finishFactHolder.gameObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        finishFactText = finishFactHolder.gameObject.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        startFactHolder.SetActive(false);
+        finishFactHolder.SetActive(false);
+        missionControl.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -39,20 +66,36 @@ public class FactManager : MonoBehaviour
         
     }
 
-    public void openFactBox()
+    public void openStartFactBox()
     {
-        factHolderImage.gameObject.SetActive(true);
-        factHolderTitle.gameObject.SetActive(true);
+        startFactHolder.gameObject.SetActive(true);
         blackBackground.gameObject.SetActive(true);
-        factText.text = startFacts[startFactIndex];
+        startFactText.text = startFactArray[startFactIndex];
     }
     
-    public void onFactBoxButtonPress()
+    public void onStartFactBoxButtonPress()
     {
-        factHolderImage.gameObject.SetActive(false);
-        factHolderTitle.gameObject.SetActive(false);
+        startFactHolder.SetActive(false);
         blackBackground.gameObject.SetActive(false);
         startFactIndex++;
-        SoundManager.instance.PlayButtonClickSound(SoundManager.instance.buttonClickSound1);
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
+    }
+
+    public void openFinishFactBox()
+    {
+        SoundManager.instance.PlayUISound(SoundManager.instance.levelCompleteSound);
+        blackBackground.gameObject.SetActive(true);
+        finishFactHolder.SetActive(true);
+        finishFactText.text = finishFactArray[finishFactIndex];
+    }
+
+    public void onLevelSelectButtonPress()
+    {
+        finishFactIndex++;
+        finishFactHolder.SetActive(false);
+        blackBackground.gameObject.SetActive(false);
+        missionControl.gameObject.SetActive(true);
+        martianSurface.gameObject.SetActive(false);
+
     }
 }
