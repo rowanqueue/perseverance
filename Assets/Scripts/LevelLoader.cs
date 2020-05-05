@@ -12,6 +12,8 @@ public enum Tile : byte{
 public class LevelLoader : MonoBehaviour
 {
     public TextAsset[] levelTexts;
+    public Transform gridParent;
+    public GameObject gridSquarePrefab;
     Dictionary<char,Tile> char2Tile = new Dictionary<char, Tile>{
         {'.',Tile.None},
         {' ',Tile.None},
@@ -21,6 +23,9 @@ public class LevelLoader : MonoBehaviour
         {'h',Tile.Cache}
     };  
     public void DeleteLevel(){
+        for(int i = gridParent.childCount-1; i >= 0; i--){
+            Destroy(gridParent.GetChild(0).gameObject);
+        }
         Services.SampleManager.ClearSamples();
         Services.ObstacleManager.ClearObstacles();
     }
@@ -89,10 +94,17 @@ public class LevelLoader : MonoBehaviour
         LoadLevel(_level);
     }
     public void LoadLevel(Tile[,] _level){
+        Services.Rover.sendsThisLevel = 0;
+        Services.Rover.movesThisLevel = 0;
         DeleteLevel();
         for(int x = 0;x<_level.GetLength(0);x++){
             for(int y = 0; y<_level.GetLength(1);y++){
+                
                 Vector2Int pos = new Vector2Int(x,_level.GetLength(1)-y-1)+Services.GameController.offset;
+                //make a grid sqaure
+                Vector3 gridPos = new Vector3(pos.x+0.5f,pos.y-0.5f,0f);
+                GameObject obj = Instantiate(gridSquarePrefab,gridPos,Quaternion.identity,gridParent);
+                //make the level bro
                 switch(_level[x,y]){
                     case Tile.Obstacle:
                         Services.ObstacleManager.CreateObstacle(pos);

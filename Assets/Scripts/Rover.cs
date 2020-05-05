@@ -34,6 +34,9 @@ public class Rover : MonoBehaviour
     public Sample sampleCarried;
     SpriteRenderer spriteRenderer;
 
+    public int movesThisLevel;//how many times you've moved this level
+    public int sendsThisLevel;//how many times you've sent this level
+
 
     void Start(){
         spriteRenderer  = GetComponentInChildren<SpriteRenderer>();
@@ -122,6 +125,8 @@ public class Rover : MonoBehaviour
     public void SendCommands(){
         doMoves = true;
         numMoves = moves.Count;
+        sendsThisLevel++;
+        movesThisLevel+=numMoves;
         if(numMoves == 0){
             Debug.Log("ERROR: No moves input");
             return;
