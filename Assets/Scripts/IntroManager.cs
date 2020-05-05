@@ -28,7 +28,7 @@ public class IntroManager : MonoBehaviour
     //tutorial text elements
     private TextAsset tutorialLines;
     private string[] tutorialStringArray;
-    private int StringArrayIndex = 0;
+    public int StringArrayIndex = 0;//5,8,9
     
     //tutorial sprites
     public SpriteRenderer martianSurface;
@@ -64,10 +64,13 @@ public class IntroManager : MonoBehaviour
     public Image[] fadeableImageArray;
     public GameObject game;
     public GameController gameController;
+    public bool canHitContinue;
+    public bool alreadyHit;
 
     // Start is called before the first frame update
     void Start()
     {
+        canHitContinue = true;
         if(gameController.currentLevel > 0){
             game.SetActive(true);
             GameObject.Destroy(gameObject);
@@ -105,7 +108,33 @@ public class IntroManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(canHitContinue){
+            continueButton.gameObject.SetActive(true);
+        }else{
+            continueButton.gameObject.SetActive(false);
+            if(alreadyHit == false){
+                if(StringArrayIndex == 5){
+                    if(Services.Rover.waitingForInput == false){
+                        fakeContinueButtonClick();
+                        alreadyHit = true;
+                    }
+                }
+                if(StringArrayIndex == 8){
+                    if(Services.Rover.carryingSample){
+                        fakeContinueButtonClick();
+                        alreadyHit = true;
+                    }
+                }
+            }
+            
+        }
+    }
+    void OnCachePlacement(Eevent e){
+        if(alreadyHit == false && StringArrayIndex == 9){
+            fakeContinueButtonClick();
+            alreadyHit = true;
+            Services.EventManager.Unregister<PlacedOnCache>(OnCachePlacement);
+        }
     }
 
     public void onPlayButtonPress()
@@ -130,7 +159,10 @@ public class IntroManager : MonoBehaviour
         tutorialText.DOFade(1f, 2f);
         continueButton.image.DOFade(1f, 2f);
     }
-
+    public void fakeContinueButtonClick(){
+        tutorialText.DOFade(0f, textFadeTime).OnComplete(() => tutorialText.DOFade(1f, textFadeTime));
+        Invoke("loadNewTutorialText", textFadeTime);
+    }
     public void continueButtonClick()
     {
         tutorialText.DOFade(0f, textFadeTime).OnComplete(() => tutorialText.DOFade(1f, textFadeTime));
@@ -140,7 +172,16 @@ public class IntroManager : MonoBehaviour
 
     void loadNewTutorialText()
     {
+        alreadyHit = false;
         StringArrayIndex++;
+        if(StringArrayIndex == 5 || StringArrayIndex == 8 || StringArrayIndex == 9){
+            canHitContinue = false;
+            if(StringArrayIndex == 9){
+                Services.EventManager.Register<PlacedOnCache>(OnCachePlacement);
+            }
+        }else{
+            canHitContinue = true;
+        }
         if (StringArrayIndex == 4)
         {
             controlRoomPicture.DOFade(0f, 1f).OnComplete(() => martianSurface.DOFade(1f, 1f));
@@ -231,6 +272,8 @@ public class IntroManager : MonoBehaviour
             //SceneManager.LoadScene(1);
             Services.GameController.intro = null;
             Destroy(gameObject);
+            Services.GameController.currentLevel++;
+            Services.GameController.levelLoader.LoadLevel(Services.GameController.currentLevel);
         }
         else
         {

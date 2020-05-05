@@ -65,6 +65,10 @@ public class GameController : MonoBehaviour
     }
 
     void OnCachePlacement(Eevent e){
+        if(ReferenceEquals(intro,null) == false){
+            //intro is still happening so don't go to next level
+            return;
+        }
         currentLevel++;
         levelLoader.LoadLevel(currentLevel);
     }

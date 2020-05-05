@@ -4877,7 +4877,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1919100217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4890,14 +4890,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222d6d0555398034a96679489294b263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  factHolderImage: {fileID: 1077861227}
-  factHolderTitle: {fileID: 156448989}
+  startFactHolder: {fileID: 0}
+  finishFactHolder: {fileID: 0}
   blackBackground: {fileID: 1748657638}
-  startFacts:
-  - Mars is called the "Red Planet" because its regolith (surface material) is full
-    of rust-colored iron oxide.
-  - The Perseverance rover has 23 cameras and 2 microphones.
-  startFactIndex: 0
+  martianSurface: {fileID: 0}
+  missionControl: {fileID: 0}
 --- !u!4 &1919100218
 Transform:
   m_ObjectHideFlags: 0
@@ -5266,6 +5263,7 @@ MonoBehaviour:
   roverPickupSound: {fileID: 8300000, guid: 82582894c964f844ca0b1fb4f81d576a, type: 3}
   roverHitObstacleSound: {fileID: 8300000, guid: d11d5fa0dc4ee9a46a670e1b174c9ced,
     type: 3}
+  levelCompleteSound: {fileID: 0}
   roverSoundPlaying: 0
 --- !u!4 &2020121063
 Transform:
