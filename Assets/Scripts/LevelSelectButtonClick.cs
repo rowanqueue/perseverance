@@ -20,6 +20,7 @@ public class LevelSelectButtonClick : MonoBehaviour
 
     public void onButtonClick()
     {
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
         myLevelLoader.LoadLevel(buttonNumber);
     }
 }

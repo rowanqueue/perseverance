@@ -26,26 +26,33 @@ public class MenuController : MonoBehaviour
         {
             menu.SetActive(true);
             isMenuOpen = true;
+            SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
         }
         else
         {
             menu.SetActive(false);
             isMenuOpen = false;
+            SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
+
         }
     }
 
     public void onRestartButtonClick()
     {
         myLevelLoader.LoadLevel(myGameController.currentLevel);
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
     }
 
     public void onLevelScreenClick()
     {
         LevelTransitionManager.instance.onLevelScreenButtonPress();
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
+
     }
 
     public void onQuitButtonClick()
     {
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
         Application.Quit();
     }
 }
