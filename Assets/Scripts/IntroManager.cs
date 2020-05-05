@@ -103,6 +103,7 @@ public class IntroManager : MonoBehaviour
         dropoffArrowVector = dropoffArrow.gameObject.transform.position;
         obstacleArrow1Vector = obstacleArrow1.gameObject.transform.position;
         obstacleArrow2Vector = obstacleArrow2.gameObject.transform.position;
+
     }
 
     // Update is called once per frame
@@ -158,6 +159,7 @@ public class IntroManager : MonoBehaviour
         tutorialText.text = tutorialStringArray[StringArrayIndex];
         tutorialText.DOFade(1f, 2f);
         continueButton.image.DOFade(1f, 2f);
+        LevelTransitionManager.instance.missionControl.gameObject.SetActive(false);
     }
     public void fakeContinueButtonClick(){
         tutorialText.DOFade(0f, textFadeTime).OnComplete(() => tutorialText.DOFade(1f, textFadeTime));

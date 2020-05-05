@@ -5,9 +5,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FactManager : MonoBehaviour
+public class LevelTransitionManager : MonoBehaviour
 {
-    public static FactManager instance;
+
+    public static LevelTransitionManager instance;
     
     public GameObject startFactHolder;
 
@@ -18,6 +19,8 @@ public class FactManager : MonoBehaviour
     private TextMeshProUGUI scoreText;
 
     private TextMeshProUGUI finishFactText;
+
+    private TextMeshProUGUI scoreLevelDesignationText;
 
     public Image blackBackground;
 
@@ -37,6 +40,10 @@ public class FactManager : MonoBehaviour
 
     public SpriteRenderer missionControl;
 
+    public string[] levelDesignations;
+
+    public Button[] levelButtons;
+
     private void Awake()
     {
         instance = this;
@@ -50,14 +57,13 @@ public class FactManager : MonoBehaviour
 
         scoreText = finishFactHolder.gameObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         finishFactText = finishFactHolder.gameObject.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+        scoreLevelDesignationText = finishFactHolder.gameObject.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        startFactHolder.SetActive(false);
-        finishFactHolder.SetActive(false);
-        missionControl.gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -65,6 +71,7 @@ public class FactManager : MonoBehaviour
     {
         
     }
+
 
     public void openStartFactBox()
     {
@@ -89,7 +96,7 @@ public class FactManager : MonoBehaviour
         finishFactText.text = finishFactArray[finishFactIndex];
     }
 
-    public void onLevelSelectButtonPress()
+    public void onLevelScreenButtonPress()
     {
         finishFactIndex++;
         finishFactHolder.SetActive(false);
@@ -97,5 +104,14 @@ public class FactManager : MonoBehaviour
         missionControl.gameObject.SetActive(true);
         martianSurface.gameObject.SetActive(false);
 
+        ButtonManager.instance.buttonHolder.gameObject.SetActive(false);
+        ButtonManager.instance.commandBox.gameObject.SetActive(false);
+
+        foreach (var butt in levelButtons)
+        {
+            butt.gameObject.SetActive(true);
+        }
+
     }
+
 }
