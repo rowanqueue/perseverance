@@ -69,6 +69,8 @@ public class GameController : MonoBehaviour
             //intro is still happening so don't go to next level
             return;
         }
+        //SCORE THE ROVER HERE
+        Debug.Log(Services.Rover.sendsThisLevel+Services.Rover.movesThisLevel);
         currentLevel++;
         levelLoader.LoadLevel(currentLevel);
     }
