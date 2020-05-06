@@ -20,6 +20,8 @@ public class GameController : MonoBehaviour
     public Sprite carriedSample;
     public bool isTutorial;
     public IntroManager intro;
+    public int score;
+    public bool endOfLevel;
     // Start is called before the first frame update
     void Awake()
     {
@@ -68,8 +70,12 @@ public class GameController : MonoBehaviour
             //intro is still happening so don't go to next level
             return;
         }
+        endOfLevel = true;
         //SCORE THE ROVER HERE
-        Debug.Log(Services.Rover.sendsThisLevel+Services.Rover.movesThisLevel);
+        score = 50-Services.Rover.sendsThisLevel-Services.Rover.movesThisLevel;
+        
+    }
+    public void GoToNextLevel(){
         currentLevel++;
         levelLoader.LoadLevel(currentLevel);
     }

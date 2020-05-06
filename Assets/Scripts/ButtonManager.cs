@@ -12,6 +12,7 @@ public class ButtonManager : MonoBehaviour
 {
 
     public static ButtonManager instance;
+    public int maxCommands;
 
     public Rover thisRover;
 
@@ -115,7 +116,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnForwardButtonPress()
     {
-        if(commandList.Count >= 6){return;}
+        if(commandList.Count >= maxCommands){return;}
         thisRover.EnterCommand(Command.Forward);
         var newUpArrowIcon = Instantiate(UpArrowPrefab);
         newUpArrowIcon.transform.SetParent(commandBox.transform);
@@ -125,7 +126,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnBackwardButtonPress()
     {
-        if(commandList.Count >= 6){return;}
+        if(commandList.Count >= maxCommands){return;}
         thisRover.EnterCommand(Command.Backward);
         var newDownArrowIcon = Instantiate(DownArrowPrefab);
         newDownArrowIcon.transform.SetParent(commandBox.transform);
@@ -136,7 +137,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnRightButtonPress()
     {
-        if(commandList.Count >= 6){return;}
+        if(commandList.Count >= maxCommands){return;}
         thisRover.EnterCommand(Command.TurnRight);
         var newRightArrowIcon = Instantiate(RightArrowPrefab);
         newRightArrowIcon.transform.SetParent(commandBox.transform);
@@ -146,7 +147,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnLeftButtonPress()
     {
-        if(commandList.Count >= 6){return;}
+        if(commandList.Count >= maxCommands){return;}
         thisRover.EnterCommand(Command.TurnLeft);
         var newLeftArrowIcon = Instantiate(LeftArrowPrefab);
         newLeftArrowIcon.transform.SetParent(commandBox.transform);
@@ -157,7 +158,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnPutdownButtonPress()
     {
-        if(commandList.Count >= 6){return;}
+        if(commandList.Count >= maxCommands){return;}
         thisRover.EnterCommand(Command.PutDown);
         var newDropoffIcon = Instantiate(DropoffPrefab);
         newDropoffIcon.transform.SetParent(commandBox.transform);
@@ -168,7 +169,7 @@ public class ButtonManager : MonoBehaviour
 
     public void onPickupButtonPress()
     {
-        if(commandList.Count >= 6){return;}
+        if(commandList.Count >= maxCommands){return;}
         thisRover.EnterCommand(Command.PickUp);
         var newPickupIcon = Instantiate(PickupPrefab);
         newPickupIcon.transform.SetParent(commandBox.transform);
@@ -194,7 +195,7 @@ public class ButtonManager : MonoBehaviour
         
         Destroy(commandList[commandList.Count - 1].gameObject);
         commandList.RemoveAt(commandList.Count-1);
-        thisRover.moves.RemoveAt(commandList.Count-1);
+        thisRover.moves.RemoveAt(thisRover.moves.Count-1);
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
     }
 

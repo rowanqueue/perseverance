@@ -3988,6 +3988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c64fe373fc7ec740be57117376179e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxCommands: 11
   thisRover: {fileID: 860205224}
   commandBox: {fileID: 2033591377}
   UpArrowPrefab: {fileID: 938554076816699552, guid: 80c38613bae9dad41b01bfcbd8b5ae80,
@@ -8199,7 +8200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: -2, y: -2}
-  currentLevel: 0
+  currentLevel: 1
   levelLoader: {fileID: 1854334285}
   rover: {fileID: 860205224}
   obstaclesParent: {fileID: 323141744}
@@ -8213,6 +8214,8 @@ MonoBehaviour:
   carriedSample: {fileID: 21300000, guid: af50e7bc43fbe9b48bc56290721a589e, type: 3}
   isTutorial: 0
   intro: {fileID: 457074089}
+  score: 0
+  endOfLevel: 0
 --- !u!4 &1854334287
 Transform:
   m_ObjectHideFlags: 0
