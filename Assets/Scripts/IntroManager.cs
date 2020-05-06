@@ -75,6 +75,8 @@ public class IntroManager : MonoBehaviour
             game.SetActive(true);
             GameObject.Destroy(gameObject);
             gameController.intro = null;
+            pickupButton.image.DOFade(1f, 1f);
+            dropoffButton.image.DOFade(1f, 1f);
             return;
         }
         //get correct components for various UI elements, then set them inactive/fade them

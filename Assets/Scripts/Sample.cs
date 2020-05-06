@@ -6,10 +6,12 @@ public class Sample
 {
     public Vector2Int pos;
     public GameObject obj;
+    SpriteRenderer spriteRenderer;
     public bool beingCarried;
     public Sample(Vector2Int pos){
         this.pos = pos;
         obj = GameObject.Instantiate(Services.SampleManager.prefab) as GameObject;
+        spriteRenderer = obj.transform.GetComponentInChildren<SpriteRenderer>();
         obj.transform.parent = Services.SampleManager.parent;
         obj.transform.position = (Vector3Int)pos;
         obj.name = "Samp";
@@ -17,6 +19,7 @@ public class Sample
     public void PickUp(){
         obj.transform.parent = Services.Rover.transform;
         obj.transform.localPosition = Vector2.zero;
+        spriteRenderer.sprite = Services.SampleManager.pickUpSprite;
     }
     public void Drop(Vector2Int dropPosition){
         pos = dropPosition;
