@@ -198,7 +198,7 @@ public class ButtonManager : MonoBehaviour
         
         Destroy(commandList[commandList.Count - 1].gameObject);
         commandList.RemoveAt(commandList.Count-1);
-        thisRover.moves.RemoveAt(commandList.Count-1);
+        thisRover.moves.RemoveAt(thisRover.moves.Count-1);
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
     }
 
