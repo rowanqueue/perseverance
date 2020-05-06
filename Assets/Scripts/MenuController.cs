@@ -41,18 +41,21 @@ public class MenuController : MonoBehaviour
     {
         myLevelLoader.LoadLevel(myGameController.currentLevel);
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
+        menu.SetActive(false);
     }
 
     public void onLevelScreenClick()
     {
         LevelTransitionManager.instance.onLevelScreenButtonPress();
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
+        menu.SetActive(false);
 
     }
 
     public void onQuitButtonClick()
     {
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
+        menu.SetActive(false);
         Application.Quit();
     }
 }

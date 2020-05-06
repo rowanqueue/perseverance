@@ -16,11 +16,11 @@ public class LevelTransitionManager : MonoBehaviour
 
     public GameObject finishFactHolder;
 
-    private TextMeshProUGUI scoreText;
+    public TextMeshProUGUI scoreText;
 
-    private TextMeshProUGUI finishFactText;
+    public TextMeshProUGUI finishFactText;
 
-    private TextMeshProUGUI scoreLevelDesignationText;
+    public TextMeshProUGUI scoreLevelDesignationText;
 
     public Image blackBackground;
 
@@ -42,7 +42,7 @@ public class LevelTransitionManager : MonoBehaviour
 
     public string[] levelDesignations;
 
-    public Button[] levelButtons;
+    public GameObject buttonHolder;
 
     private void Awake()
     {
@@ -56,9 +56,6 @@ public class LevelTransitionManager : MonoBehaviour
         finishFacts = Resources.Load<TextAsset>("FinishFacts");
         finishFactArray = finishFacts.text.Split('\n');
 
-        scoreText = finishFactHolder.gameObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        finishFactText = finishFactHolder.gameObject.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-        scoreLevelDesignationText = finishFactHolder.gameObject.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
     }
 
     // Start is called before the first frame update
@@ -70,12 +67,16 @@ public class LevelTransitionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreLevelDesignationText.text = Services.GameController.score.ToString();
+        scoreText.text = Services.GameController.score.ToString();
     }
 
 
     public void openStartFactBox()
     {
+        ButtonManager.instance.buttonHolder.gameObject.SetActive(true);
+        ButtonManager.instance.commandBox.gameObject.transform.parent.gameObject.SetActive(true);
+        martianSurface.gameObject.SetActive(true);
+
         startFactHolder.gameObject.SetActive(true);
         blackBackground.gameObject.SetActive(true);
         startFactText.text = startFactArray[startFactIndex];
@@ -106,12 +107,11 @@ public class LevelTransitionManager : MonoBehaviour
         martianSurface.gameObject.SetActive(false);
 
         ButtonManager.instance.buttonHolder.gameObject.SetActive(false);
-        ButtonManager.instance.commandBox.gameObject.SetActive(false);
+        ButtonManager.instance.commandBox.gameObject.transform.parent.gameObject.SetActive(false);
 
-        foreach (var butt in levelButtons)
-        {
-            butt.gameObject.SetActive(true);
-        }
+        buttonHolder.SetActive(true);
+
+        Services.GameController.levelLoader.DeleteLevel();
 
     }
 

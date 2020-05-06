@@ -22,5 +22,7 @@ public class LevelSelectButtonClick : MonoBehaviour
     {
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
         myLevelLoader.LoadLevel(buttonNumber);
+        LevelTransitionManager.instance.missionControl.gameObject.SetActive(false);
+        LevelTransitionManager.instance.buttonHolder.SetActive(false);
     }
 }
