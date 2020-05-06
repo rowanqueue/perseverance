@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
     public GameObject cachePrefab;
     public Transform samplesParent;
     public GameObject samplePrefab;
+    public Sprite carriedSample;
     public bool isTutorial;
     public IntroManager intro;
     // Start is called before the first frame update
@@ -53,6 +54,7 @@ public class GameController : MonoBehaviour
 
         Services.SampleManager = new SampleManager();
         Services.SampleManager.Initialize(samplesParent,samplePrefab);
+        Services.SampleManager.pickUpSprite = carriedSample;
 
         Services.Rover = rover;
         Services.Cache = new Cache(Vector2Int.zero);

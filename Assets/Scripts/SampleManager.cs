@@ -11,6 +11,7 @@ public class SampleManager
     private SpriteGlowEffect sampGlow;
     public float glowLowRange = 3f;
     public float glowHighRange = 4f;
+    public Sprite pickUpSprite;
     
     // Start is called before the first frame update
     public void Initialize(Transform parent, GameObject prefab)

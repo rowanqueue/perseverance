@@ -1132,7 +1132,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 1f308e5694c807b46a4505f18e539866, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2314,41 +2314,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &519767066
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 519767067}
-  m_Layer: 5
-  m_Name: GridAppearance
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &519767067
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519767066}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 1204639277}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &562014768
 GameObject:
   m_ObjectHideFlags: 0
@@ -2963,7 +2928,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &783589680
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3295,9 +3260,9 @@ MonoBehaviour:
   direction: 3
   directionalSprites:
   - {fileID: 21300000, guid: 3b75708e7ad6e5e4b873e672b780c55a, type: 3}
-  - {fileID: 21300000, guid: 37d1e9b630180664793de313bec646c0, type: 3}
+  - {fileID: 21300000, guid: 77f0e6495b2c69145bba3daaf6dc04fa, type: 3}
   - {fileID: 21300000, guid: ece2409b745ad4943ae60169e52414a3, type: 3}
-  - {fileID: 21300000, guid: 37d1e9b630180664793de313bec646c0, type: 3}
+  - {fileID: 21300000, guid: caa49d68354474644bd06f65ec854820, type: 3}
   text: {fileID: 872151723}
   carryingSample: 0
   movesThisLevel: 0
@@ -3625,6 +3590,36 @@ Transform:
   - {fileID: 2011506425}
   m_Father: {fileID: 762576940}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &919648565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 919648566}
+  m_Layer: 0
+  m_Name: GridAppearance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &919648566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919648565}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1204639277}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &925847680
 GameObject:
@@ -4904,8 +4899,8 @@ Transform:
   - {fileID: 1488099472}
   - {fileID: 116302424}
   - {fileID: 284800063}
-  - {fileID: 519767067}
   - {fileID: 1209422714}
+  - {fileID: 919648566}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5009,7 +5004,7 @@ RectTransform:
   - {fileID: 1968073225}
   - {fileID: 192202157}
   m_Father: {fileID: 1204639277}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8071,10 +8066,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelTexts:
   - {fileID: 4900000, guid: 866470d4a1664a34bbf54f8107773526, type: 3}
-  - {fileID: 4900000, guid: 273bb9552d064934cba979c7f4c13211, type: 3}
   - {fileID: 4900000, guid: 2754eb518578fa44f9cc95478a2f3187, type: 3}
+  - {fileID: 4900000, guid: 273bb9552d064934cba979c7f4c13211, type: 3}
   - {fileID: 4900000, guid: a896239bafdca0e408a8a573f0c9fb5d, type: 3}
-  gridParent: {fileID: 519767067}
+  gridParent: {fileID: 919648566}
   gridSquarePrefab: {fileID: 834716861274504985, guid: 261dc502ca1d3f940a82cfc801eb7412,
     type: 3}
 --- !u!114 &1854334286
@@ -8101,6 +8096,7 @@ MonoBehaviour:
   samplesParent: {fileID: 1488099472}
   samplePrefab: {fileID: 2510540129166736251, guid: c6ca5e4f77ea38748ac564d73dafc2fc,
     type: 3}
+  carriedSample: {fileID: 21300000, guid: af50e7bc43fbe9b48bc56290721a589e, type: 3}
   isTutorial: 0
   intro: {fileID: 457074089}
 --- !u!4 &1854334287
