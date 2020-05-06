@@ -96,6 +96,10 @@ public class LevelTransitionManager : MonoBehaviour
         blackBackground.gameObject.SetActive(true);
         finishFactHolder.SetActive(true);
         finishFactText.text = finishFactArray[finishFactIndex];
+        if (SoundManager.instance.RoverAudioSource.isPlaying)
+        {
+            SoundManager.instance.RoverAudioSource.Stop();
+        }
     }
 
     public void onLevelScreenButtonPress()

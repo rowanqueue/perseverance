@@ -10,7 +10,7 @@ public class SoundManager : MonoBehaviour
     public GameController myGameController;
     private AudioSource soundtrackAudioSource;
     [HideInInspector] public AudioSource UIAudioSource;
-    private AudioSource RoverAudioSource;
+    [HideInInspector] public AudioSource RoverAudioSource;
     public AudioClip[] soundtrackMusic;
     public AudioClip buttonClickSound1;
     public AudioClip buttonClickSound2;
