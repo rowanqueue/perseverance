@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class RandomSpriteSelector : MonoBehaviour
 {
+    public Sprite[] sprites;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        int index = Random.Range(0,sprites.Length);
+        spriteRenderer.sprite = sprites[index];
     }
 }
