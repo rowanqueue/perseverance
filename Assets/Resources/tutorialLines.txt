@@ -6,8 +6,9 @@ Check out this map of the Jezero Crater. See that robot? That's the rover!
 Let's experiment. Press the up, down, turn right, and turn left buttons in any order you want. Then press 'send.'
 Good work!
 See these obstacles? Try not to hit them. Perseverance can't climb hills and mountains.
-Now, take a look at the sample icon. Move forward, turn left, and use the pickup button to collect the sample. Then press 'send' again.
+Now, take a look at the sample icon. Move right, go forward, move left, and use the pickup button to collect the sample. Then press 'send' again.
 Place the sample on the cache by using the dropoff button and press 'send.'
 Great! You've cleared our test level.
 Starting on level one, you'll receive a score when you cache the sample. Your score depends on how efficiently you've programmed Perseverance.
 The fewer sequences you send (that is, the less you have to press the 'send' button), the better. And try not to hit any obstacles!
+If you want to quit, restart the level, or choose a different level, press the menu button.

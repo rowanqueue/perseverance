@@ -24,7 +24,7 @@ public class LevelLoader : MonoBehaviour
     };  
     public void DeleteLevel(){
         for(int i = gridParent.childCount-1; i >= 0; i--){
-            Destroy(gridParent.GetChild(0).gameObject);
+            Destroy(gridParent.GetChild(i).gameObject);
         }
         Services.SampleManager.ClearSamples();
         Services.ObstacleManager.ClearObstacles();
@@ -94,6 +94,10 @@ public class LevelLoader : MonoBehaviour
         LoadLevel(_level);
     }
     public void LoadLevel(Tile[,] _level){
+        if (Services.GameController.currentLevel != 0)
+        {
+            LevelTransitionManager.instance.openStartFactBox();
+        }
         Services.Rover.sendsThisLevel = 0;
         Services.Rover.movesThisLevel = 0;
         DeleteLevel();

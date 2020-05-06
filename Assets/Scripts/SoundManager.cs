@@ -48,6 +48,7 @@ public class SoundManager : MonoBehaviour
         soundtrackAudioSource.clip = soundtrackMusic[0];
         soundtrackAudioSource.Play();
         soundtrackAudioSource.loop = true;
+        Debug.Assert(soundtrackAudioSource.isPlaying == true);
     }
 
     // Update is called once per frame
