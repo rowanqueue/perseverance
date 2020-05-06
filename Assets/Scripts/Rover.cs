@@ -202,6 +202,13 @@ public class Rover : MonoBehaviour
             if(Services.SampleManager.IsSampleHere(targetExact)){
                 obstacleHere = true;
             }
+            if(SoundManager.instance.roverSoundPlaying){
+                SoundManager.instance.playRoverSound(SoundManager.instance.roverMoveForwardSound);
+            }else{
+                SoundManager.instance.roverSoundPlaying = true;
+                SoundManager.instance.playRoverSound(SoundManager.instance.roverBeginMoveForwardSound);
+            }
+            
         }
         internal override void Update(){
             base.Update();
@@ -213,11 +220,6 @@ public class Rover : MonoBehaviour
                 }
             }else{
                 rover.transform.position = Vector2.Lerp(start,target,elapsedTime/duration);
-                if (!SoundManager.instance.roverSoundPlaying)
-                {
-                    SoundManager.instance.playRoverSound(SoundManager.instance.roverMoveForwardSound);
-                    SoundManager.instance.roverSoundPlaying = true;
-                }
             }   
         }
     }
@@ -246,10 +248,10 @@ public class Rover : MonoBehaviour
                 }
             }
             rover.direction = (rover.direction+4)%4;
+            SoundManager.instance.roverSoundPlaying = false;
             if (!SoundManager.instance.roverSoundPlaying)
             {
                 SoundManager.instance.playRoverSound(SoundManager.instance.roverTurnSound);
-                SoundManager.instance.roverSoundPlaying = true;
             }
             //if(rover.direction)
             Debug.Log(rover.direction);
@@ -289,6 +291,8 @@ public class Rover : MonoBehaviour
                 start = sampleToPickUp.pos;
                 target = rover.transform.position;
             }
+            SoundManager.instance.roverSoundPlaying = false;
+            SoundManager.instance.playRoverSound(SoundManager.instance.roverPickupSound);
         }
         internal override void Update(){
             base.Update();
@@ -304,11 +308,6 @@ public class Rover : MonoBehaviour
                 rover.carryingSample = true;
                 rover.sampleCarried = sampleToPickUp;
                 rover.sampleCarried.PickUp();
-                if (!SoundManager.instance.roverSoundPlaying)
-                {
-                    SoundManager.instance.playRoverSound(SoundManager.instance.roverPickupSound);
-                    SoundManager.instance.roverSoundPlaying = true;
-                }
             }
         }
     }
@@ -337,6 +336,8 @@ public class Rover : MonoBehaviour
                 start = rover.transform.position;
                 target = dropPosition;
             }
+            SoundManager.instance.roverSoundPlaying = false;
+            SoundManager.instance.playRoverSound(SoundManager.instance.roverDropSound);
         }
         internal override void Update(){
             base.Update();
@@ -354,12 +355,6 @@ public class Rover : MonoBehaviour
                 rover.sampleCarried.Drop(dropPosition);
 
                 rover.sampleCarried = null;
-
-                if (!SoundManager.instance.roverSoundPlaying)
-                {
-                    SoundManager.instance.playRoverSound(SoundManager.instance.roverDropSound);
-                    SoundManager.instance.roverSoundPlaying = true;
-                }
             }
         }
     }
