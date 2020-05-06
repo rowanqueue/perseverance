@@ -64,11 +64,7 @@ public class ButtonManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Services.GameController.isTutorial){
-            buttonHolder.localPosition = (new Vector3(0,-100f));
-        }else{
-            buttonHolder.localPosition += (new Vector3(0,-185f)-buttonHolder.localPosition)*0.1f;
-        }
+       
         if (beamingUp)
         {
             SendingToRoverImage.gameObject.SetActive(true);

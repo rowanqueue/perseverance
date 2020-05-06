@@ -45,6 +45,7 @@ public class IntroManager : MonoBehaviour
     public SpriteRenderer dropoffArrow;
     public SpriteRenderer obstacleArrow1;
     public SpriteRenderer obstacleArrow2;
+    public SpriteRenderer menuArrow;
 
     public float arrowMoveAmount = .25f;
     private Vector2 roverArrowVector;
@@ -56,6 +57,7 @@ public class IntroManager : MonoBehaviour
     private Vector2 dropoffArrowVector;
     private Vector2 obstacleArrow1Vector;
     private Vector2 obstacleArrow2Vector;
+    private Vector2 menuArrowVector;
     
     //rover UI
     public Button[] fadeableDirectionalIconArray;
@@ -105,6 +107,7 @@ public class IntroManager : MonoBehaviour
         dropoffArrowVector = dropoffArrow.gameObject.transform.position;
         obstacleArrow1Vector = obstacleArrow1.gameObject.transform.position;
         obstacleArrow2Vector = obstacleArrow2.gameObject.transform.position;
+        menuArrowVector = menuArrow.gameObject.transform.position;
 
     }
 
@@ -226,11 +229,11 @@ public class IntroManager : MonoBehaviour
         if (StringArrayIndex == 6)
         {
             //reset the rover
-            myLevelLoader.LoadLevel(Services.GameController.currentLevel);
         }
 
         if (StringArrayIndex == 7)
         {
+            myLevelLoader.LoadLevel(Services.GameController.currentLevel);
             obstacleArrow1.DOFade(1f, 1f);
             obstacleArrow2.DOFade(1f, 1f);
             obstacleArrow1.transform
@@ -251,7 +254,7 @@ public class IntroManager : MonoBehaviour
                 .OnComplete(() => sampleArrow.DOFade(0f, 1f).
                     OnComplete(() => sampleArrow.gameObject.SetActive(false)));
             pickupArrow.DOFade(1f, 1f).SetDelay(3f);
-            pickupArrow.transform.DOMove(new Vector2(pickupArrowVector.x, pickupArrowVector.y - arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4)
+            pickupArrow.transform.DOMove(new Vector2(pickupArrowVector.x + arrowMoveAmount, pickupArrowVector.y), 1).SetEase(Ease.InOutQuad).SetLoops(4)
                 .SetDelay(3f)
                 .OnComplete(() => pickupArrow.DOFade(0f, 1f).
                     OnComplete(() => pickupArrow.gameObject.SetActive(false)));
@@ -265,10 +268,19 @@ public class IntroManager : MonoBehaviour
                 .OnComplete(() => cacheArrow.DOFade(0f, 1f).
                     OnComplete(() => cacheArrow.gameObject.SetActive(false)));
             dropoffArrow.DOFade(1f, 1f).SetDelay(3f);
-            dropoffArrow.transform.DOMove(new Vector2(dropoffArrowVector.x - arrowMoveAmount, dropoffArrowVector.y), 1).SetEase(Ease.InOutQuad).SetLoops(4)
+            dropoffArrow.transform.DOMove(new Vector2(dropoffArrowVector.x, dropoffArrowVector.y - arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4)
                 .SetDelay(3f)
                 .OnComplete(() => dropoffArrow.DOFade(0f, 1f).
                     OnComplete(() => dropoffArrow.gameObject.SetActive(false)));
+
+        }
+
+        if (StringArrayIndex == 13)
+        {
+            menuArrow.DOFade(1f, 1f);
+            menuArrow.transform.DOMove(new Vector2(cacheArrowVector.x, cacheArrowVector.y + arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4)
+               .OnComplete(() => menuArrow.DOFade(0f, 1f).
+                   OnComplete(() => menuArrow.gameObject.SetActive(false)));
 
         }
         if (StringArrayIndex == tutorialStringArray.Length)

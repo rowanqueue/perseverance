@@ -47,10 +47,11 @@ public class LevelTransitionManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        startFactText = startFactHolder.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        startFactText = startFactHolder.gameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
         startFacts = Resources.Load<TextAsset>("StartFacts");
         startFactArray = startFacts.text.Split('\n');
+        Debug.Log("The length of startFactArray is " + startFactArray.Length);
 
         finishFacts = Resources.Load<TextAsset>("FinishFacts");
         finishFactArray = finishFacts.text.Split('\n');
