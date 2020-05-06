@@ -87,6 +87,10 @@ public class LevelTransitionManager : MonoBehaviour
         startFactHolder.SetActive(false);
         blackBackground.gameObject.SetActive(false);
         startFactIndex++;
+        if (startFactIndex == startFactArray.Length)
+        {
+            startFactIndex = 0;
+        }
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
     }
 
@@ -105,6 +109,10 @@ public class LevelTransitionManager : MonoBehaviour
     public void onLevelScreenButtonPress()
     {
         finishFactIndex++;
+        if (finishFactIndex == finishFactArray.Length)
+        {
+            finishFactIndex = 0;
+        }
         finishFactHolder.SetActive(false);
         blackBackground.gameObject.SetActive(false);
         missionControl.gameObject.SetActive(true);
