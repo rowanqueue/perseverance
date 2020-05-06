@@ -70,7 +70,7 @@ public class LevelTransitionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        scoreLevelDesignationText.text = Services.GameController.score.ToString();
     }
 
 
