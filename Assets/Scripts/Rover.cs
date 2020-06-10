@@ -46,6 +46,7 @@ public class Rover : MonoBehaviour
         //set direction
         if(sampleCarried != null){
             sampleCarried.pos = new Vector2Int((int)transform.position.x,(int)transform.position.y);
+            sampleCarried.obj.transform.localPosition = (Vector2)directions[direction]*0.5f;
         }
         spriteRenderer.sprite = directionalSprites[direction];
         //transform.GetChild(0).localEulerAngles = new Vector3(0,0,angles[direction]);
@@ -289,7 +290,7 @@ public class Rover : MonoBehaviour
             }
             if(foundSample){
                 start = sampleToPickUp.pos;
-                target = rover.transform.position;
+                target = rover.transform.position+ (Vector3)(Vector2)rover.directions[rover.direction]*0.5f;
             }
             SoundManager.instance.roverSoundPlaying = false;
             SoundManager.instance.playRoverSound(SoundManager.instance.roverPickupSound);
