@@ -278,7 +278,7 @@ public class IntroManager : MonoBehaviour
         if (StringArrayIndex == 13)
         {
             menuArrow.DOFade(1f, 1f);
-            menuArrow.transform.DOMove(new Vector2(cacheArrowVector.x, cacheArrowVector.y + arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4)
+            menuArrow.transform.DOMove(new Vector2(menuArrowVector.x, menuArrowVector.y + arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4)
                .OnComplete(() => menuArrow.DOFade(0f, 1f).
                    OnComplete(() => menuArrow.gameObject.SetActive(false)));
 

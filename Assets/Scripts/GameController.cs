@@ -71,6 +71,7 @@ public class GameController : MonoBehaviour
             return;
         }
         endOfLevel = true;
+        LevelTransitionManager.instance.openFinishFactBox();
         //SCORE THE ROVER HERE
         score = 50-Services.Rover.sendsThisLevel-Services.Rover.movesThisLevel;
         

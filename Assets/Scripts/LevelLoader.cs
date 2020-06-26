@@ -94,6 +94,7 @@ public class LevelLoader : MonoBehaviour
         LoadLevel(_level);
     }
     public void LoadLevel(Tile[,] _level){
+        Services.GameController.endOfLevel = false;
         if (Services.GameController.currentLevel != 0)
         {
             LevelTransitionManager.instance.openStartFactBox();
