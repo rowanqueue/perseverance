@@ -24,11 +24,11 @@ public class LevelTransitionManager : MonoBehaviour
 
     public Image blackBackground;
 
-    private TextAsset startFacts;
+    public TextAsset startFacts;
 
     private string[] startFactArray;
 
-    private TextAsset finishFacts;
+    public TextAsset finishFacts;
 
     private string[] finishFactArray;
 
@@ -49,11 +49,11 @@ public class LevelTransitionManager : MonoBehaviour
         instance = this;
         startFactText = startFactHolder.gameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
-        startFacts = Resources.Load<TextAsset>("StartFacts");
+        //startFacts = Resources.Load<TextAsset>("StartFacts");
         startFactArray = startFacts.text.Split('\n');
         Debug.Log("The length of startFactArray is " + startFactArray.Length);
 
-        finishFacts = Resources.Load<TextAsset>("FinishFacts");
+        //finishFacts = Resources.Load<TextAsset>("FinishFacts");
         finishFactArray = finishFacts.text.Split('\n');
 
     }
