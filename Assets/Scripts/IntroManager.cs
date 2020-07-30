@@ -22,8 +22,10 @@ public class IntroManager : MonoBehaviour
     public Image tutorialBox;
     public Image tutorialBoxOutline;
     private TextMeshProUGUI tutorialText;
-    private Button continueButton;
+    public Button continueButton;
+    public Button goBackButton;
     public float textFadeTime = .25f;
+    private Color clearWhite = new Color(255, 255, 255, 0);
 
     //tutorial text elements
     private TextAsset tutorialLines;
@@ -84,11 +86,7 @@ public class IntroManager : MonoBehaviour
         //get correct components for various UI elements, then set them inactive/fade them
         playButtonText = playButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
         tutorialText = tutorialBox.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        continueButton = tutorialBox.gameObject.GetComponentInChildren<Button>();
-        /*continueButton.image.color = clearButtonColor;
-        tutorialText.color = clearBlack;
-        tutorialBox.color = clearWhite;
-        tutorialBoxOutline.color = clearTutorialBoxOutline;*/
+ 
         tutorialBox.gameObject.SetActive(false);
         tutorialBoxOutline.gameObject.SetActive(false);
         controlRoomPicture.DOFade(0f, .1f);
@@ -164,6 +162,7 @@ public class IntroManager : MonoBehaviour
         tutorialText.text = tutorialStringArray[StringArrayIndex];
         tutorialText.DOFade(1f, 2f);
         continueButton.image.DOFade(1f, 2f);
+        //goBackButton.image.DOFade(1f, 2f);
         LevelTransitionManager.instance.missionControl.gameObject.SetActive(false);
     }
     public void fakeContinueButtonClick(){
@@ -172,15 +171,29 @@ public class IntroManager : MonoBehaviour
     }
     public void continueButtonClick()
     {
-        tutorialText.DOFade(0f, textFadeTime).OnComplete(() => tutorialText.DOFade(1f, textFadeTime));
-        Invoke("loadNewTutorialText", textFadeTime);
+        tutorialText.DOFade(0f, textFadeTime).OnComplete(() => loadNewTutorialText());
+        tutorialText.DOFade(1f, textFadeTime).SetDelay(textFadeTime);
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
+        StringArrayIndex++;
+    }
+
+    public void goBackButtonClick()
+    {
+        tutorialText.DOFade(0f, textFadeTime).OnComplete(() => loadNewTutorialText());
+        tutorialText.DOFade(1f, textFadeTime).SetDelay(textFadeTime);
+        SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
+        if (StringArrayIndex >= 1)
+        {
+            StringArrayIndex--;
+            Debug.Log("I went back. Now I equal " + StringArrayIndex);
+        }
+        else
+        { Debug.Log("Can't go back any farther than this"); }
     }
 
     void loadNewTutorialText()
     {
         alreadyHit = false;
-        StringArrayIndex++;
         if(StringArrayIndex == 5 || StringArrayIndex == 8 || StringArrayIndex == 9){
             canHitContinue = false;
             if(StringArrayIndex == 9){
@@ -189,8 +202,14 @@ public class IntroManager : MonoBehaviour
         }else{
             canHitContinue = true;
         }
+        if (StringArrayIndex == 1)
+        {
+            goBackButton.image.DOFade(1f, 1f);
+        }
         if (StringArrayIndex == 4)
         {
+            tutorialBox.rectTransform.DOAnchorPos(new Vector2(0, 171), 1f).SetEase(Ease.InOutQuad);
+            tutorialBoxOutline.rectTransform.DOAnchorPos(new Vector2(0, 171), 1f).SetEase(Ease.InOutQuad);
             controlRoomPicture.DOFade(0f, 1f).OnComplete(() => martianSurface.DOFade(1f, 1f));
             game.SetActive(true);
             grid.DOFade(.4f, 1f).SetDelay(1f);
