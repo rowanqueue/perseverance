@@ -23,6 +23,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip roverPickupSound;
     public AudioClip roverHitObstacleSound;
     public AudioClip levelCompleteSound;
+    public bool soundOn = true;
 
     [HideInInspector] public bool roverSoundPlaying = false;
     private float sendingtimer = 0;
@@ -45,16 +46,17 @@ public class SoundManager : MonoBehaviour
         soundtrackAudioSource = gameObject.transform.GetChild(0).GetComponent<AudioSource>();
         UIAudioSource = gameObject.transform.GetChild(1).GetComponent<AudioSource>();
         RoverAudioSource = gameObject.transform.GetChild(2).GetComponent<AudioSource>();
-        soundtrackAudioSource.clip = soundtrackMusic[0];
-        soundtrackAudioSource.Play();
-        soundtrackAudioSource.loop = true;
-        Debug.Assert(soundtrackAudioSource.isPlaying == true);
+        if(soundOn){
+            soundtrackAudioSource.clip = soundtrackMusic[0];
+            soundtrackAudioSource.Play();
+            soundtrackAudioSource.loop = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (myGameController.currentLevel != 0 && soundtrackAudioSource.clip != soundtrackMusic[1])
+        if (soundOn && myGameController.currentLevel != 0 && soundtrackAudioSource.clip != soundtrackMusic[1])
         {
             soundtrackAudioSource.clip = soundtrackMusic[1];
             soundtrackAudioSource.Play();
@@ -65,20 +67,30 @@ public class SoundManager : MonoBehaviour
 
     public void PlayUISound(AudioClip clip)
     {
-        UIAudioSource.PlayOneShot(clip);
+        if(soundOn){
+            UIAudioSource.PlayOneShot(clip);
+        }
+        
     }
 
     public void PlaySendingToRoverSound()
     {
-        UIAudioSource.clip = sendingToRoverSound;
-        UIAudioSource.Play();
-        UIAudioSource.loop = true;
-
+        if(soundOn){
+            UIAudioSource.clip = sendingToRoverSound;
+            UIAudioSource.Play();
+            UIAudioSource.loop = true;
+        }
     }
 
     public void playRoverSound(AudioClip clip)
     {
-        Debug.Log("Playing rover sound");
-        RoverAudioSource.PlayOneShot(clip);
+        if(soundOn){
+            Debug.Log("Playing rover sound");
+            RoverAudioSource.PlayOneShot(clip);
+        }
+        
+    }
+    public void SoundOff(){
+        soundOn = !soundOn;
     }
 }
