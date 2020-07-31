@@ -8569,6 +8569,11 @@ PrefabInstance:
       propertyPath: uiGlow
       value: 
       objectReference: {fileID: 2100000, guid: 693d43d5b6f45b44e93e381561ba141e, type: 2}
+    - target: {fileID: 4852222279744984775, guid: dd72b591ffc692049bb658ce290eb0e0,
+        type: 3}
+      propertyPath: skipButton
+      value: 
+      objectReference: {fileID: 92701912}
     - target: {fileID: 4852222279760177019, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: m_IsActive
