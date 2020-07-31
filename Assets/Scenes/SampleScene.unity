@@ -5271,7 +5271,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1204639277
 Transform:
   m_ObjectHideFlags: 0
@@ -9409,7 +9409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: -2, y: -2}
-  currentLevel: 1
+  currentLevel: 0
   levelLoader: {fileID: 1854334285}
   rover: {fileID: 860205224}
   obstaclesParent: {fileID: 323141744}
