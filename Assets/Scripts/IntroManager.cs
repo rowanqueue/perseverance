@@ -342,12 +342,15 @@ fakeContinueButtonClick();
         {
             dropoffArrow.material = null;
             Services.Cache.obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 0;
-            menuArrow.material = uiGlow;
+            
             /*menuArrow.DOFade(1f, 1f);
             menuArrow.transform.DOMove(new Vector2(menuArrowVector.x, menuArrowVector.y + arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4)
                .OnComplete(() => menuArrow.DOFade(0f, 1f).
                    OnComplete(() => menuArrow.gameObject.SetActive(false)));*/
 
+        }
+        if(StringArrayIndex ==14){
+            menuArrow.material = uiGlow;
         }
         Debug.Log(StringArrayIndex+","+tutorialStringArray.Length);
         if (StringArrayIndex == tutorialStringArray.Length)

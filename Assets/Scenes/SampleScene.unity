@@ -11450,8 +11450,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: here's a cool space fact. rad! here's a cool space fact. rad! here's a
-    cool space fact. rad!
+  m_text: Mars is called the "Red Planet" because its regolith (surface material)
+    is full of rust-colored iron oxide.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 08676c0a1fba1aa4eb5173544aa1680e, type: 2}
   m_sharedMaterial: {fileID: -1272412994697888837, guid: b207d2430a54a534692f529399d23004,
