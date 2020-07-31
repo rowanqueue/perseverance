@@ -117,7 +117,7 @@ public class IntroManager : MonoBehaviour
         }else{
             continueButton.gameObject.SetActive(false);
             if(alreadyHit == false){
-                if(StringArrayIndex == 5){
+                if(StringArrayIndex == 6){
                     if(Services.Rover.waitingForInput == false){
                         fakeContinueButtonClick();
                         alreadyHit = true;
@@ -174,6 +174,7 @@ public class IntroManager : MonoBehaviour
         LevelTransitionManager.instance.missionControl.gameObject.SetActive(false);
     }
     public void fakeContinueButtonClick(){
+        Debug.Log("I'm calling fakeContinueButtonClick");
         tutorialText.DOFade(0f, textFadeTime).OnComplete(() => tutorialText.DOFade(1f, textFadeTime));
         Invoke("loadNewTutorialText", textFadeTime);
     }
@@ -202,7 +203,7 @@ public class IntroManager : MonoBehaviour
     void loadNewTutorialText()
     {
         alreadyHit = false;
-        if(StringArrayIndex == 5 || StringArrayIndex == 8 || StringArrayIndex == 9){
+        if(StringArrayIndex == 6 || StringArrayIndex == 9 || StringArrayIndex == 10){
             canHitContinue = false;
             if(StringArrayIndex == 9){
                 Services.EventManager.Register<PlacedOnCache>(OnCachePlacement);
@@ -214,7 +215,7 @@ public class IntroManager : MonoBehaviour
         {
             goBackButton.image.DOFade(1f, 1f);
         }
-        if (StringArrayIndex == 4)
+        if (StringArrayIndex == 5)
         {
             tutorialBox.rectTransform.DOAnchorPos(new Vector2(0, 171), 1f).SetEase(Ease.InOutQuad);
             tutorialBoxOutline.rectTransform.DOAnchorPos(new Vector2(0, 171), 1f).SetEase(Ease.InOutQuad);
@@ -228,7 +229,7 @@ public class IntroManager : MonoBehaviour
                     OnComplete(() => roverArrow.gameObject.SetActive(false)));
         }
         
-        if (StringArrayIndex == 5)
+        if (StringArrayIndex == 6)
         {
             foreach (var butt in fadeableDirectionalIconArray)
             {
@@ -253,12 +254,12 @@ public class IntroManager : MonoBehaviour
 
         }
 
-        if (StringArrayIndex == 6)
+        if (StringArrayIndex == 7)
         {
             //reset the rover
         }
 
-        if (StringArrayIndex == 7)
+        if (StringArrayIndex == 8)
         {
             myLevelLoader.LoadLevel(Services.GameController.currentLevel);
             obstacleArrow1.DOFade(1f, 1f);
@@ -273,7 +274,7 @@ public class IntroManager : MonoBehaviour
                 .OnComplete(() => obstacleArrow2.DOFade(0f, 1f));
         }
 
-        if (StringArrayIndex == 8)
+        if (StringArrayIndex == 9)
         {
             pickupButton.image.DOFade(1f, 1f);
             sampleArrow.DOFade(1f, 1f);
@@ -287,7 +288,7 @@ public class IntroManager : MonoBehaviour
                     OnComplete(() => pickupArrow.gameObject.SetActive(false)));
         }
 
-        if (StringArrayIndex == 9)
+        if (StringArrayIndex == 11)
         {
             dropoffButton.image.DOFade(1f, 1f);
             cacheArrow.DOFade(1f, 1f);
@@ -302,7 +303,7 @@ public class IntroManager : MonoBehaviour
 
         }
 
-        if (StringArrayIndex == 13)
+        if (StringArrayIndex == 16)
         {
             menuArrow.DOFade(1f, 1f);
             menuArrow.transform.DOMove(new Vector2(menuArrowVector.x, menuArrowVector.y + arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4)
