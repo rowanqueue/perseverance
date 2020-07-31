@@ -8700,7 +8700,7 @@ PrefabInstance:
     - target: {fileID: 4852222280371965486, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -15
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 4852222280417136438, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
@@ -8795,12 +8795,12 @@ PrefabInstance:
     - target: {fileID: 4852222281250588817, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: m_fontSize
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4852222281250588817, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4852222281250588817, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
@@ -8814,6 +8814,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2681244520685780382, guid: 08676c0a1fba1aa4eb5173544aa1680e,
         type: 2}
+    - target: {fileID: 4852222281250588817, guid: dd72b591ffc692049bb658ce290eb0e0,
+        type: 3}
+      propertyPath: m_textAlignment
+      value: 264
+      objectReference: {fileID: 0}
     - target: {fileID: 4852222281250588846, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -11279,7 +11284,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -265, y: -15}
+  m_AnchoredPosition: {x: -265, y: -20}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2021338233
