@@ -12,7 +12,7 @@ public class LevelTransitionManager : MonoBehaviour
     
     public GameObject startFactHolder;
 
-    private TextMeshProUGUI startFactText;
+    public TextMeshProUGUI startFactText;
 
     public GameObject finishFactHolder;
     public Image[] stars;
