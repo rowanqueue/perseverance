@@ -152,7 +152,6 @@ public class IntroManager : MonoBehaviour
         }
     }
     public void onSkipButtonPress(){
-        gameController.currentLevel = 1;
         game.SetActive(true);
         LevelTransitionManager.instance.onLevelScreenButtonPress();
         GameObject.Destroy(gameObject);

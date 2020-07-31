@@ -119,7 +119,10 @@ public class LevelTransitionManager : MonoBehaviour
         {
             finishFactIndex = 0;
         }
+        ButtonManager.instance.buttonHolder.gameObject.SetActive(false);
+        ButtonManager.instance.commandBox.gameObject.transform.parent.gameObject.SetActive(false);
         finishFactHolder.SetActive(false);
+        startFactHolder.gameObject.SetActive(false);
         blackBackground.gameObject.SetActive(false);
         missionControl.gameObject.SetActive(true);
         martianSurface.gameObject.SetActive(false);
