@@ -13,6 +13,7 @@ public class IntroManager : MonoBehaviour
     //title screen elements
     public SpriteRenderer titlePicture;
     public Button playButton;
+    public Button skipButton;
     public TextMeshProUGUI[] titleTextArray;
     private TextMeshProUGUI playButtonText;
     public SpriteRenderer blackBackground;
@@ -30,7 +31,7 @@ public class IntroManager : MonoBehaviour
 
     //tutorial text elements
     private TextAsset tutorialLines;
-    private string[] tutorialStringArray;
+    public string[] tutorialStringArray;
     public int StringArrayIndex = 0;//5,8,9
     
     //tutorial sprites
@@ -96,6 +97,7 @@ public class IntroManager : MonoBehaviour
         //set up the tutorial lines array
         tutorialLines = Resources.Load<TextAsset>("tutorialLines");
         tutorialStringArray = tutorialLines.text.Split('\n');
+        Debug.Log(tutorialStringArray);
         
         //set arrow Vector2s
         //roverArrowVector = roverArrow.gameObject.transform.position;
@@ -119,13 +121,13 @@ public class IntroManager : MonoBehaviour
         }else{
             continueButton.gameObject.SetActive(false);
             if(alreadyHit == false){
-                if(StringArrayIndex == 5){
+                if(StringArrayIndex == 6){
                     if(Services.Rover.waitingForInput == false){
                         fakeContinueButtonClick();
                         alreadyHit = true;
                     }
                 }
-                if(StringArrayIndex == 8){
+                if(StringArrayIndex == 10){
                     if(Services.Rover.carryingSample){
                         fakeContinueButtonClick();
                         alreadyHit = true;
@@ -136,17 +138,22 @@ public class IntroManager : MonoBehaviour
         }
     }
     void OnCachePlacement(Eevent e){
-        if(alreadyHit == false && StringArrayIndex == 9){
-            fakeContinueButtonClick();
+        Debug.Log("A");
+        if(StringArrayIndex == 11){
+            Debug.Log("B");
+fakeContinueButtonClick();
             alreadyHit = true;
             Services.EventManager.Unregister<PlacedOnCache>(OnCachePlacement);
         }
+        
     }
 
     public void onPlayButtonPress()
     {
         titlePicture.DOFade(0f, 1f).OnComplete(() => titlePicture.gameObject.SetActive(false));
         playButton.image.DOFade(0f, 1f).OnComplete(() => playButton.gameObject.SetActive(false));
+        skipButton.image.DOFade(0f, 1f).OnComplete(() => skipButton.gameObject.SetActive(false));
+        skipButton.GetComponentInChildren<TextMeshProUGUI>().DOFade(0f, 1f);
         playButtonText.DOFade(0f, 1f).OnComplete(() => tutorialSetup());
         foreach (var titleAsset in titleTextArray)
         {
@@ -176,15 +183,20 @@ public class IntroManager : MonoBehaviour
         LevelTransitionManager.instance.missionControl.gameObject.SetActive(false);
     }
     public void fakeContinueButtonClick(){
-        tutorialText.DOFade(0f, textFadeTime).OnComplete(() => tutorialText.DOFade(1f, textFadeTime));
-        Invoke("loadNewTutorialText", textFadeTime);
+        //tutorialText.DOFade(0f, textFadeTime).OnComplete(() => tutorialText.DOFade(1f, textFadeTime));
+        //Invoke("loadNewTutorialText", textFadeTime);
+        StringArrayIndex++;
+        tutorialText.DOFade(1f, textFadeTime).SetDelay(textFadeTime);
+        loadNewTutorialText();
     }
     public void continueButtonClick()
     {
-        tutorialText.DOFade(0f, textFadeTime).OnComplete(() => loadNewTutorialText());
+        StringArrayIndex++;
+        //tutorialText.DOFade(0f, textFadeTime).OnComplete(() => loadNewTutorialText());
+        loadNewTutorialText();
         tutorialText.DOFade(1f, textFadeTime).SetDelay(textFadeTime);
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
-        StringArrayIndex++;
+        
     }
 
     public void goBackButtonClick()
@@ -203,10 +215,11 @@ public class IntroManager : MonoBehaviour
 
     void loadNewTutorialText()
     {
+
         alreadyHit = false;
-        if(StringArrayIndex == 5 || StringArrayIndex == 8 || StringArrayIndex == 9){
+        if(StringArrayIndex == 6 || StringArrayIndex == 10 || StringArrayIndex == 11){
             canHitContinue = false;
-            if(StringArrayIndex == 9){
+            if(StringArrayIndex == 11){
                 Services.EventManager.Register<PlacedOnCache>(OnCachePlacement);
             }
         }else{
@@ -216,7 +229,7 @@ public class IntroManager : MonoBehaviour
         {
             goBackButton.image.DOFade(1f, 1f);
         }
-        if (StringArrayIndex == 4)
+        if (StringArrayIndex == 5)
         {
             tutorialBox.rectTransform.DOAnchorPos(new Vector2(0, 171), 1f).SetEase(Ease.InOutQuad);
             tutorialBoxOutline.rectTransform.DOAnchorPos(new Vector2(0, 171), 1f).SetEase(Ease.InOutQuad);
@@ -231,7 +244,7 @@ public class IntroManager : MonoBehaviour
                     OnComplete(() => roverArrow.gameObject.SetActive(false)));*/
         }
         
-        if (StringArrayIndex == 5)
+        if (StringArrayIndex == 6)
         {
             roverArrow.OutlineWidth = 0;
             foreach (var butt in fadeableDirectionalIconArray)
@@ -259,7 +272,7 @@ public class IntroManager : MonoBehaviour
 
         }
 
-        if (StringArrayIndex == 6)
+        if (StringArrayIndex == 7)
         {
             sendArrow.material = null;
             //reset the rover
@@ -269,7 +282,7 @@ public class IntroManager : MonoBehaviour
             }
         }
 
-        if (StringArrayIndex == 7)
+        if (StringArrayIndex == 8)
         {
             myLevelLoader.LoadLevel(Services.GameController.currentLevel);
             foreach(Obstacle obs in Services.ObstacleManager.obstacles){
@@ -287,7 +300,7 @@ public class IntroManager : MonoBehaviour
                 .OnComplete(() => obstacleArrow2.DOFade(0f, 1f));*/
         }
 
-        if (StringArrayIndex == 8)
+        if (StringArrayIndex == 9)
         {
             foreach(Obstacle obs in Services.ObstacleManager.obstacles){
                 obs.obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 0;
@@ -306,7 +319,7 @@ public class IntroManager : MonoBehaviour
                     OnComplete(() => pickupArrow.gameObject.SetActive(false)));*/
         }
 
-        if (StringArrayIndex == 9)
+        if (StringArrayIndex == 11)
         {
             pickupArrow.material = null;
              Services.SampleManager.samples[0].obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 0;
@@ -325,7 +338,7 @@ public class IntroManager : MonoBehaviour
 
         }
 
-        if (StringArrayIndex == 13)
+        if (StringArrayIndex == 12)
         {
             dropoffArrow.material = null;
             Services.Cache.obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 0;
@@ -336,6 +349,7 @@ public class IntroManager : MonoBehaviour
                    OnComplete(() => menuArrow.gameObject.SetActive(false)));*/
 
         }
+        Debug.Log(StringArrayIndex+","+tutorialStringArray.Length);
         if (StringArrayIndex == tutorialStringArray.Length)
         {
             menuArrow.material = null;

@@ -481,17 +481,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 92701910}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1397670034}
-  m_Father: {fileID: 124589265}
-  m_RootOrder: 5
+  m_Father: {fileID: 1760161328}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1, y: -157}
+  m_AnchoredPosition: {x: 0, y: -104.53335}
   m_SizeDelta: {x: 222, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &92701912
@@ -704,12 +704,6 @@ Transform:
   m_Father: {fileID: 1204639277}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!224 &124589265 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4852222280879551808, guid: dd72b591ffc692049bb658ce290eb0e0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1678649465}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &125143773
 GameObject:
   m_ObjectHideFlags: 0
@@ -1527,6 +1521,7 @@ GameObject:
   m_Component:
   - component: {fileID: 313404249}
   - component: {fileID: 313404250}
+  - component: {fileID: 313404251}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -1599,6 +1594,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &313404251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313404248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glowColor: {r: 0, g: 1, b: 0.7372549, a: 1}
+  glowBrightness: 3.5
+  outlineWidth: 0
+  alphaThreshold: 0.01
+  drawOutside: 0
+  enableInstancing: 0
 --- !u!1 &323141743
 GameObject:
   m_ObjectHideFlags: 0
@@ -5421,7 +5434,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1204639277
 Transform:
   m_ObjectHideFlags: 0
@@ -8420,17 +8433,17 @@ PrefabInstance:
         type: 3}
       propertyPath: roverArrow
       value: 
-      objectReference: {fileID: 2045653143}
+      objectReference: {fileID: 313404251}
     - target: {fileID: 4852222279744984775, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: directionalArrow
       value: 
-      objectReference: {fileID: 562014770}
+      objectReference: {fileID: 0}
     - target: {fileID: 4852222279744984775, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: sendArrow
       value: 
-      objectReference: {fileID: 1746193282}
+      objectReference: {fileID: 1138150412}
     - target: {fileID: 4852222279744984775, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: rover
@@ -8495,7 +8508,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pickupArrow
       value: 
-      objectReference: {fileID: 1317431466}
+      objectReference: {fileID: 337906799}
     - target: {fileID: 4852222279744984775, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: myLevelLoader
@@ -8515,32 +8528,32 @@ PrefabInstance:
         type: 3}
       propertyPath: sampleArrow
       value: 
-      objectReference: {fileID: 1758407959}
+      objectReference: {fileID: 0}
     - target: {fileID: 4852222279744984775, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: dropoffArrow
       value: 
-      objectReference: {fileID: 1847391263}
+      objectReference: {fileID: 1669955518}
     - target: {fileID: 4852222279744984775, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: cacheArrow
       value: 
-      objectReference: {fileID: 1338249394}
+      objectReference: {fileID: 0}
     - target: {fileID: 4852222279744984775, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: obstacleArrow1
       value: 
-      objectReference: {fileID: 89827804}
+      objectReference: {fileID: 0}
     - target: {fileID: 4852222279744984775, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: obstacleArrow2
       value: 
-      objectReference: {fileID: 2011506427}
+      objectReference: {fileID: 0}
     - target: {fileID: 4852222279744984775, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: menuArrow
       value: 
-      objectReference: {fileID: 2049464744}
+      objectReference: {fileID: 1902359341}
     - target: {fileID: 4852222279744984775, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: continueButton
@@ -8551,6 +8564,11 @@ PrefabInstance:
       propertyPath: goBackButton
       value: 
       objectReference: {fileID: 2021338233}
+    - target: {fileID: 4852222279744984775, guid: dd72b591ffc692049bb658ce290eb0e0,
+        type: 3}
+      propertyPath: uiGlow
+      value: 
+      objectReference: {fileID: 2100000, guid: 693d43d5b6f45b44e93e381561ba141e, type: 2}
     - target: {fileID: 4852222279760177019, guid: dd72b591ffc692049bb658ce290eb0e0,
         type: 3}
       propertyPath: m_IsActive
@@ -9640,6 +9658,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!224 &1760161328 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4852222281328073635, guid: dd72b591ffc692049bb658ce290eb0e0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1678649465}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1847391261
 GameObject:
   m_ObjectHideFlags: 0
