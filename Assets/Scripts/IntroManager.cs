@@ -231,8 +231,8 @@ fakeContinueButtonClick();
         }
         if (StringArrayIndex == 5)
         {
-            tutorialBox.rectTransform.DOAnchorPos(new Vector2(0, 171), 1f).SetEase(Ease.InOutQuad);
-            tutorialBoxOutline.rectTransform.DOAnchorPos(new Vector2(0, 171), 1f).SetEase(Ease.InOutQuad);
+            tutorialBox.rectTransform.DOAnchorPos(new Vector2(0, 190), 1f).SetEase(Ease.InOutQuad);
+            tutorialBoxOutline.rectTransform.DOAnchorPos(new Vector2(0, 190), 1f).SetEase(Ease.InOutQuad);
             controlRoomPicture.DOFade(0f, 1f).OnComplete(() => martianSurface.DOFade(1f, 1f));
             game.SetActive(true);
             grid.DOFade(.4f, 1f).SetDelay(1f);
