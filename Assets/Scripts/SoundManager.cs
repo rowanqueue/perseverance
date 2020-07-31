@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip roverHitObstacleSound;
     public AudioClip levelCompleteSound;
     public bool soundOn = true;
+    public Sprite[] soundSprites;
+    public Image soundImage;
 
     [HideInInspector] public bool roverSoundPlaying = false;
     private float sendingtimer = 0;
@@ -62,6 +65,7 @@ public class SoundManager : MonoBehaviour
             soundtrackAudioSource.Play();
             soundtrackAudioSource.loop = true;
         }
+        soundImage.sprite = soundOn ? soundSprites[0] : soundSprites[1];
 
     }
 

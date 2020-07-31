@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
     public IntroManager intro;
     public int score;
     public bool endOfLevel;
+    public int scoreToBeat;
     // Start is called before the first frame update
     void Awake()
     {
@@ -73,8 +74,13 @@ public class GameController : MonoBehaviour
         endOfLevel = true;
         LevelTransitionManager.instance.openFinishFactBox();
         //SCORE THE ROVER HERE
-        score = 50-Services.Rover.sendsThisLevel-Services.Rover.movesThisLevel;
-        
+        if(Services.Rover.movesThisLevel <= scoreToBeat){
+            score = 3;
+        }else if(Services.Rover.movesThisLevel <= scoreToBeat + 6){
+            score = 2;
+        }else{
+            score = 1;
+        }
     }
     public void GoToNextLevel(){
         currentLevel++;

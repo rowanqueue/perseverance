@@ -19,6 +19,7 @@ public class Rover : MonoBehaviour
     public int numMoves;
     public int direction;
     public List<Sprite> directionalSprites;
+    public GameObject directionalArrow;
     List<float> angles = new List<float>{0,-90,-180,-270};
     List<Vector2Int> directions = new List<Vector2Int>{Vector2Int.up,Vector2Int.right,Vector2Int.down,Vector2Int.left};
     public TaskManager taskManager = new TaskManager();
@@ -43,6 +44,8 @@ public class Rover : MonoBehaviour
     }
     void Update()
     {
+        directionalArrow.transform.eulerAngles = new Vector3(0,0,angles[direction]);
+        directionalArrow.SetActive(Services.GameController.isTutorial);
         //set direction
         if(sampleCarried != null){
             sampleCarried.pos = new Vector2Int((int)transform.position.x,(int)transform.position.y);

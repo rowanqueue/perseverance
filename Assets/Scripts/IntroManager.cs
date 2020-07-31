@@ -151,6 +151,15 @@ public class IntroManager : MonoBehaviour
             titleAsset.DOFade(0f, 1f);
         }
     }
+    public void onSkipButtonPress(){
+        gameController.currentLevel = 1;
+        game.SetActive(true);
+        LevelTransitionManager.instance.onLevelScreenButtonPress();
+        GameObject.Destroy(gameObject);
+        gameController.intro = null;
+        //pickupButton.image.DOFade(1f, 1f);
+        //dropoffButton.image.DOFade(1f, 1f);
+    }
 
     void tutorialSetup()
     {
@@ -308,7 +317,8 @@ public class IntroManager : MonoBehaviour
             Services.GameController.intro = null;
             Destroy(gameObject);
             Services.GameController.currentLevel++;
-            Services.GameController.levelLoader.LoadLevel(Services.GameController.currentLevel);
+            LevelTransitionManager.instance.onLevelScreenButtonPress();
+            //Services.GameController.levelLoader.LoadLevel(Services.GameController.currentLevel);
         }
         else
         {

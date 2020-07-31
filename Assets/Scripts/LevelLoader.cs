@@ -41,7 +41,9 @@ public class LevelLoader : MonoBehaviour
         bool hasMultipleCache = false;
         bool hasSample = false;
         string[] splitLevel = levelString.Split(',');
+        Debug.Log(levelString);
         Services.GameController.offset = new Vector2Int(-int.Parse(splitLevel[0]),-int.Parse(splitLevel[1]));
+        Services.GameController.scoreToBeat = int.Parse(splitLevel[2]);
         for(int y = 0; y<height;y++){
             for(int x = 0; x<width;x++){
                 char c = lines[y+1][x+1];

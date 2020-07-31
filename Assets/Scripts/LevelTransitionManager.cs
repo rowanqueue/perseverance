@@ -15,8 +15,8 @@ public class LevelTransitionManager : MonoBehaviour
     private TextMeshProUGUI startFactText;
 
     public GameObject finishFactHolder;
-
-    public TextMeshProUGUI scoreText;
+    public Image[] stars;
+    public Sprite[] starSprites;
 
     public TextMeshProUGUI finishFactText;
 
@@ -67,7 +67,13 @@ public class LevelTransitionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = Services.GameController.score.ToString();
+        for(var i = 0; i < 3;i++){
+            if(i < Services.GameController.score){
+                stars[i].sprite = starSprites[0];
+            }else{
+                stars[i].sprite = starSprites[1];
+            }
+        }
     }
 
 
