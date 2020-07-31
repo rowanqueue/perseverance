@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 2917612027727290165}
   - component: {fileID: 2917612027727290164}
   - component: {fileID: 3892044101105610911}
+  - component: {fileID: 5524500931623695695}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -81,7 +82,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -128,3 +129,21 @@ MonoBehaviour:
   sprites:
   - {fileID: 21300000, guid: 217f7d860d93fa541823a06f105a8272, type: 3}
   - {fileID: 21300000, guid: 0561c6f75a0df9643b9bfdbd7345b9cd, type: 3}
+--- !u!114 &5524500931623695695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2917612027727290166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glowColor: {r: 0, g: 1, b: 0.7372549, a: 1}
+  glowBrightness: 3.5
+  outlineWidth: 0
+  alphaThreshold: 0.01
+  drawOutside: 0
+  enableInstancing: 0

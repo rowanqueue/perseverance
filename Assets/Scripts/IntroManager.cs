@@ -5,6 +5,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using SpriteGlow;
 
 public class IntroManager : MonoBehaviour
 {
@@ -38,16 +39,17 @@ public class IntroManager : MonoBehaviour
     public SpriteRenderer rover;
     
     //pointer arrows
-    public SpriteRenderer roverArrow;
+    public Material uiGlow;
+    public SpriteGlowEffect roverArrow;
     public SpriteRenderer directionalArrow;
-    public SpriteRenderer sendArrow;
-    public SpriteRenderer sampleArrow;
-    public SpriteRenderer pickupArrow;
-    public SpriteRenderer cacheArrow;
-    public SpriteRenderer dropoffArrow;
-    public SpriteRenderer obstacleArrow1;
-    public SpriteRenderer obstacleArrow2;
-    public SpriteRenderer menuArrow;
+    public Image sendArrow;
+    public SpriteGlowEffect sampleArrow;
+    public Image pickupArrow;
+    public SpriteGlowEffect cacheArrow;
+    public Image dropoffArrow;
+    public SpriteGlowEffect obstacleArrow1;
+    public SpriteGlowEffect obstacleArrow2;
+    public Image menuArrow;
 
     public float arrowMoveAmount = .25f;
     private Vector2 roverArrowVector;
@@ -96,16 +98,16 @@ public class IntroManager : MonoBehaviour
         tutorialStringArray = tutorialLines.text.Split('\n');
         
         //set arrow Vector2s
-        roverArrowVector = roverArrow.gameObject.transform.position;
-        directionalArrowVector = directionalArrow.gameObject.transform.position;
-        sendArrowVector = sendArrow.gameObject.transform.position;
-        sampleArrowVector = sampleArrow.gameObject.transform.position;
-        pickupArrowVector = pickupArrow.gameObject.transform.position;
-        cacheArrowVector = cacheArrow.gameObject.transform.position;
-        dropoffArrowVector = dropoffArrow.gameObject.transform.position;
-        obstacleArrow1Vector = obstacleArrow1.gameObject.transform.position;
-        obstacleArrow2Vector = obstacleArrow2.gameObject.transform.position;
-        menuArrowVector = menuArrow.gameObject.transform.position;
+        //roverArrowVector = roverArrow.gameObject.transform.position;
+        //directionalArrowVector = directionalArrow.gameObject.transform.position;
+        //sendArrowVector = sendArrow.gameObject.transform.position;
+        //sampleArrowVector = sampleArrow.gameObject.transform.position;
+        //pickupArrowVector = pickupArrow.gameObject.transform.position;
+        //cacheArrowVector = cacheArrow.gameObject.transform.position;
+        //dropoffArrowVector = dropoffArrow.gameObject.transform.position;
+        //obstacleArrow1Vector = obstacleArrow1.gameObject.transform.position;
+        //obstacleArrow2Vector = obstacleArrow2.gameObject.transform.position;
+        //menuArrowVector = menuArrow.gameObject.transform.position;
 
     }
 
@@ -222,18 +224,21 @@ public class IntroManager : MonoBehaviour
             game.SetActive(true);
             grid.DOFade(.4f, 1f).SetDelay(1f);
             rover.DOFade(1f, 1f);
-            roverArrow.DOFade(1f, 1f).SetDelay(1f);
+            roverArrow.OutlineWidth = 4;
+            /*roverArrow.DOFade(1f, 1f).SetDelay(1f);
             roverArrow.transform.DOMove(new Vector2(roverArrowVector.x, roverArrowVector.y - arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4).SetDelay(1f)
                 .OnComplete(() => roverArrow.DOFade(0f, 1f).
-                    OnComplete(() => roverArrow.gameObject.SetActive(false)));
+                    OnComplete(() => roverArrow.gameObject.SetActive(false)));*/
         }
         
         if (StringArrayIndex == 5)
         {
+            roverArrow.OutlineWidth = 0;
             foreach (var butt in fadeableDirectionalIconArray)
             {
                 butt.gameObject.SetActive(true);
                 butt.image.DOFade(1f, 1f);
+                butt.image.material = uiGlow;
             }
 
             foreach (var UIBox in fadeableImageArray)
@@ -242,26 +247,35 @@ public class IntroManager : MonoBehaviour
                 UIBox.DOFade(.8f, 1f);
             }
             
-            directionalArrow.DOFade(1f, 1f);
+           /* directionalArrow.DOFade(1f, 1f);
             directionalArrow.transform.DOMove(new Vector2(directionalArrowVector.x, directionalArrowVector.y - arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4)
                 .OnComplete(() => directionalArrow.DOFade(0f, 1f)
                     .OnComplete(() => directionalArrow.gameObject.SetActive(false)));
-            sendArrow.DOFade(1f, 1f).SetDelay(4f);
+            sendArrow.material = uiGlow;*/
+            /*sendArrow.DOFade(1f, 1f).SetDelay(4f);
             sendArrow.transform.DOMove(new Vector2(sendArrowVector.x - arrowMoveAmount, sendArrowVector.y), 1).SetEase(Ease.InOutQuad).SetLoops(4).SetDelay(4f)
                 .OnComplete(() => sendArrow.DOFade(0f, 1f).
-                    OnComplete(() => sendArrow.gameObject.SetActive(false)));
+                    OnComplete(() => sendArrow.gameObject.SetActive(false)));*/
 
         }
 
         if (StringArrayIndex == 6)
         {
+            sendArrow.material = null;
             //reset the rover
+            foreach (var butt in fadeableDirectionalIconArray)
+            {
+                butt.image.material = null;
+            }
         }
 
         if (StringArrayIndex == 7)
         {
             myLevelLoader.LoadLevel(Services.GameController.currentLevel);
-            obstacleArrow1.DOFade(1f, 1f);
+            foreach(Obstacle obs in Services.ObstacleManager.obstacles){
+                obs.obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 4;
+            }
+            /*obstacleArrow1.DOFade(1f, 1f);
             obstacleArrow2.DOFade(1f, 1f);
             obstacleArrow1.transform
                 .DOMove(new Vector2(obstacleArrow1Vector.x, obstacleArrow1Vector.y - arrowMoveAmount), 1)
@@ -270,48 +284,61 @@ public class IntroManager : MonoBehaviour
             obstacleArrow2.transform
                 .DOMove(new Vector2(obstacleArrow2Vector.x, obstacleArrow2Vector.y - arrowMoveAmount), 1)
                 .SetEase(Ease.InOutQuad).SetLoops(4)
-                .OnComplete(() => obstacleArrow2.DOFade(0f, 1f));
+                .OnComplete(() => obstacleArrow2.DOFade(0f, 1f));*/
         }
 
         if (StringArrayIndex == 8)
         {
+            foreach(Obstacle obs in Services.ObstacleManager.obstacles){
+                obs.obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 0;
+            }
             pickupButton.image.DOFade(1f, 1f);
-            sampleArrow.DOFade(1f, 1f);
+            /*sampleArrow.DOFade(1f, 1f);
             sampleArrow.transform.DOMove(new Vector2(sampleArrowVector.x - arrowMoveAmount, sampleArrowVector.y),1).SetEase(Ease.InOutQuad).SetLoops(4)
                 .OnComplete(() => sampleArrow.DOFade(0f, 1f).
-                    OnComplete(() => sampleArrow.gameObject.SetActive(false)));
-            pickupArrow.DOFade(1f, 1f).SetDelay(3f);
+                    OnComplete(() => sampleArrow.gameObject.SetActive(false)));*/
+            Services.SampleManager.samples[0].obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 4;
+            pickupArrow.material = uiGlow;
+            /*pickupArrow.DOFade(1f, 1f).SetDelay(3f);
             pickupArrow.transform.DOMove(new Vector2(pickupArrowVector.x + arrowMoveAmount, pickupArrowVector.y), 1).SetEase(Ease.InOutQuad).SetLoops(4)
                 .SetDelay(3f)
                 .OnComplete(() => pickupArrow.DOFade(0f, 1f).
-                    OnComplete(() => pickupArrow.gameObject.SetActive(false)));
+                    OnComplete(() => pickupArrow.gameObject.SetActive(false)));*/
         }
 
         if (StringArrayIndex == 9)
         {
+            pickupArrow.material = null;
+             Services.SampleManager.samples[0].obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 0;
             dropoffButton.image.DOFade(1f, 1f);
-            cacheArrow.DOFade(1f, 1f);
+            /*cacheArrow.DOFade(1f, 1f);
             cacheArrow.transform.DOMove(new Vector2(cacheArrowVector.x - arrowMoveAmount, cacheArrowVector.y),1).SetEase(Ease.InOutQuad).SetLoops(4)
                 .OnComplete(() => cacheArrow.DOFade(0f, 1f).
-                    OnComplete(() => cacheArrow.gameObject.SetActive(false)));
-            dropoffArrow.DOFade(1f, 1f).SetDelay(3f);
+                    OnComplete(() => cacheArrow.gameObject.SetActive(false)));*/
+            Services.Cache.obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 4;
+            dropoffArrow.material = uiGlow;
+            /*dropoffArrow.DOFade(1f, 1f).SetDelay(3f);
             dropoffArrow.transform.DOMove(new Vector2(dropoffArrowVector.x, dropoffArrowVector.y - arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4)
                 .SetDelay(3f)
                 .OnComplete(() => dropoffArrow.DOFade(0f, 1f).
-                    OnComplete(() => dropoffArrow.gameObject.SetActive(false)));
+                    OnComplete(() => dropoffArrow.gameObject.SetActive(false)));*/
 
         }
 
         if (StringArrayIndex == 13)
         {
-            menuArrow.DOFade(1f, 1f);
+            dropoffArrow.material = null;
+            Services.Cache.obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 0;
+            menuArrow.material = uiGlow;
+            /*menuArrow.DOFade(1f, 1f);
             menuArrow.transform.DOMove(new Vector2(menuArrowVector.x, menuArrowVector.y + arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4)
                .OnComplete(() => menuArrow.DOFade(0f, 1f).
-                   OnComplete(() => menuArrow.gameObject.SetActive(false)));
+                   OnComplete(() => menuArrow.gameObject.SetActive(false)));*/
 
         }
         if (StringArrayIndex == tutorialStringArray.Length)
         {
+            menuArrow.material = null;
             //SceneManager.LoadScene(1);
             Services.GameController.intro = null;
             Destroy(gameObject);
