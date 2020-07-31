@@ -1,5 +1,10 @@
 Mars is called the "Red Planet" because its regolith (surface material) is full of rust-colored iron oxide.
-The Perseverance rover has 23 cameras and 2 microphones. It can take selfies if directed!
-The atmosphere on Mars is 96% carbon dioxide and only .174% oxygen. Try breathing that!
-On ancient Mars, water left its mark in the form of river deltas. The Jezero Crater is the site of one of those dried-out deltas.
+The Perseverance rover has 23 cameras and two microphones. It can take selfies if directed!
+The atmosphere on Mars is 96% carbon dioxide and only 0.174% oxygen. Don’t try breathing that!
+On ancient Mars, water left its mark in the form of dried-out river deltas. The Jezero Crater is the site of one of those ancient deltas.
 Perseverance may look small in pictures, but it's the size of a car and weighs 2,260 pounds!
+Perseverance is carrying a helicopter to Mars! Four-pound Ingenuity is stowed on the underside of Perseverance and will detach after landing. Its goal: the first powered flight on Mars.
+Perseverance launched on July 30th, 2020. It will travel for seven months before landing on Mars in February of 2021. Talk about a long road trip!
+Perseverance’s mission will last at least one Mars year, or 687 Earth days. Mars has longer years than we do because it’s farther away from the Sun.
+Perseverance is powered by a plutonium generator, which gives off energy in the form of heat. The generator can last up to 14 years!
+The computer inside Perseverance has two gigabytes of flash memory. That isn’t much compared to the average smartphone, but it’s eight times the memory of the Spirit and Opportunity rovers.
