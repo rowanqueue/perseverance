@@ -16,7 +16,13 @@ public class ButtonManager : MonoBehaviour
 
     public Rover thisRover;
 
-    public GameObject commandBox;
+    public RectTransform[] placeholderTransformArray;
+
+    public GameObject verticalBox;
+
+    public GameObject horizontalBox;
+    
+    private int placeholderArrayIndex = 0;
 
     public Image UpArrowPrefab;
 
@@ -43,7 +49,6 @@ public class ButtonManager : MonoBehaviour
     private string[] timePassingArray;
 
     [HideInInspector]public List<Image> commandList;
-    public Transform buttonHolder;
 
     private void Awake()
     {
@@ -59,6 +64,11 @@ public class ButtonManager : MonoBehaviour
         SendingToRoverImage.gameObject.SetActive(false);
         timePassingFile = Resources.Load<TextAsset>("DataLines");
         timePassingArray = timePassingFile.text.Split('\n');
+
+        foreach (Transform thisTransform in placeholderTransformArray)
+        {
+            Destroy(thisTransform.gameObject.GetComponent<Image>());
+        }
 
     }
 
@@ -116,64 +126,76 @@ public class ButtonManager : MonoBehaviour
 
     public void OnForwardButtonPress()
     {
-        if(commandList.Count >= maxCommands){return;}
+        if (placeholderArrayIndex >= placeholderTransformArray.Length) { return; }
         thisRover.EnterCommand(Command.Forward);
         var newUpArrowIcon = Instantiate(UpArrowPrefab);
-        newUpArrowIcon.transform.SetParent(commandBox.transform);
+        newUpArrowIcon.rectTransform.SetParent(placeholderTransformArray[placeholderArrayIndex]);
+        newUpArrowIcon.rectTransform.localPosition = new Vector2(0, 0);
         commandList.Add(newUpArrowIcon);
+        placeholderArrayIndex++;
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
     }
 
     public void OnBackwardButtonPress()
     {
-        if(commandList.Count >= maxCommands){return;}
+        if (placeholderArrayIndex >= placeholderTransformArray.Length) { return; }
         thisRover.EnterCommand(Command.Backward);
         var newDownArrowIcon = Instantiate(DownArrowPrefab);
-        newDownArrowIcon.transform.SetParent(commandBox.transform);
+        newDownArrowIcon.transform.SetParent(placeholderTransformArray[placeholderArrayIndex]);
+        newDownArrowIcon.rectTransform.localPosition = new Vector2(0, 0);
         commandList.Add(newDownArrowIcon);
+        placeholderArrayIndex++;
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
 
     }
 
     public void OnRightButtonPress()
     {
-        if(commandList.Count >= maxCommands){return;}
+        if (placeholderArrayIndex >= placeholderTransformArray.Length) { return; }
         thisRover.EnterCommand(Command.TurnRight);
         var newRightArrowIcon = Instantiate(RightArrowPrefab);
-        newRightArrowIcon.transform.SetParent(commandBox.transform);
+        newRightArrowIcon.transform.SetParent(placeholderTransformArray[placeholderArrayIndex]);
+        newRightArrowIcon.rectTransform.localPosition = new Vector2(0, 0);
         commandList.Add(newRightArrowIcon);
+        placeholderArrayIndex++;
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
     }
 
     public void OnLeftButtonPress()
     {
-        if(commandList.Count >= maxCommands){return;}
+        if(placeholderArrayIndex >= placeholderTransformArray.Length){return;}
         thisRover.EnterCommand(Command.TurnLeft);
         var newLeftArrowIcon = Instantiate(LeftArrowPrefab);
-        newLeftArrowIcon.transform.SetParent(commandBox.transform);
+        newLeftArrowIcon.transform.SetParent(placeholderTransformArray[placeholderArrayIndex]);
+        newLeftArrowIcon.rectTransform.localPosition = new Vector2(0, 0);
         commandList.Add(newLeftArrowIcon);
+        placeholderArrayIndex++;
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
 
     }
 
     public void OnPutdownButtonPress()
     {
-        if(commandList.Count >= maxCommands){return;}
+        if (placeholderArrayIndex >= placeholderTransformArray.Length) { return; }
         thisRover.EnterCommand(Command.PutDown);
         var newDropoffIcon = Instantiate(DropoffPrefab);
-        newDropoffIcon.transform.SetParent(commandBox.transform);
+        newDropoffIcon.transform.SetParent(placeholderTransformArray[placeholderArrayIndex]);
+        newDropoffIcon.rectTransform.localPosition = new Vector2(0, 0);
         commandList.Add(newDropoffIcon);
+        placeholderArrayIndex++;
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
 
     }
 
     public void onPickupButtonPress()
     {
-        if(commandList.Count >= maxCommands){return;}
+        if (placeholderArrayIndex >= placeholderTransformArray.Length) { return; }
         thisRover.EnterCommand(Command.PickUp);
         var newPickupIcon = Instantiate(PickupPrefab);
-        newPickupIcon.transform.SetParent(commandBox.transform);
+        newPickupIcon.transform.SetParent(placeholderTransformArray[placeholderArrayIndex]);
+        newPickupIcon.rectTransform.localPosition = new Vector2(0, 0);
         commandList.Add(newPickupIcon);
+        placeholderArrayIndex++;
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
 
     }
@@ -192,7 +214,7 @@ public class ButtonManager : MonoBehaviour
             //if there is nothing in the list, it will stop running the function right here
             return;
         }
-        
+        placeholderArrayIndex--;
         Destroy(commandList[commandList.Count - 1].gameObject);
         commandList.RemoveAt(commandList.Count-1);
         thisRover.moves.RemoveAt(thisRover.moves.Count-1);

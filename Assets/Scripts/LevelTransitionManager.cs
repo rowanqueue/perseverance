@@ -80,8 +80,8 @@ public class LevelTransitionManager : MonoBehaviour
 
     public void openStartFactBox()
     {
-        ButtonManager.instance.buttonHolder.gameObject.SetActive(true);
-        ButtonManager.instance.commandBox.gameObject.transform.parent.gameObject.SetActive(true);
+        ButtonManager.instance.verticalBox.gameObject.SetActive(true);
+        ButtonManager.instance.horizontalBox.gameObject.transform.parent.gameObject.SetActive(true);
         martianSurface.gameObject.SetActive(true);
 
         startFactHolder.gameObject.SetActive(true);
@@ -127,16 +127,14 @@ public class LevelTransitionManager : MonoBehaviour
         {
             RefreshFactList("finish");
         }
-        ButtonManager.instance.buttonHolder.gameObject.SetActive(false);
-        ButtonManager.instance.commandBox.gameObject.transform.parent.gameObject.SetActive(false);
+        ButtonManager.instance.verticalBox.gameObject.SetActive(false);
+        ButtonManager.instance.horizontalBox.gameObject.SetActive(false);
         finishFactHolder.SetActive(false);
         startFactHolder.gameObject.SetActive(false);
         blackBackground.gameObject.SetActive(false);
         missionControl.gameObject.SetActive(true);
         martianSurface.gameObject.SetActive(false);
 
-        ButtonManager.instance.buttonHolder.gameObject.SetActive(false);
-        ButtonManager.instance.commandBox.gameObject.transform.parent.gameObject.SetActive(false);
 
         buttonHolder.SetActive(true);
 

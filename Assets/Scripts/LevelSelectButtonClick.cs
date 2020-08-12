@@ -25,8 +25,8 @@ public class LevelSelectButtonClick : MonoBehaviour
         LevelTransitionManager.instance.missionControl.gameObject.SetActive(false);
         LevelTransitionManager.instance.buttonHolder.SetActive(false);
 
-        ButtonManager.instance.buttonHolder.gameObject.SetActive(true);
-        ButtonManager.instance.commandBox.gameObject.transform.parent.gameObject.SetActive(true);
+        ButtonManager.instance.verticalBox.SetActive(true);
+        ButtonManager.instance.horizontalBox.SetActive(true);
         LevelTransitionManager.instance.startFactHolder.gameObject.SetActive(true);
         LevelTransitionManager.instance.martianSurface.gameObject.SetActive(true);
     }
