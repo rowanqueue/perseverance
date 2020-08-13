@@ -166,6 +166,7 @@ fakeContinueButtonClick();
         game.SetActive(true);
         GameObject.Destroy(gameObject);
         Services.GameController.intro = null;
+        Services.GameController.menuButton.SetActive(false);
         //Services.GameController.currentLevel++;
         LevelTransitionManager.instance.onLevelScreenButtonPress();
         
