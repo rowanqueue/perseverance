@@ -114,6 +114,7 @@ public class LevelTransitionManager : MonoBehaviour
         var random = new System.Random();
         var myRandomFinishNum = random.Next(finishFactList.Count);
         finishFactText.text = finishFactList[myRandomFinishNum];
+        scoreLevelDesignationText.text = levelDesignations[Services.GameController.score-1];
         finishFactList.Remove(finishFactList[myRandomFinishNum]);
         Debug.Log("I have played and removed the " + myRandomFinishNum + " from the finishFactList");
         if (SoundManager.instance.RoverAudioSource.isPlaying)

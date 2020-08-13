@@ -45,7 +45,7 @@ public class Rover : MonoBehaviour
     void Update()
     {
         directionalArrow.transform.eulerAngles = new Vector3(0,0,angles[direction]);
-        directionalArrow.SetActive(Services.GameController.isTutorial);
+        directionalArrow.SetActive(true);
         //set direction
         if(sampleCarried != null){
             sampleCarried.pos = new Vector2Int((int)transform.position.x,(int)transform.position.y);
