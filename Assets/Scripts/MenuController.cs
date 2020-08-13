@@ -7,7 +7,6 @@ public class MenuController : MonoBehaviour
     private bool isMenuOpen = false;
     public GameObject menu;
     public LevelLoader myLevelLoader;
-    public GameController myGameController;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +38,7 @@ public class MenuController : MonoBehaviour
 
     public void onRestartButtonClick()
     {
-        myLevelLoader.LoadLevel(myGameController.currentLevel);
+        myLevelLoader.LoadLevel(Services.GameController.currentLevel);
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
         menu.SetActive(false);
     }
@@ -48,6 +47,7 @@ public class MenuController : MonoBehaviour
     {
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
         menu.SetActive(false);
+        Services.GameController.menuButton.SetActive(false);
         if(Services.GameController.intro != null){
             IntroManager.instance.onSkipButtonPress();
         }else{

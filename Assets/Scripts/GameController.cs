@@ -23,6 +23,8 @@ public class GameController : MonoBehaviour
     public int score;
     public bool endOfLevel;
     public int scoreToBeat;
+
+    public GameObject menuButton;
     // Start is called before the first frame update
     void Awake()
     {
