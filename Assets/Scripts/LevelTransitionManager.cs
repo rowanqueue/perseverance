@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class LevelTransitionManager : MonoBehaviour
 {
@@ -26,15 +27,15 @@ public class LevelTransitionManager : MonoBehaviour
 
     public TextAsset startFacts;
 
-    private string[] startFactArray;
+    private List<string> startFactList = new List<string>();
 
     public TextAsset finishFacts;
 
-    private string[] finishFactArray;
+    private List<string> finishFactList = new List<string>();
 
-    private int startFactIndex = 0;
+    //private int startFactIndex = 0;
 
-    private int finishFactIndex = 0;
+    //private int finishFactIndex = 0;
 
     public SpriteRenderer martianSurface;
 
@@ -50,18 +51,18 @@ public class LevelTransitionManager : MonoBehaviour
         //startFactText = startFactHolder.gameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
         //startFacts = Resources.Load<TextAsset>("StartFacts");
-        startFactArray = startFacts.text.Split('\n');
-        Debug.Log("The length of startFactArray is " + startFactArray.Length);
+        startFactList = startFacts.text.Split('\n').ToList();
 
         //finishFacts = Resources.Load<TextAsset>("FinishFacts");
-        finishFactArray = finishFacts.text.Split('\n');
+        finishFactList = finishFacts.text.Split('\n').ToList();
 
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log("The length of cleanStartFactList is " + startFactList.Count);
+        Debug.Log("The length of cleanFinishFactList is " + finishFactList.Count);
     }
 
     // Update is called once per frame
@@ -74,30 +75,33 @@ public class LevelTransitionManager : MonoBehaviour
                 stars[i].sprite = starSprites[1];
             }
         }
-        startFactText.text = startFactArray[startFactIndex];
+        //startFactText.text = startFactArray[startFactIndex];
     }
 
 
     public void openStartFactBox()
     {
-        ButtonManager.instance.buttonHolder.gameObject.SetActive(true);
-        ButtonManager.instance.commandBox.gameObject.transform.parent.gameObject.SetActive(true);
+        ButtonManager.instance.verticalBox.gameObject.SetActive(true);
+        ButtonManager.instance.horizontalBox.gameObject.transform.parent.gameObject.SetActive(true);
         martianSurface.gameObject.SetActive(true);
 
         startFactHolder.gameObject.SetActive(true);
         blackBackground.gameObject.SetActive(true);
-        
-        
+        var random = new System.Random();
+        int myRandomStartNum = random.Next(startFactList.Count);
+        startFactText.text = startFactList[myRandomStartNum];
+        startFactList.Remove(startFactList[myRandomStartNum]);
+        Debug.Log("I have played and removed the " + myRandomStartNum + " from the startFactList");
+
     }
     
     public void onStartFactBoxButtonPress()
     {
         startFactHolder.SetActive(false);
         blackBackground.gameObject.SetActive(false);
-        startFactIndex = UnityEngine.Random.Range(0,startFactArray.Length);
-        if (startFactIndex == startFactArray.Length)
+        if (startFactList.Count == 0)
         {
-            startFactIndex = 0;
+            RefreshFactList("start");
         }
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
     }
@@ -107,7 +111,11 @@ public class LevelTransitionManager : MonoBehaviour
         SoundManager.instance.PlayUISound(SoundManager.instance.levelCompleteSound);
         blackBackground.gameObject.SetActive(true);
         finishFactHolder.SetActive(true);
-        finishFactText.text = finishFactArray[finishFactIndex];
+        var random = new System.Random();
+        var myRandomFinishNum = random.Next(finishFactList.Count);
+        finishFactText.text = finishFactList[myRandomFinishNum];
+        finishFactList.Remove(finishFactList[myRandomFinishNum]);
+        Debug.Log("I have played and removed the " + myRandomFinishNum + " from the finishFactList");
         if (SoundManager.instance.RoverAudioSource.isPlaying)
         {
             SoundManager.instance.RoverAudioSource.Stop();
@@ -116,26 +124,38 @@ public class LevelTransitionManager : MonoBehaviour
 
     public void onLevelScreenButtonPress()
     {
-        finishFactIndex++;
-        if (finishFactIndex == finishFactArray.Length)
+        if (finishFactList.Count == 0)
         {
-            finishFactIndex = 0;
+            RefreshFactList("finish");
         }
-        ButtonManager.instance.buttonHolder.gameObject.SetActive(false);
-        ButtonManager.instance.commandBox.gameObject.transform.parent.gameObject.SetActive(false);
+        ButtonManager.instance.verticalBox.gameObject.SetActive(false);
+        ButtonManager.instance.horizontalBox.gameObject.SetActive(false);
         finishFactHolder.SetActive(false);
         startFactHolder.gameObject.SetActive(false);
         blackBackground.gameObject.SetActive(false);
         missionControl.gameObject.SetActive(true);
         martianSurface.gameObject.SetActive(false);
 
-        ButtonManager.instance.buttonHolder.gameObject.SetActive(false);
-        ButtonManager.instance.commandBox.gameObject.transform.parent.gameObject.SetActive(false);
 
         buttonHolder.SetActive(true);
 
         Services.GameController.levelLoader.DeleteLevel();
 
+    }
+
+    public void RefreshFactList(string factListPicker)
+    {
+        if (factListPicker == "start")
+        {
+            startFactList = startFacts.text.Split('\n').ToList();
+            Debug.Log("Resetting startFactList...");
+
+        }
+        else if (factListPicker == "finish")
+        {
+            finishFactList = finishFacts.text.Split('\n').ToList();
+            Debug.Log("Resetting finishFactList...");
+        }
     }
 
 }
