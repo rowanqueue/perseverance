@@ -46,9 +46,14 @@ public class MenuController : MonoBehaviour
 
     public void onLevelScreenClick()
     {
-        LevelTransitionManager.instance.onLevelScreenButtonPress();
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound2);
         menu.SetActive(false);
+        if(Services.GameController.intro != null){
+            IntroManager.instance.onSkipButtonPress();
+        }else{
+            LevelTransitionManager.instance.onLevelScreenButtonPress();
+        }
+        
 
     }
 

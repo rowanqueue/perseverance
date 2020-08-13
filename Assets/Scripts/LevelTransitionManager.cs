@@ -47,7 +47,7 @@ public class LevelTransitionManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        startFactText = startFactHolder.gameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        //startFactText = startFactHolder.gameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
         //startFacts = Resources.Load<TextAsset>("StartFacts");
         startFactArray = startFacts.text.Split('\n');
@@ -74,6 +74,7 @@ public class LevelTransitionManager : MonoBehaviour
                 stars[i].sprite = starSprites[1];
             }
         }
+        startFactText.text = startFactArray[startFactIndex];
     }
 
 
@@ -85,14 +86,15 @@ public class LevelTransitionManager : MonoBehaviour
 
         startFactHolder.gameObject.SetActive(true);
         blackBackground.gameObject.SetActive(true);
-        startFactText.text = startFactArray[startFactIndex];
+        
+        
     }
     
     public void onStartFactBoxButtonPress()
     {
         startFactHolder.SetActive(false);
         blackBackground.gameObject.SetActive(false);
-        startFactIndex++;
+        startFactIndex = UnityEngine.Random.Range(0,startFactArray.Length);
         if (startFactIndex == startFactArray.Length)
         {
             startFactIndex = 0;

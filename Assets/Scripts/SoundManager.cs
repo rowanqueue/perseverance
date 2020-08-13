@@ -96,5 +96,10 @@ public class SoundManager : MonoBehaviour
     }
     public void SoundOff(){
         soundOn = !soundOn;
+        if(soundOn == false){
+            soundtrackAudioSource.volume = 0f;
+        }else{
+            soundtrackAudioSource.volume = 1f;
+        }
     }
 }

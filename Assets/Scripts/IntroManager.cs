@@ -9,6 +9,7 @@ using SpriteGlow;
 
 public class IntroManager : MonoBehaviour
 {
+    public static IntroManager instance;
     public LevelLoader myLevelLoader;
     //title screen elements
     public SpriteRenderer titlePicture;
@@ -77,6 +78,7 @@ public class IntroManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
         canHitContinue = true;
         if(gameController.currentLevel > 0){
             game.SetActive(true);
@@ -162,9 +164,11 @@ fakeContinueButtonClick();
     }
     public void onSkipButtonPress(){
         game.SetActive(true);
-        LevelTransitionManager.instance.onLevelScreenButtonPress();
         GameObject.Destroy(gameObject);
-        gameController.intro = null;
+        Services.GameController.intro = null;
+        //Services.GameController.currentLevel++;
+        LevelTransitionManager.instance.onLevelScreenButtonPress();
+        
         //pickupButton.image.DOFade(1f, 1f);
         //dropoffButton.image.DOFade(1f, 1f);
     }
@@ -238,6 +242,7 @@ fakeContinueButtonClick();
             grid.DOFade(.4f, 1f).SetDelay(1f);
             rover.DOFade(1f, 1f);
             roverArrow.OutlineWidth = 4;
+            Services.SampleManager.samples[0].obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 0;
             /*roverArrow.DOFade(1f, 1f).SetDelay(1f);
             roverArrow.transform.DOMove(new Vector2(roverArrowVector.x, roverArrowVector.y - arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4).SetDelay(1f)
                 .OnComplete(() => roverArrow.DOFade(0f, 1f).
@@ -251,7 +256,7 @@ fakeContinueButtonClick();
             {
                 butt.gameObject.SetActive(true);
                 butt.image.DOFade(1f, 1f);
-                butt.image.material = uiGlow;
+                //butt.image.material = uiGlow;
             }
 
             foreach (var UIBox in fadeableImageArray)
@@ -311,7 +316,7 @@ fakeContinueButtonClick();
                 .OnComplete(() => sampleArrow.DOFade(0f, 1f).
                     OnComplete(() => sampleArrow.gameObject.SetActive(false)));*/
             Services.SampleManager.samples[0].obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 4;
-            pickupArrow.material = uiGlow;
+            //pickupArrow.material = uiGlow;
             /*pickupArrow.DOFade(1f, 1f).SetDelay(3f);
             pickupArrow.transform.DOMove(new Vector2(pickupArrowVector.x + arrowMoveAmount, pickupArrowVector.y), 1).SetEase(Ease.InOutQuad).SetLoops(4)
                 .SetDelay(3f)
@@ -322,14 +327,13 @@ fakeContinueButtonClick();
         if (StringArrayIndex == 11)
         {
             pickupArrow.material = null;
-             Services.SampleManager.samples[0].obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 0;
             dropoffButton.image.DOFade(1f, 1f);
             /*cacheArrow.DOFade(1f, 1f);
             cacheArrow.transform.DOMove(new Vector2(cacheArrowVector.x - arrowMoveAmount, cacheArrowVector.y),1).SetEase(Ease.InOutQuad).SetLoops(4)
                 .OnComplete(() => cacheArrow.DOFade(0f, 1f).
                     OnComplete(() => cacheArrow.gameObject.SetActive(false)));*/
             Services.Cache.obj.GetComponentInChildren<SpriteGlowEffect>().OutlineWidth = 4;
-            dropoffArrow.material = uiGlow;
+            //dropoffArrow.material = uiGlow;
             /*dropoffArrow.DOFade(1f, 1f).SetDelay(3f);
             dropoffArrow.transform.DOMove(new Vector2(dropoffArrowVector.x, dropoffArrowVector.y - arrowMoveAmount), 1).SetEase(Ease.InOutQuad).SetLoops(4)
                 .SetDelay(3f)
@@ -350,7 +354,7 @@ fakeContinueButtonClick();
 
         }
         if(StringArrayIndex ==14){
-            menuArrow.material = uiGlow;
+            //menuArrow.material = uiGlow;
         }
         Debug.Log(StringArrayIndex+","+tutorialStringArray.Length);
         if (StringArrayIndex == tutorialStringArray.Length)

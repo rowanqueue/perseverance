@@ -131,6 +131,7 @@ public class LevelLoader : MonoBehaviour
         Services.ObstacleManager.border = new Vector2Int(_level.GetLength(0),_level.GetLength(1));
     }
     public void LoadLevel(int levelNum){
+        Services.GameController.currentLevel = levelNum;
         LoadLevel(levelTexts[levelNum].text);
     }
 }
