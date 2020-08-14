@@ -1,18 +1,18 @@
-Congratulations, scientist! You've been selected to collect samples  with NASA's new Mars rover, Perseverance.
+Congratulations, scientist! You've been selected to collect samples with NASA's new Mars rover, Perseverance.
 Welcome to mission control. Here, you'll beam instructions from Earth to Mars.
 One of Perseverance's top jobs is taking geological samples, or rocks. Once Perseverance takes those samples, it stores them in caches. Caches are spots on the surface of Mars that NASA scientists have mapped out.
 On future missions, we'll bring the samples back to Earth and analyze them in our labs.
 It's your job to tell Perseverance where to explore and what to collect. Think you can handle that?
 Check out this map of the Jezero Crater. See that robot? That's the rover! Perseverance has 23 cameras for 'seeing' Mars and 3 antennae for 'talking' to you. It also has 2 microphones and a 7-foot arm with a drill at the end. 
-Let's experiment with programming the Mars rover. First, create a sequence of instructions to move the rover by pressing these buttons in order: <b>'Forward,' 'Reverse,' 'Turn Right,' and 'Turn Left.'</b> Then, beam the instructions to Mars by pressing the <b>'Send' button</b>.
+Let's experiment with programming the Mars rover. First, create a sequence of instructions to move the rover by pressing these buttons in order: <b>'forward,' 'reverse,' 'turn right,' and 'turn left.'</b> Then, beam the instructions to Mars by pressing the <b>'send' button</b>.
 Good work! Did you notice that it took 20 minutes for the instructions to beam from mission control to the rover? That's because Mars is, on average, 225,000,000 kilometers (139,808,518 miles) away from Earth!   
 See these obstacles? Try not to hit them. Perseverance can roam over rough and bumpy terrain, but it can't climb steep slopes.
-Now, take a look at this Martian rock . Let's tell the rover to go and collect it!
-First, press the buttons to tell the rover to turn right, go forward, and turn left (this will tell the rover to travel to a square next to the sample). Next, press the <b>'Pick up' button</b> to pick up the rock sample. Finally, press the <b>'Send' button</b> to beam your sequence of instructions to Perseverance.
-Let's tell the rover to place the rock sample in the cache. First, move the rover forward. Then, press the <b>'Drop' button</b> to put the rock in the cache. Finally, press <b>'Send'</b> to beam instructions.
+Now, take a look at this Martian rock. Let's tell the rover to go and collect it!
+First, press the buttons to tell the rover to turn right, go forward, and turn left (this will tell the rover to travel to a square next to the sample). Next, press the <b>'pick up' button</b> to pick up the rock sample. Finally, press the <b>'send' button</b> to beam your sequence of instructions to Perseverance.
+Let's tell the rover to place the rock sample in the cache. First, move the rover forward twice. Then, press the <b>'drop' button</b> to put the rock in the cache. Finally, press <b>'Send'</b> to beam instructions.
 Great! You've cleared the tutorial. 
 You're now ready for your mission. There are three levels. In each level, your goal is to program the rover to collect Martian rock samples and store them safely in the cache. 
 Each time the rover drops off a rock sample into the cache, you'll receive a score. Your score will depend on how efficiently you've programmed Perseverance.
 The fewer number of instructions in the sequence you beam to the rover, the better. And try not to hit any obstacles!
-If you want to quit, restart the level, or choose a different level, you can press the menu button anytime.
+If you want to quit, restart the level, or choose a different level, you can press the menu button in the upper right-hand corner anytime.
 Okay, ready? Let's get started!

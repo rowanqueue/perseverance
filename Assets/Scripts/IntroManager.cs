@@ -197,8 +197,8 @@ fakeContinueButtonClick();
     public void continueButtonClick()
     {
         StringArrayIndex++;
-        //tutorialText.DOFade(0f, textFadeTime).OnComplete(() => loadNewTutorialText());
-        loadNewTutorialText();
+        tutorialText.DOFade(0f, textFadeTime).OnComplete(() => loadNewTutorialText());
+        //loadNewTutorialText();
         tutorialText.DOFade(1f, textFadeTime).SetDelay(textFadeTime);
         SoundManager.instance.PlayUISound(SoundManager.instance.buttonClickSound1);
         

@@ -18,11 +18,12 @@ public class ButtonManager : MonoBehaviour
     public Transform placeHolderParent;
     public RectTransform[] placeholderTransformArray;
 
+    private int placeholderArrayIndex = 0;
+
+
     public GameObject verticalBox;
 
     public GameObject horizontalBox;
-    
-    private int placeholderArrayIndex = 0;
 
     public Image UpArrowPrefab;
 
@@ -37,6 +38,8 @@ public class ButtonManager : MonoBehaviour
     public Image DropoffPrefab;
 
     public Image SendingToRoverImage;
+
+    public GameObject blackBackdrop;
 
     private TextAsset timePassingFile;
 
@@ -82,6 +85,7 @@ public class ButtonManager : MonoBehaviour
        
         if (beamingUp)
         {
+            blackBackdrop.SetActive(true);
             SendingToRoverImage.gameObject.SetActive(true);
             timePassingText.text = timePassingArray[0];
             timePassingText.gameObject.SetActive(false);
@@ -123,6 +127,8 @@ public class ButtonManager : MonoBehaviour
                 Services.Rover.SendCommands();
                 beamingUp = false;
                 timer = 0;
+                placeholderArrayIndex = 0;
+                blackBackdrop.SetActive(false);
             }
         }
 
