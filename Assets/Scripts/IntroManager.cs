@@ -240,6 +240,7 @@ fakeContinueButtonClick();
             tutorialBoxOutline.rectTransform.DOAnchorPos(new Vector2(0, 190), 1f).SetEase(Ease.InOutQuad);
             controlRoomPicture.DOFade(0f, 1f).OnComplete(() => martianSurface.DOFade(1f, 1f));
             game.SetActive(true);
+            Services.GameController.Begin();
             grid.DOFade(.4f, 1f).SetDelay(1f);
             rover.DOFade(1f, 1f);
             roverArrow.OutlineWidth = 4;

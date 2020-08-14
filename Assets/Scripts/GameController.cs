@@ -26,13 +26,13 @@ public class GameController : MonoBehaviour
 
     public GameObject menuButton;
     // Start is called before the first frame update
-    void Awake()
+    public void Awake()
     {
         InitializeServices();
         Services.EventManager.Register<PlacedOnCache>(OnCachePlacement);
     }
 
-    private void Start()
+    public void Begin()
     {
         //Elizabeth's note: 0 is the tutorial scene, so no facts needed. If the scene index is not 0, pop open the fact box.
         /*if (SceneManager.GetActiveScene().buildIndex != 0)
