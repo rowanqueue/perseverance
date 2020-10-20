@@ -159,7 +159,9 @@ fakeContinueButtonClick();
         titlePicture.DOFade(0f, 1f).OnComplete(() => titlePicture.gameObject.SetActive(false));
         playButton.image.DOFade(0f, 1f).OnComplete(() => playButton.gameObject.SetActive(false));
         skipButton.image.DOFade(0f, 1f).OnComplete(() => skipButton.gameObject.SetActive(false));
+        creditsButton.image.DOFade(0f, 1f).OnComplete(() => creditsButton.gameObject.SetActive(false));
         skipButton.GetComponentInChildren<TextMeshProUGUI>().DOFade(0f, 1f);
+        creditsButton.GetComponentInChildren<TextMeshProUGUI>().DOFade(0f, 1f);
         playButtonText.DOFade(0f, 1f).OnComplete(() => tutorialSetup());
         foreach (var titleAsset in titleTextArray)
         {
