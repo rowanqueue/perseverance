@@ -15,6 +15,9 @@ public class IntroManager : MonoBehaviour
     public SpriteRenderer titlePicture;
     public Button playButton;
     public Button skipButton;
+    public Button creditsButton;
+    public Image creditsPanel;
+    private bool areCreditsActive = false;
     public TextMeshProUGUI[] titleTextArray;
     private TextMeshProUGUI playButtonText;
     public SpriteRenderer blackBackground;
@@ -90,6 +93,7 @@ public class IntroManager : MonoBehaviour
         }
         //get correct components for various UI elements, then set them inactive/fade them
         playButtonText = playButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        creditsPanel.gameObject.SetActive(false);
         tutorialText = tutorialBox.gameObject.GetComponentInChildren<TextMeshProUGUI>();
  
         tutorialBox.gameObject.SetActive(false);
@@ -172,6 +176,20 @@ fakeContinueButtonClick();
         
         //pickupButton.image.DOFade(1f, 1f);
         //dropoffButton.image.DOFade(1f, 1f);
+    }
+
+    public void onCreditsButtonPress()
+    {
+        if(!areCreditsActive)
+        {
+            creditsPanel.gameObject.SetActive(true);
+            areCreditsActive = true;
+        }
+        else
+        {
+            creditsPanel.gameObject.SetActive(false);
+            areCreditsActive = false;
+        }
     }
 
     void tutorialSetup()
