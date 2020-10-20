@@ -74,7 +74,7 @@ public class GameController : MonoBehaviour
             return;
         }
         endOfLevel = true;
-        LevelTransitionManager.instance.openFinishFactBox();
+        
         //SCORE THE ROVER HERE
         if(Services.Rover.movesThisLevel <= scoreToBeat){
             score = 3;
@@ -83,6 +83,7 @@ public class GameController : MonoBehaviour
         }else{
             score = 1;
         }
+        LevelTransitionManager.instance.openFinishFactBox();
     }
     public void GoToNextLevel(){
         currentLevel++;
