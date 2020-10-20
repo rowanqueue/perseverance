@@ -15,6 +15,9 @@ public class IntroManager : MonoBehaviour
     public SpriteRenderer titlePicture;
     public Button playButton;
     public Button skipButton;
+    public Button creditsButton;
+    public Image creditsPanel;
+    private bool areCreditsActive = false;
     public TextMeshProUGUI[] titleTextArray;
     private TextMeshProUGUI playButtonText;
     public SpriteRenderer blackBackground;
@@ -90,6 +93,7 @@ public class IntroManager : MonoBehaviour
         }
         //get correct components for various UI elements, then set them inactive/fade them
         playButtonText = playButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        creditsPanel.gameObject.SetActive(false);
         tutorialText = tutorialBox.gameObject.GetComponentInChildren<TextMeshProUGUI>();
  
         tutorialBox.gameObject.SetActive(false);
@@ -155,7 +159,9 @@ fakeContinueButtonClick();
         titlePicture.DOFade(0f, 1f).OnComplete(() => titlePicture.gameObject.SetActive(false));
         playButton.image.DOFade(0f, 1f).OnComplete(() => playButton.gameObject.SetActive(false));
         skipButton.image.DOFade(0f, 1f).OnComplete(() => skipButton.gameObject.SetActive(false));
+        creditsButton.image.DOFade(0f, 1f).OnComplete(() => creditsButton.gameObject.SetActive(false));
         skipButton.GetComponentInChildren<TextMeshProUGUI>().DOFade(0f, 1f);
+        creditsButton.GetComponentInChildren<TextMeshProUGUI>().DOFade(0f, 1f);
         playButtonText.DOFade(0f, 1f).OnComplete(() => tutorialSetup());
         foreach (var titleAsset in titleTextArray)
         {
@@ -172,6 +178,20 @@ fakeContinueButtonClick();
         
         //pickupButton.image.DOFade(1f, 1f);
         //dropoffButton.image.DOFade(1f, 1f);
+    }
+
+    public void onCreditsButtonPress()
+    {
+        if(!areCreditsActive)
+        {
+            creditsPanel.gameObject.SetActive(true);
+            areCreditsActive = true;
+        }
+        else
+        {
+            creditsPanel.gameObject.SetActive(false);
+            areCreditsActive = false;
+        }
     }
 
     void tutorialSetup()
