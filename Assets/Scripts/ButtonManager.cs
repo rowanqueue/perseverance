@@ -131,11 +131,17 @@ public class ButtonManager : MonoBehaviour
                 blackBackdrop.SetActive(false);
             }
         }
+        if(ReferenceEquals(Services.Rover,null) == false && Services.Rover.waitingForInput == false){
+            for(int i = 0; i < commandList.Count; i++){
+                commandList[i].color = Services.Rover.currentMove == i ? Color.black : Color.white;
+            }
+        }
 
     }
 
     public void OnForwardButtonPress()
     {
+        if(thisRover.waitingForInput == false){return;}
         Debug.Log("A");
         if (placeholderArrayIndex >= placeholderTransformArray.Length) { return; }
         Debug.Log("B");
@@ -150,6 +156,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnBackwardButtonPress()
     {
+        if(thisRover.waitingForInput == false){return;}
         if (placeholderArrayIndex >= placeholderTransformArray.Length) { return; }
         thisRover.EnterCommand(Command.Backward);
         var newDownArrowIcon = Instantiate(DownArrowPrefab);
@@ -163,6 +170,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnRightButtonPress()
     {
+        if(thisRover.waitingForInput == false){return;}
         if (placeholderArrayIndex >= placeholderTransformArray.Length) { return; }
         thisRover.EnterCommand(Command.TurnRight);
         var newRightArrowIcon = Instantiate(RightArrowPrefab);
@@ -175,6 +183,8 @@ public class ButtonManager : MonoBehaviour
 
     public void OnLeftButtonPress()
     {
+        if(thisRover.waitingForInput == false){return;}
+        if(thisRover.waitingForInput == false){return;}
         if(placeholderArrayIndex >= placeholderTransformArray.Length){return;}
         thisRover.EnterCommand(Command.TurnLeft);
         var newLeftArrowIcon = Instantiate(LeftArrowPrefab);
@@ -188,6 +198,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnPutdownButtonPress()
     {
+        if(thisRover.waitingForInput == false){return;}
         if (placeholderArrayIndex >= placeholderTransformArray.Length) { return; }
         thisRover.EnterCommand(Command.PutDown);
         var newDropoffIcon = Instantiate(DropoffPrefab);
@@ -201,6 +212,7 @@ public class ButtonManager : MonoBehaviour
 
     public void onPickupButtonPress()
     {
+        if(thisRover.waitingForInput == false){return;}
         if (placeholderArrayIndex >= placeholderTransformArray.Length) { return; }
         thisRover.EnterCommand(Command.PickUp);
         var newPickupIcon = Instantiate(PickupPrefab);
@@ -214,6 +226,7 @@ public class ButtonManager : MonoBehaviour
 
     public void onSendButtonPress()
     {
+        if(thisRover.waitingForInput == false){return;}
         SendingToRoverImage.gameObject.SetActive(true);
         beamingUp = true;
         SoundManager.instance.PlaySendingToRoverSound();
@@ -221,6 +234,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnDeleteButtonPress()
     {
+        if(thisRover.waitingForInput == false){return;}
         if (commandList.Count == 0)
         {
             //if there is nothing in the list, it will stop running the function right here

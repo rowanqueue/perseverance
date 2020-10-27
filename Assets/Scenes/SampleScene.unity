@@ -4398,6 +4398,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ece2409b745ad4943ae60169e52414a3, type: 3}
   - {fileID: 21300000, guid: 37d1e9b630180664793de313bec646c0, type: 3}
   directionalArrow: {fileID: 1628343236}
+  currentMove: 0
   text: {fileID: 872151723}
   carryingSample: 0
   movesThisLevel: 0
@@ -6621,7 +6622,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1277873570
 RectTransform:
   m_ObjectHideFlags: 0

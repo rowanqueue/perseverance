@@ -24,6 +24,7 @@ public class Rover : MonoBehaviour
     List<Vector2Int> directions = new List<Vector2Int>{Vector2Int.up,Vector2Int.right,Vector2Int.down,Vector2Int.left};
     public TaskManager taskManager = new TaskManager();
     public List<RoverCommand> moves = new List<RoverCommand>();
+    public int currentMove;
     bool doMoves = false;
     float elapsedTime;
     float timeForCommands;
@@ -127,6 +128,7 @@ public class Rover : MonoBehaviour
         
     }
     public void SendCommands(){
+        currentMove = 0;
         doMoves = true;
         numMoves = moves.Count;
         sendsThisLevel++;
@@ -172,7 +174,7 @@ public class Rover : MonoBehaviour
             }
         }
         protected override void OnSuccess(){
-
+            rover.currentMove+=1;
         }
     }
     public class MoveRover : RoverCommand
