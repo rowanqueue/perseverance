@@ -76,6 +76,14 @@ public class LevelTransitionManager : MonoBehaviour
             }
         }
         //startFactText.text = startFactArray[startFactIndex];
+
+        /*if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (finishFactHolder.activeInHierarchy == true)
+            {
+                FinishFactTest();
+            }
+        }*/
     }
 
 
@@ -108,6 +116,10 @@ public class LevelTransitionManager : MonoBehaviour
 
     public void openFinishFactBox()
     {
+        if (finishFactList.Count == 0)
+        {
+            RefreshFactList("finish");
+        }
         SoundManager.instance.PlayUISound(SoundManager.instance.levelCompleteSound);
         blackBackground.gameObject.SetActive(true);
         finishFactHolder.SetActive(true);
@@ -117,11 +129,31 @@ public class LevelTransitionManager : MonoBehaviour
         scoreLevelDesignationText.text = levelDesignations[Services.GameController.score-1 >= 0 ? Services.GameController.score-1 : 0];
         finishFactList.Remove(finishFactList[myRandomFinishNum]);
         Debug.Log("I have played and removed the " + myRandomFinishNum + " from the finishFactList");
+
         if (SoundManager.instance.RoverAudioSource.isPlaying)
         {
             SoundManager.instance.RoverAudioSource.Stop();
         }
     }
+
+    /*public void FinishFactTest()
+    {
+        if (finishFactList.Count == 0)
+        {
+            RefreshFactList("finish");
+        }
+        var random = new System.Random();
+        var myRandomFinishNum = random.Next(finishFactList.Count);
+        finishFactText.text = finishFactList[myRandomFinishNum];
+        scoreLevelDesignationText.text = levelDesignations[Services.GameController.score - 1 >= 0 ? Services.GameController.score - 1 : 0];
+        finishFactList.Remove(finishFactList[myRandomFinishNum]);
+        Debug.Log("I have played and removed the " + myRandomFinishNum + " from the finishFactList");   
+
+        if (SoundManager.instance.RoverAudioSource.isPlaying)
+        {
+            SoundManager.instance.RoverAudioSource.Stop();
+        }
+    }*/
 
     public void onLevelScreenButtonPress()
     {
